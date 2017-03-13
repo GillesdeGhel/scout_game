@@ -12,13 +12,7 @@
 
    **HOST** should be set to the actual host of your application.
 
-2. Ensure you have defined `root_url` to *something* in your config/routes.rb.
-   For example:
-   ```ruby
-   root to: "home#index"
-   ```
-
-3. You can copy Devise views (for customization) to your app by running:
+2. You can copy Devise views (for customization) to your app by running:
    ```
    rails g devise:views
    ```
@@ -31,4 +25,25 @@ Devise modules.
 
 ```
 rails generate devise MODEL
+```
+
+## RailsAdmin
+
+#### Configuration + Devise
+You must change the namespace /admin in the `routes` file to that you want.
+
+```ruby
+mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+```
+
+Also in `config/initializers/rails_admin.rb` you need to change under the
+**Devise** title the `scope: :admin` and `:current_admin` by the one you
+selected before.
+
+e.g:
+```ruby
+config.authenticate_with do
+  warden.authenticate! scope: :user
+end
+config.current_user_method(&:current_user)
 ```
