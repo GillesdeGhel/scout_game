@@ -1,1 +1,1 @@
-# rails-boilerplate
+# Rails Boilerplate
