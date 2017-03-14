@@ -20,6 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'figaro', '~> 1.1'
 end
 
 group :development do

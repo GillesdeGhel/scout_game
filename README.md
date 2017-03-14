@@ -47,3 +47,24 @@ config.authenticate_with do
 end
 config.current_user_method(&:current_user)
 ```
+
+## S3
+
+#### Configuration
+You can find in the production and development files in config/environments/
+the following setup:
+
+```ruby
+config.paperclip_defaults = {
+  storage: :s3,
+  s3_credentials: {
+    bucket: ENV["S3_BUCKET_NAME_PROD"],
+    access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+    secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
+    s3_region: ENV["AWS_REGION"],
+  }
+}
+```
+
+then you need to create a file `application.yml` in config/ directory with the
+credentials, you can find a sample file called `application.yml.example`.
