@@ -1,5 +1,24 @@
 # Rails Boilerplate
 
+The reason behind for this repository is that many times we found ourselves, as
+developers, repeating over and over again the very same setup processes when
+starting new applications.
+
+This is generic repository, containing the bases for an application and which
+main purpose is to serve as a template/boilerplate for applications that share
+a given set of technologies.
+
+After kicking-off many projects, we found that there is a trend and that many
+applications make use of 5 mainstream technologies:
+* Ruby on Rails, a full-stack MVC web-application framework
+* Devise, an authentication solution for Rails based on Warden
+* RailsAdmin, an administration framework for Ruby on Rails applications
+* S3, an object storage service with a simple web service interface
+* Stripe, online payments service with a neat and developer-friendly API
+
+Below is a quick guide on how to use this repository as a boilerplate for a new
+application that relies on the above stated technology stack.
+
 ## Devise
 
 #### Configuration
@@ -68,3 +87,7 @@ config.paperclip_defaults = {
 
 then you need to create a file `application.yml` in config/ directory with the
 credentials, you can find a sample file called `application.yml.example`.
+
+## Stripe
+
+coming soon...
