@@ -109,6 +109,7 @@ end
 ```
 
 **Important**
+
 Don't forget run the migration for the attached name (:avatar in the example),
 update the *form* that allows users to browse and select images from their
 local filesystem (make sure the form has `multipart: true` added to it).
@@ -123,4 +124,9 @@ To show the image you need to add the following line in the view you want:
 
 ## Stripe
 
-coming soon...
+You have a `Charges` controller that does two things:
+1. Shows a credit card form (using [Checkout](https://stripe.com/checkout).
+2. Creates the actual charges by calling our API.
+
+You can read more [here](https://stripe.com/docs/checkout/rails) about Stripe
+and his configuration.
