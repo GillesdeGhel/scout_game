@@ -1,3 +1,7 @@
+# DB
+DB_USERNAME: "db_username"
+DB_PASSWORD: "db_password"
+
 # S3
 S3_BUCKET_NAME: "bucket_name"
 S3_BUCKET_NAME_PROD: "bucket_name_prod"
