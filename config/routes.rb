@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  root to: 'rails_admin/main#dashboard'
-  resources :charges
+  root to: 'home#show'
+  resources :cities, only: [:index]
+  resources :patrols, only: [:show]
+  resources :attacks, only: %i[create index]
+  post 'end_turn', action: :end_turn, controller: 'turns'
 end

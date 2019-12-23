@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<ul>
+  <% Troop.all.each do |t| %>
+  <li>
+    <%= t.name %>
+    <ul>
+    <% t.patrols.each do |p|%>
+      <li>
+        <%= link_to p.name, patrol_path(p.id) %>
+        <%= p.money %>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
+  </li>
+</ul>
+
+
+<button type="primary" name="button">
+  <%= link_to 'finir le tour', end_turn_path, method: :post %>
+</button>

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<ul>
+  <% City.all.each do |c|%>
+  <li>
+    <%= c.name %>
+    <%= c.troop.name %>
+  </li>
+  <% end %>
+</ul>

@@ -1,0 +1,16 @@
+<h1>
+  <%= @patrol.name %>
+</h1>
+
+<p>
+  thune :
+  <%= @patrol.money %>
+</p>
+
+
+<%= simple_form_for @attack do |f| %>
+  <%= f.collection_select :city_id, City.all, :id, :name %>
+  <%= f.hidden_field :patrol_id, value: @patrol.id %>
+  <%= f.input :man_power %>
+  <%= f.button :submit %>
+<% end %>
