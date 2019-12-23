@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   resources :cities, only: [:index]
   resources :patrols, only: [:show]
   resources :attacks, only: %i[create index]
-  post 'end_turn', action: :end_turn, controller: 'turns'
+  get 'end_turn', action: :end_turn, controller: 'turns'
 end

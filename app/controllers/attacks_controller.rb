@@ -2,9 +2,13 @@ class AttacksController < ApplicationController
   def create
     attack = Attack.new(attack_params)
     if attack.save
-      redirect_to attacks_path
+      patrol = attack.patrol
+      patrol.money -= attack.man_power
+      patrol.save
+      flash[:success] = 'Le livre a été mis à jour.'
+      redirect_to patrol_path(patrol.id)
     else
-      render patrol_path(params[:id])
+      render 'show'
     end
   end
 
