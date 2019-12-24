@@ -4,7 +4,8 @@ class ConstructionsController < ApplicationController
     if construction.save
       patrol = construction.patrol
       patrol.money -= construction.building.cost
-      patrol.save
+      patrol.city.defense_building_multiplicator += construction.building.multiplicator if contruction.usage.eql?('defense')
+      patrol.save!
       flash[:success] = "Les hommes ont construit #{construction.building.name} "
       redirect_to patrol_path(patrol.id)
     else

@@ -71,3 +71,6 @@ Patrol.create(name: 'Daim', troop: paladins, money: 100)
 # Patrol.create(name: 'Faucon', troop: servants)
 # Patrol.create(name: 'Brocard', troop: servants)
 # Patrol.create(name: 'Daim', troop: servants)
+
+Building.create(name: 'Trébuchet', usage: 'attack', durability: 2, multiplicator: 2, cost: 300)
+Building.create(name: 'Mur de bois', usage: 'defense', multiplicator: 1.3, cost: 300)

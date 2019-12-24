@@ -4,5 +4,6 @@ class PatrolsController < ApplicationController
     @attack = Attack.new
     @defense = Defense.new
     @mining = Mining.new
+    @construction = Construction.new
   end
 end

@@ -27,3 +27,9 @@
   <%= f.input :man_power %>
   <%= f.button :submit %>
 <% end %>
+
+<%= simple_form_for @construction do |f| %>
+  <%= f.collection_select :building_id, Building.all, :id, :name %>
+  <%= f.hidden_field :patrol_id, value: @patrol.id %>
+  <%= f.button :submit %>
+<% end %>

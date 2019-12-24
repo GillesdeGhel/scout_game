@@ -1,9 +1,30 @@
 class TurnsController < ApplicationController
   def end_turn
+    pay_patrols
+    resolve_minings
+    resolve_conflicts
+    destroy_all_actions
+
+    redirect_to root_path
+  end
+
+  private
+
+  def pay_patrols
     Patrol.all.each do |p|
       p.money += 100
       p.save!
     end
+  end
+
+  def resolve_minings
+    Mining.all.each do |m|
+      m.patrol.money += m.man_power * 1.5
+      m.patrol.save!
+    end
+  end
+
+  def resolve_conflicts
     City.all.each do |c|
       if total_attack(c) > total_defense(c)
         if c.name.eql?('Paris')
@@ -16,12 +37,13 @@ class TurnsController < ApplicationController
         puts "#{c.name} a été défendue"
       end
     end
-    Attack.destroy_all
-    Defense.destroy_all
-    redirect_to root_path
   end
 
-  private
+  def destroy_all_actions
+    Mining.destroy_all
+    Attack.destroy_all
+    Defense.destroy_all
+  end
 
   def total_attack(city)
     attacks_on_the_city(city).sum do |a|
@@ -34,8 +56,8 @@ class TurnsController < ApplicationController
   end
 
   def attack_power(attack)
-    constructions = attack.patrol.constructions.select { |construction| construction.type.eql?('attack') }
-    construction_multiplicator = constructions.sum(&:multiplicator)
+    constructions = attack.patrol.constructions.select { |construction| construction.building.usage.eql?('attack') }
+    construction_multiplicator = constructions.sum { |construction| construction.building.multiplicator }
     attack.man_power * (construction_multiplicator.positive? ? construction_multiplicator : 1)
   end
 
@@ -49,7 +71,6 @@ class TurnsController < ApplicationController
   end
 
   def pillage(city)
-    binding.pry
     city.troop.patrols.each do |patrol|
       if defense_manpower(city).zero?
         patrol.money -= (power_difference(city) / 6)
@@ -70,7 +91,7 @@ class TurnsController < ApplicationController
   end
 
   def power_difference(city)
-    total_attack(city) - total_defense(city)
+    (total_attack(city) - total_defense(city)) * 2
   end
 
   # def capture_of_paris
