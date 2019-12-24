@@ -1,0 +1,69 @@
+### GENERAL CONFIG
+AllCops:
+  TargetRubyVersion: 2.3
+
+Layout/EmptyLines:
+  Enabled: false
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+   Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FormatStringToken:
+  EnforcedStyle: template
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+### SPEC CONFIG
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Naming/VariableNumber:
+  Exclude:
+    - 'spec/**/*'
+
+Security/Eval:
+  Exclude:
+    - 'spec/**/*'
+
+Style/EvalWithLocation:
+  Exclude:
+    - 'spec/**/*'
+
+### EXCLUDING FILES
+
+AllCops:
+  Exclude:
+    - '**/*.rake'
+    - 'bin/*'
+    - 'db/migrate/*'
+    - 'db/old_migrations/*'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'app/views/*'

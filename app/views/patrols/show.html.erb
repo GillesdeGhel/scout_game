@@ -14,3 +14,16 @@
   <%= f.input :man_power %>
   <%= f.button :submit %>
 <% end %>
+
+<%= simple_form_for @defense do |f| %>
+  <%= f.hidden_field :city_id, value: @patrol.troop.city %>
+  <%= f.hidden_field :patrol_id, value: @patrol.id %>
+  <%= f.input :man_power %>
+  <%= f.button :submit %>
+<% end %>
+
+<%= simple_form_for @mining do |f| %>
+  <%= f.hidden_field :patrol_id, value: @patrol.id %>
+  <%= f.input :man_power %>
+  <%= f.button :submit %>
+<% end %>

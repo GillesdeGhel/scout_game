@@ -5,7 +5,7 @@ class AttacksController < ApplicationController
       patrol = attack.patrol
       patrol.money -= attack.man_power
       patrol.save
-      flash[:success] = 'Le livre a été mis à jour.'
+      flash[:success] = "L'attaque a été créée."
       redirect_to patrol_path(patrol.id)
     else
       render 'show'

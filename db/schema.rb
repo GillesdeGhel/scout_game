@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_23_141756) do
+ActiveRecord::Schema.define(version: 2019_12_24_111634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,11 +23,43 @@ ActiveRecord::Schema.define(version: 2019_12_23_141756) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "buildings", force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.integer "durability"
+    t.integer "cost"
+    t.integer "multiplicator"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cities", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "troop_id"
     t.integer "defense_men_power"
     t.integer "defense_building_multiplicator"
+  end
+
+  create_table "constructions", force: :cascade do |t|
+    t.integer "patrol_id"
+    t.integer "building_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "defenses", force: :cascade do |t|
+    t.integer "patrol_id"
+    t.integer "city_id"
+    t.integer "man_power"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "minings", force: :cascade do |t|
+    t.integer "patrol_id"
+    t.integer "man_power"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "patrols", id: :serial, force: :cascade do |t|
