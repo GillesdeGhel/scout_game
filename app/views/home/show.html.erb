@@ -12,7 +12,8 @@
             <% t.patrols.sort_by(&:money).reverse.each do |p|%>
             <li>
               <%= link_to p.name, patrol_path(p.id) %>
-              <%= p.money %>
+              argent: <%= p.money %>
+              score total: <%= p.total_gains %>
             </li>
             <% end %>
           </ul>

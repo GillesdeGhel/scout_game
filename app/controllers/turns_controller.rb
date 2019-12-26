@@ -5,6 +5,7 @@ class TurnsController < ApplicationController
     pay_patrols
     change_construction_durability
     destroy_all_actions
+    compute_total_gains
 
     redirect_to root_path
   end
@@ -56,6 +57,14 @@ class TurnsController < ApplicationController
         c.durability -= 1
         c.save
       end
+    end
+  end
+
+  def compute_total_gains
+    Patrol.all.each do |p|
+      p.total_gains = 0 if p.total_gains.nil?
+      p.total_gains += p.money
+      p.save
     end
   end
 
