@@ -1,35 +1,111 @@
-<h1>
-  <%= @patrol.name %>
-</h1>
+<div class="row">
+  <div class="col-sm-6">
+    <h1>
+      <%= @patrol.name %>
+      thune :
+      <%= @patrol.money %>
+    </h1>
+  </div>
 
-<p>
-  thune :
-  <%= @patrol.money %>
-</p>
+  <div class="col-sm-6">
+    <%= link_to 'Revenir au dashboard', root_path, class:"btn btn-primary" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 col-sm-6">
+    <h2> Attaque de la patrouille: </h2>
+    <% if !@patrol.attack? %>
+      <%= simple_form_for @attack do |f| %>
+        <%= f.collection_select :city_id, City.all, :id, :name %>
+        <%= f.hidden_field :patrol_id, value: @patrol.id %>
+        <%= f.input :man_power %>
+        <%= f.button :submit, class: "btn-primary" %>
+      <% end %>
+    <% else %>
+      <p> Attaque sur: <%= @patrol.attack.city.name %> des <%= @patrol.attack.city.troop.name %> </p>
+      <p> Puissance des hommes: <%= @patrol.attack.man_power %> </p>
+      <p> Multiplicateur des constructions: <%= @patrol.attack_multiplicator %> </p>
+      <p> Puissance totale: <%= @patrol.attack.total_attack_power %> </p>
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-sm-6">
+    <h2> Défense de la patrouille: </h2>
+    <% if !@patrol.defense? %>
+      <%= simple_form_for @defense do |f| %>
+        <%= f.hidden_field :city_id, value: @patrol.city.id %>
+        <%= f.hidden_field :patrol_id, value: @patrol.id %>
+        <%= f.input :man_power %>
+        <%= f.button :submit, class: "btn-primary" %>
+      <% end %>
+    <% else %>
+      <p> Puissance des hommes: <%= @patrol.defense.man_power %> </p>
+      <p> Multiplicateur des constructions: <%= @patrol.city.defense_building_multiplicator %> </p>
+      <p> Puissance totale: <%= @patrol.defense.total_defense_power %> </p>
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-sm-6">
+    <h2> Homme qui partent à la mine: </h2>
+    <% if !@patrol.mining? %>
+      <%= simple_form_for @mining do |f| %>
+        <%= f.hidden_field :patrol_id, value: @patrol.id %>
+        <%= f.input :man_power %>
+        <%= f.button :submit, class: "btn-primary" %>
+      <% end %>
+    <% else %>
+      <p> Nombre d'hommes: <%= @patrol.mining.man_power %> </p>
+    <% end %>
+  </div>
+
+  <div class="col-md-3 col-sm-6">
+    <p> Constructions d'attaque: </p>
+    <ul>
+      <% Building.select{ |b| b.usage.eql?('attack') }.each do |b| %>
+      <li>
+        <%= b.name %>:
+        <ul>
+          <li>
+            coût: <%= b.cost %>
+          </li>
+          <li>
+            durabilité: <%= b.durability %>
+          </li>
+        </ul>
+      </li>
+      <% end %>
+    </ul>
+
+    <p> Constructions de défense: </p>
+    <ul>
+      <% Building.select{ |b| b.usage.eql?('defense') }.each do |b| %>
+      <li>
+        <%= b.name %>:
+        <ul>
+          <li>
+            coût: <%= b.cost %>
+          </li>
+        </ul>
+      </li>
+      <% end %>
+    </ul>
+    <%= simple_form_for @construction do |f| %>
+    <%= f.collection_select :building_id, Building.all, :id, :name %>
+    <%= f.hidden_field :patrol_id, value: @patrol.id %>
+    <%= f.button :submit, class: "btn-primary" %>
+    <% end %>
+  </div>
+</div>
 
 
-<%= simple_form_for @attack do |f| %>
-  <%= f.collection_select :city_id, City.all, :id, :name %>
-  <%= f.hidden_field :patrol_id, value: @patrol.id %>
-  <%= f.input :man_power %>
-  <%= f.button :submit %>
-<% end %>
-
-<%= simple_form_for @defense do |f| %>
-  <%= f.hidden_field :city_id, value: @patrol.troop.city %>
-  <%= f.hidden_field :patrol_id, value: @patrol.id %>
-  <%= f.input :man_power %>
-  <%= f.button :submit %>
-<% end %>
-
-<%= simple_form_for @mining do |f| %>
-  <%= f.hidden_field :patrol_id, value: @patrol.id %>
-  <%= f.input :man_power %>
-  <%= f.button :submit %>
-<% end %>
-
-<%= simple_form_for @construction do |f| %>
-  <%= f.collection_select :building_id, Building.all, :id, :name %>
-  <%= f.hidden_field :patrol_id, value: @patrol.id %>
-  <%= f.button :submit %>
-<% end %>
+<% if @patrol.constructions.any?  %>
+  <% @patrol.constructions.each do |c|  %>
+    <li>
+      <h4> <%= c.building.name %> </h4>
+      <p> usage: <%= c.building.usage %> </p>
+      <p> Multiplicateur: <%= c.building.multiplicator %> </p>
+      <p> Durée: <%= c.building.durability %> </p>
+    </li>
+  <% end %>
+<%end%>

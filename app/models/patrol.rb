@@ -4,4 +4,27 @@ class Patrol < ApplicationRecord
   has_one :attack
   has_one :defense
   has_one :mining
+
+  def attack_multiplicator
+    return 1 unless constructions.any?
+
+    attack_construction = constructions.select(&:attack?)
+    attack_construction.sum { |construction| construction.building.multiplicator }
+  end
+
+  def city
+    troop.city
+  end
+
+  def attack?
+    attack.present?
+  end
+
+  def defense?
+    defense.present?
+  end
+
+  def mining?
+    mining.present?
+  end
 end

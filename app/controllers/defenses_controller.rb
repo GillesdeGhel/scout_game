@@ -1,19 +1,22 @@
 class DefensesController < ApplicationController
   def create
     defense = Defense.new(defense_params)
-    if defense.save
-      patrol = defense.patrol
+    if defense.man_power < patrol.money && defense.save
       patrol.money -= defense.man_power
       patrol.save
       flash[:success] = 'La défense a été créée.'
-      redirect_to patrol_path(patrol.id)
     else
-      render 'show'
+      flash[:alert] = 'Pas assez de thune'
     end
+    redirect_to patrol_path(patrol.id)
   end
 
   def index
     @defenses = Defense.all
+  end
+
+  def patrol
+    @patrol ||= Patrol.find(defense_params[:patrol_id])
   end
 
   def defense_params

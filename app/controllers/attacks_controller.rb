@@ -1,19 +1,22 @@
 class AttacksController < ApplicationController
   def create
     attack = Attack.new(attack_params)
-    if attack.save
-      patrol = attack.patrol
+    if attack.man_power < patrol.money && attack.save
       patrol.money -= attack.man_power
       patrol.save
       flash[:success] = "L'attaque a été créée."
-      redirect_to patrol_path(patrol.id)
     else
-      render 'show'
+      flash[:alert] = 'Pas assez de thune'
     end
+    redirect_to patrol_path(patrol.id)
   end
 
   def index
     @attacks = Attack.all
+  end
+
+  def patrol
+    @patrol ||= Patrol.find(attack_params[:patrol_id])
   end
 
   def attack_params

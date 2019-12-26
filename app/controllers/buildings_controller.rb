@@ -2,8 +2,6 @@ class BuildingsController < ApplicationController
   def create
     building = Building.new(building_params)
     if building.save
-      patrol = building.patrol
-      patrol.money -= building.cost
       patrol.save
       flash[:success] = 'Le batiment a été créée.'
       redirect_to patrol_path(patrol.id)

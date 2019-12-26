@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <ul>
   <% City.all.each do |c|%>
-  <li>
-    <%= c.name %>
-    <%= c.troop.name %>
-  </li>
+    <li>
+      <%= c.name %>
+      <%= c.troop.name %>
+    </li>
+    <p> Attaques sur la ville: </p>
+    <% c.attacks.each do |a| %>
+      Patrouille: <%= a.patrol.name %>
+      Puissance de l'attaque: <%= a.total_attack_power %>
+    <% end %>
+    puissance totale d'attaque:
+    <%= c.total_attack %>
   <% end %>
 </ul>

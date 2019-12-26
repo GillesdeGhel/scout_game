@@ -3,6 +3,7 @@ class TurnsController < ApplicationController
     pay_patrols
     resolve_minings
     resolve_conflicts
+    change_construction_durability
     destroy_all_actions
 
     redirect_to root_path
@@ -26,7 +27,7 @@ class TurnsController < ApplicationController
 
   def resolve_conflicts
     City.all.each do |c|
-      if total_attack(c) > total_defense(c)
+      if c.total_attack > c.total_defense
         if c.name.eql?('Paris')
           capture_of_paris
         else
@@ -45,54 +46,44 @@ class TurnsController < ApplicationController
     Defense.destroy_all
   end
 
-  def total_attack(city)
-    attacks_on_the_city(city).sum do |a|
-      attack_power(a)
+  def change_construction_durability
+    Construction.all.select(&:attack?).each do |c|
+      if c.durability.eql?(1)
+        c.destroy
+        next
+      else
+        c.durability -= 1
+        c.save
+      end
     end
-  end
-
-  def attacks_on_the_city(city)
-    Attack.select { |a| a.city.eql?(city) }
-  end
-
-  def attack_power(attack)
-    constructions = attack.patrol.constructions.select { |construction| construction.building.usage.eql?('attack') }
-    construction_multiplicator = constructions.sum { |construction| construction.building.multiplicator }
-    attack.man_power * (construction_multiplicator.positive? ? construction_multiplicator : 1)
-  end
-
-  def defense_manpower(city)
-    defenses_on_the_city = Defense.select { |d| d.city.eql?(city) }
-    defenses_on_the_city.sum(&:man_power)
-  end
-
-  def total_defense(city)
-    defense_manpower(city) * (city.defense_building_multiplicator.positive? ? city.defense_building_multiplicator : 1)
   end
 
   def pillage(city)
     city.troop.patrols.each do |patrol|
-      if defense_manpower(city).zero?
-        patrol.money -= (power_difference(city) / 6)
+      if city.defense_manpower.zero?
+        patrol.money -= (city.power_difference / 6)
         patrol.save!
         next
       else
-        patrol_man_power = p.defense&.man_power || 0
-        patrol_percentage = 1 - (patrol_man_power / defense_manpower(city))
-        patrol.money -= power_difference(city) * patrol_percentage
+        patrol_man_power = patrol.defense&.man_power || 0
+        patrol_percentage = 1 - (patrol_man_power / city.defense_manpower)
+        patrol.money -= city.power_difference * patrol_percentage * 2
         patrol.save!
       end
     end
-    attacks_on_the_city(city).each do |a|
-      percentage = attack_power(a) / total_attack(city)
-      a.patrol.money += power_difference(city) * percentage
+    city.attacks.each do |a|
+      percentage = a.total_attack_power / city.total_attack
+      a.patrol.money += city.power_difference * percentage * 2
       a.patrol.save!
     end
+    city.defense_building_multiplicator = 0
+    city.save
   end
 
-  def power_difference(city)
-    (total_attack(city) - total_defense(city)) * 2
+  def capture_of_paris
+
   end
+
 
   # def capture_of_paris
   #   attacks_on_the_city('Paris').

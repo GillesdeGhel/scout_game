@@ -1,20 +1,28 @@
 class ConstructionsController < ApplicationController
   def create
     construction = Construction.new(construction_params)
-    if construction.save
-      patrol = construction.patrol
-      patrol.money -= construction.building.cost
-      patrol.city.defense_building_multiplicator += construction.building.multiplicator if contruction.usage.eql?('defense')
+    if building.cost < patrol.money && construction.save
+      construction.update!(durability: building.durability)
+      patrol.money -= building.cost
+      patrol.city.defense_building_multiplicator += building.multiplicator if building.usage.eql?('defense')
       patrol.save!
-      flash[:success] = "Les hommes ont construit #{construction.building.name} "
-      redirect_to patrol_path(patrol.id)
+      flash[:success] = "Les hommes ont construit #{building.name} "
     else
-      render 'show'
+      flash[:alert] = 'Pas assez de thune'
     end
+    redirect_to patrol_path(patrol.id)
   end
 
   def index
     @constructions = Construction.all
+  end
+
+  def patrol
+    @patrol ||= Patrol.find(construction_params[:patrol_id])
+  end
+
+  def building
+    @building ||= Building.find(construction_params[:building_id])
   end
 
   def construction_params
