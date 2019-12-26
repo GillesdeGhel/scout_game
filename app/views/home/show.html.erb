@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<ul>
+<div class="row" style="text-align:center;">
+  <h1> Toutes les patrouilles </h1>
+</div>
+<div class="row">
   <% Troop.all.each do |t| %>
-  <li>
-    <%= t.name %>
-    <ul>
-    <% t.patrols.each do |p|%>
-      <li>
-        <%= link_to p.name, patrol_path(p.id) %>
-        <%= p.money %>
-      </li>
-    <% end %>
-    </ul>
+    <div class="col-sm-4">
+      <ul>
+        <li>
+          <%= t.name %>
+          <ul>
+            <% t.patrols.each do |p|%>
+            <li>
+              <%= link_to p.name, patrol_path(p.id) %>
+              <%= p.money %>
+            </li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
   <% end %>
-  </li>
-</ul>
+</div>
 
 
 <button type="primary" name="button">
