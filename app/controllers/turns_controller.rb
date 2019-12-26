@@ -1,8 +1,8 @@
 class TurnsController < ApplicationController
   def end_turn
-    pay_patrols
     resolve_minings
     resolve_conflicts
+    pay_patrols
     change_construction_durability
     destroy_all_actions
 
@@ -14,6 +14,7 @@ class TurnsController < ApplicationController
   def pay_patrols
     Patrol.all.each do |p|
       p.money += 100
+      p.money = 0 if p.money.negative?
       p.save!
     end
   end

@@ -9,7 +9,7 @@
         <li>
           <%= t.name %>
           <ul>
-            <% t.patrols.each do |p|%>
+            <% t.patrols.sort_by(&:money).reverse.each do |p|%>
             <li>
               <%= link_to p.name, patrol_path(p.id) %>
               <%= p.money %>
@@ -23,4 +23,4 @@
 </div>
 
 
-<%= link_to 'finir le tour', end_turn_path, class:'btn btn-primary' %>
+<%= link_to 'finir le tour', end_turn_path, class: 'btn btn-primary' %>
