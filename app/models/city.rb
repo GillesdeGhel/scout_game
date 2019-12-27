@@ -18,4 +18,12 @@ class City < ApplicationRecord
   def power_difference
     total_attack - total_defense
   end
+
+  def paris?
+    name.eql?('Paris')
+  end
+
+  def self.paris
+    City.find_by(name: 'Paris')
+  end
 end

@@ -8,8 +8,12 @@
       <ul>
         <li>
           <%= t.name %>
+          (<%= t.turns_holding_paris %>)
+          <% if t.hold_paris %>
+            DETIENT PARIS
+          <% end %>
           <ul>
-            <% t.patrols.sort_by(&:money).reverse.each do |p|%>
+            <% t.patrols.sort_by(&:total_gains).reverse.each do |p|%>
             <li>
               <%= link_to p.name, patrol_path(p.id) %>
               argent: <%= p.money %>

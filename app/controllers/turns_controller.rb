@@ -5,7 +5,7 @@ class TurnsController < ApplicationController
     pay_patrols
     change_construction_durability
     destroy_all_actions
-    compute_total_gains
+    compute_scores
 
     redirect_to root_path
   end
@@ -30,7 +30,7 @@ class TurnsController < ApplicationController
   def resolve_conflicts
     City.all.each do |c|
       if c.total_attack > c.total_defense
-        if c.name.eql?('Paris')
+        if c.paris?
           capture_of_paris
         else
           pillage(c)
@@ -60,12 +60,15 @@ class TurnsController < ApplicationController
     end
   end
 
-  def compute_total_gains
+  def compute_scores
     Patrol.all.each do |p|
       p.total_gains = 0 if p.total_gains.nil?
       p.total_gains += p.money
       p.save
     end
+    troop_with_paris = Troop.hold_paris
+    troop_with_paris.turns_holding_paris += 1
+    troop_with_paris.save
   end
 
   def pillage(city)
@@ -91,11 +94,17 @@ class TurnsController < ApplicationController
   end
 
   def capture_of_paris
-
+    Troop.update_all(hold_paris: false)
+    binding.pry
+    winning_troop = Troop.all.sort_by do |t|
+      t.patrols.sum { |p| p.attack_power_on_paris }
+    end.last
+    winning_troop.hold_paris = true
+    winning_troop.turns_holding_paris = 0 if winning_troop.turns_holding_paris.nil?
+    winning_troop.save
+    winning_troop.patrols.each do |p|
+      p.money += 100
+      p.total_gains += 500
+    end
   end
-
-
-  # def capture_of_paris
-  #   attacks_on_the_city('Paris').
-  # end
 end

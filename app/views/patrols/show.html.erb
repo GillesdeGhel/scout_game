@@ -4,6 +4,8 @@
       <%= @patrol.name %>
       thune :
       <%= @patrol.money %>
+      score total:
+      <%= @patrol.total_gains %>
     </h1>
   </div>
 
@@ -23,7 +25,10 @@
         <%= f.button :submit, class: "btn-primary" %>
       <% end %>
     <% else %>
-      <p> Attaque sur: <%= @patrol.attack.city.name %> des <%= @patrol.attack.city.troop.name %> </p>
+      <p> Attaque sur: <%= @patrol.attack.city.name %>
+        <% if !@patrol.attack.city.paris?%>
+          des <%= @patrol.attack.city.troop.name %> </p>
+        <% end %>
       <p> Puissance des hommes: <%= @patrol.attack.man_power %> </p>
       <p> Multiplicateur des constructions: <%= @patrol.attack_multiplicator %> </p>
       <p> Puissance totale: <%= @patrol.attack.total_attack_power %> </p>
@@ -34,7 +39,11 @@
     <h2> Défense de la patrouille: </h2>
     <% if !@patrol.defense? %>
       <%= simple_form_for @defense do |f| %>
-        <%= f.hidden_field :city_id, value: @patrol.city.id %>
+        <% if @patrol.hold_paris? %>
+          <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
+        <% else  %>
+          <%= f.hidden_field :city_id, value: @patrol.city.id %>
+        <% end  %>
         <%= f.hidden_field :patrol_id, value: @patrol.id %>
         <%= f.input :man_power %>
         <%= f.button :submit, class: "btn-primary" %>

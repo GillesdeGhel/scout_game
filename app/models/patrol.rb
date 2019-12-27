@@ -27,4 +27,14 @@ class Patrol < ApplicationRecord
   def mining?
     mining.present?
   end
+
+  def hold_paris?
+    troop.hold_paris
+  end
+
+  def attack_power_on_paris
+    return 0 unless attack&.city&.paris?
+
+    attack.total_attack_power
+  end
 end
