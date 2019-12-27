@@ -11,10 +11,6 @@ class DefensesController < ApplicationController
     redirect_to patrol_path(patrol.id)
   end
 
-  def index
-    @defenses = Defense.all
-  end
-
   def patrol
     @patrol ||= Patrol.find(defense_params[:patrol_id])
   end

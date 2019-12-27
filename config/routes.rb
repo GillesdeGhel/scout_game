@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#show'
   resources :cities, only: [:index]
-  resources :patrols, only: [:show]
+  resources :patrols, only: %i[show update]
   resources :attacks, only: %i[create index]
   resources :minings, only: %i[create index]
   resources :defenses, only: %i[create index]

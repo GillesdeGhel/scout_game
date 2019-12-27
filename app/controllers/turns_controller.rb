@@ -6,6 +6,8 @@ class TurnsController < ApplicationController
     change_construction_durability
     destroy_all_actions
     compute_scores
+    assign_guild
+    assign_regional_capital
 
     redirect_to root_path
   end
@@ -14,7 +16,8 @@ class TurnsController < ApplicationController
 
   def pay_patrols
     Patrol.all.each do |p|
-      p.money += 100
+      p.money += 100 * p.revenues_multiplicator
+      p.money += 50 if p.hold_paris?
       p.money = 0 if p.money.negative?
       p.save!
     end
@@ -22,8 +25,9 @@ class TurnsController < ApplicationController
 
   def resolve_minings
     Mining.all.each do |m|
-      m.patrol.money += m.man_power * 1.5
-      m.patrol.save!
+      patrol = m.patrol
+      patrol.money += m.man_power * 1.5 * patrol.mining_multiplicator
+      patrol.save!
     end
   end
 
@@ -35,8 +39,10 @@ class TurnsController < ApplicationController
         else
           pillage(c)
         end
+        flash[:alert] = "#{c.name} a été pillée"
         puts "#{c.name} a été pillée"
       else
+        flash[:success] = "#{c.name} a été défendue"
         puts "#{c.name} a été défendue"
       end
     end
@@ -62,13 +68,29 @@ class TurnsController < ApplicationController
 
   def compute_scores
     Patrol.all.each do |p|
-      p.total_gains = 0 if p.total_gains.nil?
       p.total_gains += p.money
       p.save
     end
-    troop_with_paris = Troop.hold_paris
-    troop_with_paris.turns_holding_paris += 1
-    troop_with_paris.save
+    if Troop.hold_paris.present?
+      troop_with_paris = Troop.hold_paris
+      troop_with_paris.turns_holding_paris += 1
+      troop_with_paris.save
+    end
+  end
+
+  def assign_guild
+    Patrol.all.each do |p|
+      p.guild = Guild.all.sample
+      p.save
+    end
+  end
+
+  def assign_regional_capital
+    Patrol.update_all(hold_regional_capital: false)
+    Troop.all.each do |t|
+      best_patrol = t.patrols.sort_by(&:money).last
+      best_patrol.update(hold_regional_capital: true)
+    end
   end
 
   def pillage(city)
@@ -89,13 +111,13 @@ class TurnsController < ApplicationController
       a.patrol.money += city.power_difference * percentage * 2
       a.patrol.save!
     end
-    city.defense_building_multiplicator = 0
+    city.pillaged = true
+    city.defense_building_multiplicator = city.defense_building_multiplicator / 2
     city.save
   end
 
   def capture_of_paris
     Troop.update_all(hold_paris: false)
-    binding.pry
     winning_troop = Troop.all.sort_by do |t|
       t.patrols.sum { |p| p.attack_power_on_paris }
     end.last

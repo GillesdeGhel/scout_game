@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<ul>
-  <% City.all.each do |c|%>
-    <li>
-      <%= c.name %>
-      <%= c.troop.name %>
-    </li>
-    <p> Attaques sur la ville: </p>
-    <% c.attacks.each do |a| %>
-      Patrouille: <%= a.patrol.name %>
-      Puissance de l'attaque: <%= a.total_attack_power %>
-    <% end %>
-    puissance totale d'attaque:
-    <%= c.total_attack %>
+
+<% City.all.each do |c|%>
+  <h4>
+    <%= c.name %>
+    <%= c.troop&.name %>
+  </h4>
+  <% if c.pillaged %>
+    <p style="background-color:red;">
+      La ville est tombée au tour passée
+    </p>
+  <% else %>
+    <p style="background-color:green;">
+      La ville s'est défendue au tour passée
+    </p>
   <% end %>
-</ul>
+  puissance des fortifications:
+  <%= c.defense_building_multiplicator %>
+  <hr>
+<% end %>

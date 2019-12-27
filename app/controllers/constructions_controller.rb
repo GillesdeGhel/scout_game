@@ -3,7 +3,8 @@ class ConstructionsController < ApplicationController
     construction = Construction.new(construction_params)
     if building.cost < patrol.money && construction.save
       construction.update!(durability: building.durability)
-      patrol.money -= building.cost
+      cost_multiplicator = building.usage.eql?('defense') ? patrol.defense_construction_cost_multiplicator : patrol.attack_construction_cost_multiplicator
+      patrol.money -= building.cost * cost_multiplicator
       patrol.city.defense_building_multiplicator += building.multiplicator if building.usage.eql?('defense')
       patrol.save!
       flash[:success] = "Les hommes ont construit #{building.name} "

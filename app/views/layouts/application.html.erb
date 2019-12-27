@@ -7,10 +7,26 @@
   </head>
 
   <body>
-    <div class="container">
+    <nav class="navbar navbar-light bg-light">
+      <%= link_to 'Dashboard', root_path, class:"nav-link" %>
+      <%= link_to 'Villes', cities_path, class:"nav-link" %>
+    </nav>
+    <div class="container" style="margin-top:20px; margin-bottom:20px;">
       <div><%= flash[:success] %></div>
       <div><%= flash[:alert] %></div>
       <%= yield %>
     </div>
+    <!-- Footer -->
+    <footer class="page-footer font-small blue">
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3" style="background-color:darkgrey;">© 2020 Copyright:
+        <a href="https://www.lonescouts.be/"> Lonescouts</a>
+        <p>Done by Gilles de Ghellinck</p>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
   </body>
 </html>

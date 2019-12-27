@@ -12,7 +12,7 @@ class City < ApplicationRecord
   end
 
   def total_defense
-    defense_manpower * (defense_building_multiplicator.positive? ? defense_building_multiplicator : 1)
+    defense_manpower * (defense_building_multiplicator > 1 ? defense_building_multiplicator : 1)
   end
 
   def power_difference

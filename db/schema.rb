@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_26_184022) do
+ActiveRecord::Schema.define(version: 2019_12_27_143941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2019_12_26_184022) do
     t.integer "troop_id"
     t.integer "defense_men_power"
     t.integer "defense_building_multiplicator"
+    t.boolean "pillaged", default: false
   end
 
   create_table "constructions", force: :cascade do |t|
@@ -56,6 +57,18 @@ ActiveRecord::Schema.define(version: 2019_12_26_184022) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "guilds", force: :cascade do |t|
+    t.string "name"
+    t.float "attack_power_multiplicator", default: 1.0
+    t.float "defense_power_multiplicator", default: 1.0
+    t.float "attack_construction_cost_multiplicator", default: 1.0
+    t.float "defense_construction_cost_multiplicator", default: 1.0
+    t.float "mining_multiplicator", default: 1.0
+    t.float "revenues_multiplicator", default: 1.0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "minings", force: :cascade do |t|
     t.integer "patrol_id"
     t.integer "man_power"
@@ -68,7 +81,8 @@ ActiveRecord::Schema.define(version: 2019_12_26_184022) do
     t.integer "troop_id"
     t.integer "money"
     t.boolean "hold_regional_capital"
-    t.integer "total_gains"
+    t.integer "total_gains", default: 0
+    t.integer "guild_id"
   end
 
   create_table "troops", id: :serial, force: :cascade do |t|
