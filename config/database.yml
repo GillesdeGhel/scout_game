@@ -10,14 +10,6 @@ development:
   password: <%= ENV['DB_PASSWORD'] %>
   host: localhost
 
-test:
-  <<: *default
-  database: rails_boilerplate_test
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: localhost
-
 production:
   <<: *default
   database: db/production.sqlite3
-
