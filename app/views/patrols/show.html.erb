@@ -165,6 +165,15 @@
       <% end %>
     </ul>
     <%= simple_form_for @construction do |f| %>
+    <% if @patrol.hold_paris? %>
+      <p>
+        Sélectionner Paris pour les batiments de défense pour construire sur Paname.
+        Pour les bâtiments d'attaque ça n'a pas d'importance.
+       </p>
+      <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
+    <% else  %>
+      <%= f.hidden_field :city_id, value: @patrol.city.id %>
+    <% end  %>
     <%= f.collection_select :building_id, Building.all, :id, :name %>
     <%= f.hidden_field :patrol_id, value: @patrol.id %>
     <%= f.button :submit, class: "btn-primary" %>

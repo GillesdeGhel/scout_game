@@ -5,7 +5,7 @@ class ConstructionsController < ApplicationController
       construction.update!(durability: building.durability)
       cost_multiplicator = building.usage.eql?('defense') ? patrol.defense_construction_cost_multiplicator : patrol.attack_construction_cost_multiplicator
       patrol.money -= building.cost * cost_multiplicator
-      patrol.city.defense_building_multiplicator += building.multiplicator if building.usage.eql?('defense')
+      city.defense_building_multiplicator += building.multiplicator if building.usage.eql?('defense')
       patrol.save!
       flash[:success] = "Les hommes ont construit #{building.name} "
     else
@@ -26,7 +26,11 @@ class ConstructionsController < ApplicationController
     @building ||= Building.find(construction_params[:building_id])
   end
 
+  def city
+    @city ||= City.find(construction_params[:city_id])
+  end
+
   def construction_params
-    params.require(:construction).permit(:building_id, :patrol_id)
+    params.require(:construction).permit(:building_id, :patrol_id, :city_id)
   end
 end

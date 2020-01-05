@@ -39,14 +39,12 @@ class TurnsController < ApplicationController
       if c.total_attack > c.total_defense
         if c.paris?
           capture_of_paris
-          flash[:alert] = "Paris a été prise"
         else
           pillage(c)
         end
         puts "#{c.name} a été pillée"
       else
         flash[:success] = "Paris a été défendue"
-        puts "#{c.name} a été défendue"
       end
     end
   end
@@ -131,5 +129,6 @@ class TurnsController < ApplicationController
       p.money += 100
       p.total_gains += 500
     end
+    flash[:alert] = "Paris a été prise par #{winning_troop.name}"
   end
 end
