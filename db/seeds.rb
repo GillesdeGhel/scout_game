@@ -94,3 +94,16 @@ Building.create(name: 'Tour de siège', usage: 'attack', durability: 1, multipli
 Building.create(name: 'Mur de bois', usage: 'defense', multiplicator: 1.5, cost: 400)
 Building.create(name: 'Mur de pierre', usage: 'defense', multiplicator: 2, cost: 600)
 Building.create(name: 'Muraille', usage: 'defense', multiplicator: 2.5, cost: 800)
+
+User.create!([
+               { email: 'archers.lonescouts@gmail.com', password: 'archerslonescouts', password_confirmation: 'archerslonescouts' },
+               { email: 'chevaliers.lonescouts@gmail.com', password: 'chevalierslonescouts', password_confirmation: 'chevalierslonescouts' },
+               { email: 'gueux.lonescouts@gmail.com', password: 'gueuxlonescouts', password_confirmation: 'gueuxlonescouts' },
+               { email: 'paladins.lonescouts@gmail.com', password: 'paladinslonescouts', password_confirmation: 'paladinslonescouts' },
+               { email: 'preux.lonescouts@gmail.com', password: 'preuxlonescouts', password_confirmation: 'preuxlonescouts' },
+               { email: 'hardis.lonescouts@gmail.com', password: 'hardislonescouts', password_confirmation: 'hardislonescouts' },
+               { email: 'servants.lonescouts@gmail.com', password: 'servantslonescouts', password_confirmation: 'servantslonescouts' },
+               { email: 'templiers.lonescouts@gmail.com', password: 'templierslonescouts', password_confirmation: 'templierslonescouts' },
+               { email: 'vaillants.lonescouts@gmail.com', password: 'vaillantslonescouts', password_confirmation: 'vaillantslonescouts' },
+               { email: 'admin@gmail.com', password: 'gillesdg95', password_confirmation: 'gillesdg95' }
+             ])

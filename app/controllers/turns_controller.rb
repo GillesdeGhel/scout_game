@@ -1,14 +1,17 @@
 class TurnsController < ApplicationController
   def end_turn
-    resolve_minings
-    resolve_conflicts
-    pay_patrols
-    change_construction_durability
-    destroy_all_actions
-    compute_scores
-    assign_guild
-    assign_regional_capital
-
+    if current_user.admin?
+      resolve_minings
+      resolve_conflicts
+      pay_patrols
+      change_construction_durability
+      destroy_all_actions
+      compute_scores
+      assign_guild
+      assign_regional_capital
+    else
+      flash[:alert] = "T'es pas admin qu'est ce que tu fous"
+    end
     redirect_to root_path
   end
 
@@ -36,13 +39,13 @@ class TurnsController < ApplicationController
       if c.total_attack > c.total_defense
         if c.paris?
           capture_of_paris
+          flash[:alert] = "Paris a été prise"
         else
           pillage(c)
         end
-        flash[:alert] = "#{c.name} a été pillée"
         puts "#{c.name} a été pillée"
       else
-        flash[:success] = "#{c.name} a été défendue"
+        flash[:success] = "Paris a été défendue"
         puts "#{c.name} a été défendue"
       end
     end

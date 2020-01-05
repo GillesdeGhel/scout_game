@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bootstrap', '~> 4.4.1'
 gem 'bundler'
+gem 'devise'
 gem 'pg'
 gem 'pry', '~> 0.12.2'
 gem 'puma', '~> 3.0'

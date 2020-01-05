@@ -1,10 +1,15 @@
 class PatrolsController < ApplicationController
   def show
-    @patrol = patrol
-    @attack = Attack.new
-    @defense = Defense.new
-    @mining = Mining.new
-    @construction = Construction.new
+    if current_user.send("#{patrol.troop.name.downcase}?") || current_user.admin?
+      @patrol = patrol
+      @attack = Attack.new
+      @defense = Defense.new
+      @mining = Mining.new
+      @construction = Construction.new
+    else
+      flash[:alert] = 'Pas votre patrouille'
+      redirect_to root_path
+    end
   end
 
   def update

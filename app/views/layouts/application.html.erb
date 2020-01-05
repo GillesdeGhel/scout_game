@@ -10,10 +10,12 @@
     <nav class="navbar navbar-light bg-light">
       <%= link_to 'Dashboard', root_path, class:"nav-link" %>
       <%= link_to 'Villes', cities_path, class:"nav-link" %>
+      <%= link_to 'Changer le mot de passe', edit_user_registration_path, class:"nav-link" %>
     </nav>
     <div class="container" style="margin-top:20px; margin-bottom:20px;">
-      <div><%= flash[:success] %></div>
-      <div><%= flash[:alert] %></div>
+      <div style="background-color: green; color: white"><%= flash[:success] %></div>
+      <div style="background-color: red; color: white"><%= flash[:alert] %></div>
+      <p class="notice"><%= notice %></p>
       <%= yield %>
     </div>
     <!-- Footer -->
