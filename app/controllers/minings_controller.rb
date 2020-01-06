@@ -1,7 +1,7 @@
 class MiningsController < ApplicationController
   def create
     mining = Mining.new(mining_params)
-    if mining.man_power < patrol.money && mining.save
+    if mining.man_power <= patrol.money && mining.save
       patrol.money -= mining.man_power
       patrol.save
       flash[:success] = 'Les hommes sont partis à la mine.'

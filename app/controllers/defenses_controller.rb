@@ -1,7 +1,7 @@
 class DefensesController < ApplicationController
   def create
     defense = Defense.new(defense_params)
-    if defense.man_power < patrol.money && defense.save
+    if defense.man_power <= patrol.money && defense.save
       patrol.money -= defense.man_power
       patrol.save
       flash[:success] = 'La défense a été créée.'

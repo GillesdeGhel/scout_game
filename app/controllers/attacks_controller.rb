@@ -1,7 +1,7 @@
 class AttacksController < ApplicationController
   def create
     attack = Attack.new(attack_params)
-    if attack.man_power < patrol.money && attack.save
+    if attack.man_power <= patrol.money && attack.save
       patrol.money -= attack.man_power
       patrol.save
       flash[:success] = "L'attaque a été créée."
