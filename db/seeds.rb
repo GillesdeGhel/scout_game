@@ -107,3 +107,5 @@ User.create!([
                { email: 'vaillants.lonescouts@gmail.com', password: 'vaillantslonescouts', password_confirmation: 'vaillantslonescouts' },
                { email: 'admin@gmail.com', password: 'gillesdg95', password_confirmation: 'gillesdg95' }
              ])
+
+Patrol.all.each { |p| Receipt.create(patrol_id: p.id) }
