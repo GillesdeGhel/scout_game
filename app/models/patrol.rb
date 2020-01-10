@@ -5,6 +5,7 @@ class Patrol < ApplicationRecord
   has_one :attack
   has_one :defense
   has_one :mining
+  has_one :receipt
 
   delegate :attack_power_multiplicator, :defense_power_multiplicator,
   :attack_construction_cost_multiplicator, :defense_construction_cost_multiplicator,

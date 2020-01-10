@@ -2,7 +2,7 @@
   <p style="background-color:red; color:white;">Votre ville, <%= @patrol.city.name %>, a été pillée et les fortifications réduites de moitié</p>
 <% end %>
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <h1>
       <%= @patrol.name %>
     </h1>
@@ -19,7 +19,7 @@
     </h6>
   </div>
   <br>
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <h3>
       Guilde :
       <%= @patrol.guild.name %>
@@ -33,7 +33,7 @@
           Coûts engins de siège: x <%= @patrol.attack_construction_cost_multiplicator %>
         </li>
         <li>
-          Puissance d'attaque: x <%= @patrol.attack_power_multiplicator %>
+          Puissance d'attaques: x <%= @patrol.attack_power_multiplicator %>
         </li>
         <li>
           Puissance défensive: x <%= @patrol.defense_power_multiplicator %>
@@ -53,6 +53,44 @@
           <%= f.button :submit, class: "btn-primary" %>
         <% end %>
       <%end%>
+  </div>
+  <div class="col-sm-4">
+    <h3>Résumé du tour passé</h3>
+    <ul>
+      <li>
+        Revenus de base:
+        <span style="color:green;">
+          <%= @patrol.receipt.base_revenues %>
+        </span>
+      </li>
+      <li>
+        Revenus miniers:
+        <span style="color:green;">
+          <%= @patrol.receipt.minings_winnings %>
+        </span>
+      </li>
+      <li>
+        Revenus de l'attaque:
+        <span style="color:green;">
+          <%= @patrol.receipt.attack_winnings %>
+        </span>
+      </li>
+      <li>
+        Perte de défense:
+        <span style="color:red;">
+          <%= @patrol.receipt.defense_losses %>
+        </span>
+      </li>
+      <% if @patrol.hold_paris? %>
+        <li>
+          Revenus grâce à Paris:
+          <span style="color:red;">
+            <%= @patrol.receipt.paris_winning %>
+          </span>
+        </li>
+      <% end  %>
+    </ul>
+
   </div>
 </div>
 <hr>

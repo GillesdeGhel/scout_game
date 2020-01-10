@@ -1,6 +1,7 @@
 class TurnsController < ApplicationController
   def end_turn
     if current_user.admin?
+      reset_all_receipts
       resolve_minings
       resolve_conflicts
       pay_patrols
@@ -17,19 +18,18 @@ class TurnsController < ApplicationController
 
   private
 
-  def pay_patrols
-    Patrol.all.each do |p|
-      p.money += 100 * p.revenues_multiplicator
-      p.money += 50 if p.hold_paris?
-      p.money = 0 if p.money.negative?
-      p.save!
-    end
+  def reset_all_receipts
+    Receipt.destroy_all
+    Patrol.all.each { |p| Receipt.create(patrol_id: p.id) }
   end
 
   def resolve_minings
     Mining.all.each do |m|
       patrol = m.patrol
-      patrol.money += m.man_power * 1.5 * patrol.mining_multiplicator
+      revenues = m.man_power * 1.5 * patrol.mining_multiplicator
+      patrol.money += revenues
+      patrol.receipt.minings_winnings += revenues
+      patrol.receipt.save!
       patrol.save!
     end
   end
@@ -46,6 +46,21 @@ class TurnsController < ApplicationController
       else
         flash[:success] = "Paris a été défendue"
       end
+    end
+  end
+
+  def pay_patrols
+    Patrol.all.each do |p|
+      revenues = 100 * p.revenues_multiplicator
+      p.money += revenues
+      if p.hold_paris?
+        p.money += 50
+        p.receipt.paris_winning += 50
+      end
+      p.money = 0 if p.money.negative?
+      p.receipt.base_revenues += revenues
+      p.receipt.save!
+      p.save!
     end
   end
 
@@ -103,13 +118,19 @@ class TurnsController < ApplicationController
       else
         patrol_man_power = patrol.defense&.man_power || 0
         patrol_percentage = 1 - (patrol_man_power / city.defense_manpower)
-        patrol.money -= city.power_difference * patrol_percentage * 2
+        revenues = city.power_difference * patrol_percentage * 2
+        patrol.money -= revenues
+        patrol.receipt.defense_losses -= revenues
+        patrol.receipt.save!
         patrol.save!
       end
     end
     city.attacks.each do |a|
       percentage = a.total_attack_power / city.total_attack
-      a.patrol.money += city.power_difference * percentage * 2
+      revenues = city.power_difference * percentage * 2
+      a.patrol.money += revenues
+      a.patrol.receipt.attack_winnings += revenues
+      a.patrol.receipt.save!
       a.patrol.save!
     end
     city.pillaged = true
@@ -124,10 +145,14 @@ class TurnsController < ApplicationController
     end.last
     winning_troop.hold_paris = true
     winning_troop.turns_holding_paris = 0 if winning_troop.turns_holding_paris.nil?
-    winning_troop.save
+    winning_troop.save!
     winning_troop.patrols.each do |p|
-      p.money += 100
+      revenues = 100
+      p.money += revenues
       p.total_gains += 500
+      p.receipt.paris_winning += revenues
+      p.receipt.save!
+      p.save!
     end
     flash[:alert] = "Paris a été prise par #{winning_troop.name}"
   end
