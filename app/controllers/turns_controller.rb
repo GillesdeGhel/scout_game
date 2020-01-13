@@ -20,7 +20,7 @@ class TurnsController < ApplicationController
 
   def reset_all_receipts
     Receipt.destroy_all
-    Patrol.all.each { |p| Receipt.create(patrol_id: p.id) }
+    patrols.each { |p| Receipt.create(patrol_id: p.id) }
   end
 
   def resolve_minings
@@ -50,7 +50,7 @@ class TurnsController < ApplicationController
   end
 
   def pay_patrols
-    Patrol.all.each do |p|
+    patrols.each do |p|
       revenues = 100 * p.revenues_multiplicator
       p.money += revenues
       if p.hold_paris?
@@ -83,7 +83,7 @@ class TurnsController < ApplicationController
   end
 
   def compute_scores
-    Patrol.all.each do |p|
+    patrols.each do |p|
       p.total_gains += p.money
       p.save
     end
@@ -95,7 +95,7 @@ class TurnsController < ApplicationController
   end
 
   def assign_guild
-    Patrol.all.each do |p|
+    patrols.each do |p|
       p.guild = Guild.all.sample
       p.save
     end
@@ -155,5 +155,9 @@ class TurnsController < ApplicationController
       p.save!
     end
     flash[:alert] = "Paris a été prise par #{winning_troop.name}"
+  end
+
+  def patrols
+    @patrols ||= Patrol.all
   end
 end
