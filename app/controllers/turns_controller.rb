@@ -36,6 +36,7 @@ class TurnsController < ApplicationController
 
   def resolve_conflicts
     City.all.each do |c|
+      c.pillaged = false
       if c.total_attack > c.total_defense
         if c.paris?
           capture_of_paris
@@ -43,9 +44,8 @@ class TurnsController < ApplicationController
           pillage(c)
         end
         puts "#{c.name} a été pillée"
-      else
-        flash[:success] = "Paris a été défendue"
       end
+      c.save!
     end
   end
 
@@ -135,7 +135,6 @@ class TurnsController < ApplicationController
     end
     city.pillaged = true
     city.defense_building_multiplicator = city.defense_building_multiplicator / 2
-    city.save
   end
 
   def capture_of_paris
@@ -154,6 +153,10 @@ class TurnsController < ApplicationController
       p.receipt.save!
       p.save!
     end
+    paris = City.paris
+    paris.pillaged = true
+    paris.defense_building_multiplicator = paris.defense_building_multiplicator / 2
+    paris.save
     flash[:alert] = "Paris a été prise par #{winning_troop.name}"
   end
 

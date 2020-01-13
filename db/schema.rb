@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_10_091804) do
+ActiveRecord::Schema.define(version: 2020_01_13_094246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_01_10_091804) do
     t.string "name"
     t.integer "troop_id"
     t.integer "defense_men_power"
-    t.integer "defense_building_multiplicator"
+    t.float "defense_building_multiplicator"
     t.boolean "pillaged", default: false
   end
 

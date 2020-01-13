@@ -6,6 +6,7 @@ class ConstructionsController < ApplicationController
       cost_multiplicator = building.usage.eql?('defense') ? patrol.defense_construction_cost_multiplicator : patrol.attack_construction_cost_multiplicator
       patrol.money -= building.cost * cost_multiplicator
       city.defense_building_multiplicator += building.multiplicator if building.usage.eql?('defense')
+      city.save!
       patrol.save!
       flash[:success] = "Les hommes ont construit #{building.name} "
     else
