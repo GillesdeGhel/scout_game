@@ -88,12 +88,12 @@ City.create(name: 'Veux le vicomte', troop: gueux, defense_building_multiplicato
 
 City.create(name: 'Paris', defense_building_multiplicator: 0)
 
-Building.create(name: 'Trébuchet', usage: 'attack', durability: 2, multiplicator: 2, cost: 400)
-Building.create(name: 'Bélier', usage: 'attack', durability: 1, multiplicator: 1.5, cost: 150)
-Building.create(name: 'Tour de siège', usage: 'attack', durability: 1, multiplicator: 2, cost: 200)
-Building.create(name: 'Mur de bois', usage: 'defense', multiplicator: 1.5, cost: 400)
-Building.create(name: 'Mur de pierre', usage: 'defense', multiplicator: 2, cost: 600)
-Building.create(name: 'Muraille', usage: 'defense', multiplicator: 2.5, cost: 800)
+Building.create(name: 'Trébuchet', usage: 'attack', durability: 2, multiplicator: 2, cost: 200)
+Building.create(name: 'Bélier', usage: 'attack', durability: 1, multiplicator: 1.5, cost: 50)
+Building.create(name: 'Tour de siège', usage: 'attack', durability: 1, multiplicator: 2, cost: 100)
+Building.create(name: 'Mur de bois', usage: 'defense', multiplicator: 1.2, cost: 400)
+Building.create(name: 'Mur de pierre', usage: 'defense', multiplicator: 1.7, cost: 600)
+Building.create(name: 'Muraille', usage: 'defense', multiplicator: 2.6, cost: 800)
 
 User.create!([
                { email: 'archers.lonescouts@gmail.com', password: 'archerslonescouts', password_confirmation: 'archerslonescouts' },

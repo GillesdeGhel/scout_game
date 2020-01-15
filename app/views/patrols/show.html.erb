@@ -7,16 +7,16 @@
       <%= @patrol.name %>
     </h1>
     <br>
-    <h6>
-      thune :
-      <%= @patrol.money %>
+    <h5>
+      Thune :
+      <%= @patrol.money %> Or
       <i class="fas fa-coins"></i>
-    </h6>
+    </h5>
     <br>
-    <h6>
-      score total:
+    <h5>
+      Score total:
       <%= @patrol.total_gains %>
-    </h6>
+    </h5>
   </div>
   <br>
   <div class="col-sm-4">
@@ -56,39 +56,44 @@
   </div>
   <div class="col-sm-4">
     <h3>Résumé du tour passé</h3>
+    EVENEMENT:
+    <span>
+      <%= @patrol.receipt.event %>
+    </span>
+    <hr>
     <ul>
       <li>
-        Revenus de base:
+        Revenus de taxes:
         <span style="color:green;">
-          <%= @patrol.receipt.base_revenues %>
+          + <%= @patrol.receipt.base_revenues %> Or
         </span>
       </li>
       <li>
         Revenus miniers:
         <span style="color:green;">
-          <%= @patrol.receipt.minings_winnings %>
+          + <%= @patrol.receipt.minings_winnings %> Or
         </span>
       </li>
       <li>
         Revenus de l'attaque:
         <span style="color:green;">
-          <%= @patrol.receipt.attack_winnings %>
-        </span>
-      </li>
-      <li>
-        Perte de défense:
-        <span style="color:red;">
-          <%= @patrol.receipt.defense_losses %>
+          + <%= @patrol.receipt.attack_winnings %> Or
         </span>
       </li>
       <% if @patrol.hold_paris? %>
         <li>
           Revenus grâce à Paris:
           <span style="color:green;">
-            <%= @patrol.receipt.paris_winning %>
+            + <%= @patrol.receipt.paris_winning %> Or
           </span>
         </li>
       <% end  %>
+      <li>
+        Perte de défense:
+        <span style="color:red;">
+          <%= @patrol.receipt.defense_losses %> Or
+        </span>
+      </li>
     </ul>
 
   </div>
@@ -172,13 +177,13 @@
         <%= b.name %>:
         <ul>
           <li>
-            coût: <%= b.cost %>
+            coût: <%= b.cost %> Or
           </li>
           <li>
-            durabilité: <%= b.durability %>
+            durabilité: <%= b.durability %> tour
           </li>
           <li>
-            Multiplicateur: <%= b.multiplicator %>
+            Multiplicateur: x <%= b.multiplicator %>
           </li>
         </ul>
       </li>
@@ -193,10 +198,10 @@
         <%= b.name %>:
         <ul>
           <li>
-            coût: <%= b.cost %>
+            coût: <%= b.cost %> Or
           </li>
           <li>
-            Multiplicateur: <%= b.multiplicator %>
+            Multiplicateur: x <%= b.multiplicator %>
           </li>
         </ul>
       </li>
@@ -212,9 +217,9 @@
     <% else  %>
       <%= f.hidden_field :city_id, value: @patrol.city.id %>
     <% end  %>
-    <%= f.collection_select :building_id, Building.all, :id, :name %>
-    <%= f.hidden_field :patrol_id, value: @patrol.id %>
-    <%= f.button :submit, class: "btn-primary" %>
+      <%= f.collection_select :building_id, Building.all, :id, :name %>
+      <%= f.hidden_field :patrol_id, value: @patrol.id %>
+      <%= f.button :submit, class: "btn-primary" %>
     <% end %>
   </div>
 </div>

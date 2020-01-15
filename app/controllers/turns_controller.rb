@@ -1,7 +1,20 @@
 class TurnsController < ApplicationController
+  require 'events'
+
+  EVENTS = %w[
+    city_plague
+    campaign_plague
+    fund_raising
+    earthquake
+    fiscal_fraud
+  ].freeze
+
+  private_constant :EVENTS
+
   def end_turn
     if current_user.admin?
       reset_all_receipts
+      randomize_event
       resolve_minings
       resolve_conflicts
       pay_patrols
@@ -18,9 +31,19 @@ class TurnsController < ApplicationController
 
   private
 
+  attr_reader :event
+
   def reset_all_receipts
     Receipt.destroy_all
     patrols.each { |p| Receipt.create(patrol_id: p.id) }
+  end
+
+  def randomize_event
+    return if rand(2) == 0
+
+    @event = EVENTS.sample
+    Event.send(event)
+    puts 'event'
   end
 
   def resolve_minings
@@ -50,6 +73,8 @@ class TurnsController < ApplicationController
   end
 
   def pay_patrols
+    return if event.eql?('fiscal_fraud')
+
     patrols.each do |p|
       revenues = 100 * p.revenues_multiplicator
       p.money += revenues
@@ -134,7 +159,7 @@ class TurnsController < ApplicationController
       a.patrol.save!
     end
     city.pillaged = true
-    city.defense_building_multiplicator = city.defense_building_multiplicator / 2
+    city.defense_building_multiplicator = (city.defense_building_multiplicator / 2).round(2)
   end
 
   def capture_of_paris
@@ -155,7 +180,7 @@ class TurnsController < ApplicationController
     end
     paris = City.paris
     paris.pillaged = true
-    paris.defense_building_multiplicator = paris.defense_building_multiplicator / 2
+    paris.defense_building_multiplicator = (paris.defense_building_multiplicator / 2).round(2)
     paris.save
     flash[:alert] = "Paris a été prise par #{winning_troop.name}"
   end
