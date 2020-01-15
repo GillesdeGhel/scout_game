@@ -7,6 +7,9 @@ class TurnsController < ApplicationController
     fund_raising
     earthquake
     fiscal_fraud
+    successfull_trade
+    clemency
+    gas_blast
   ].freeze
 
   private_constant :EVENTS
@@ -39,14 +42,16 @@ class TurnsController < ApplicationController
   end
 
   def randomize_event
-    return if rand(2) == 0
+    return if rand(2) == 1
 
     @event = EVENTS.sample
     Event.send(event)
-    puts 'event'
+    flash[:info] = "Attention, il y a eu un événement aléatoire"
   end
 
   def resolve_minings
+    return if event.eql?('gas_blast')
+
     Mining.all.each do |m|
       patrol = m.patrol
       revenues = m.man_power * 1.5 * patrol.mining_multiplicator
@@ -77,6 +82,7 @@ class TurnsController < ApplicationController
 
     patrols.each do |p|
       revenues = 100 * p.revenues_multiplicator
+      revenues = revenues * 1.3 if event.eql?('successfull_trade')
       p.money += revenues
       if p.hold_paris?
         p.money += 50
@@ -144,6 +150,7 @@ class TurnsController < ApplicationController
         patrol_man_power = patrol.defense&.man_power || 0
         patrol_percentage = 1 - (patrol_man_power / city.defense_manpower)
         revenues = city.power_difference * patrol_percentage * 2
+        revenues * 0.6 if event.eql?('clemency')
         patrol.money -= revenues
         patrol.receipt.defense_losses -= revenues
         patrol.receipt.save!

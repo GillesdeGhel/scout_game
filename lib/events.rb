@@ -1,17 +1,23 @@
 module Event
   def self.city_plague
     Defense.all.each do |d|
-      d.manpower -= 10 if d.manpower.positive?
+      d.manpower -= 30 if d.manpower.positive?
       d.save!
-      d.patrol.receipt.update(event: 'Peste dans les villes: -10 hommes en défense')
+      d.patrol.receipt.update(event: 'Peste dans les villes: -30 hommes en défense')
     end
   end
 
   def self.campaign_plague
     Attack.all.each do |a|
-      a.manpower -= 10 if a.manpower.positive?
+      a.manpower -= 30 if a.manpower.positive?
       a.save!
-      a.patrol.receipt.update(event: 'Peste dans les campements: -10 hommes en attaque')
+      a.patrol.receipt.update(event: 'Peste dans les campements: -30 hommes en attaque')
+    end
+  end
+
+  def self.successfull_trade
+    Patrol.all.each do |p|
+      p.receipt.update(event: 'Commerce fructueux, +30% de revenu de base')
     end
   end
 
@@ -38,6 +44,18 @@ module Event
   def self.fiscal_fraud
     Patrol.all.each do |p|
       p.receipt.update(event: 'Fraude fiscale: pas de revenu de taxe (base)')
+    end
+  end
+
+  def self.clemency
+    Patrol.all.each do |p|
+      p.receipt.update(event: 'Clémence et miséricorde: -40% de perte suites aux pillages de villes')
+    end
+  end
+
+  def self.gas_blast
+    Patrol.all.each do |p|
+      p.receipt.update(event: 'Coup de grisou: Aucun revenu miniers')
     end
   end
 end
