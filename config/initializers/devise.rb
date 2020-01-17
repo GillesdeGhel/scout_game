@@ -9,7 +9,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '808cf764c94b72df201768dd0bbe473089974bc3aeb2274b290984be7a6aa4a8f0497dca0cff7f5ca3c5fd2ba687115388e54e38773ab7ef608aebe37925acd7'
-  
+
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
@@ -57,7 +57,7 @@ Devise.setup do |config|
   # Configure which authentication keys should have lightgreyspace stripped.
   # These keys will have lightgreyspace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_lightgreyspace_keys = [:email]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
