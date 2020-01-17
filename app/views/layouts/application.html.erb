@@ -7,19 +7,19 @@
   </head>
 
   <body style= "background-color: #EEEEEE;">
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light" style="background-color:lightgrey;">
       <a href="https://www.lonescouts.be/" target="_blank" class="navbar-brand">
         <%= image_tag("lones.png", alt: "lones.png", style: 'width: 60px;') %>
         Baden Powell Belgian Lonescouts
       </a>
-      <%= link_to 'Dashboard', root_path, class:"nav-link" %>
+      <%= link_to 'Toutes les patrouilles', root_path, class:"nav-link" %>
       <%= link_to 'Villes', cities_path, class:"nav-link" %>
       <%= link_to 'Changer le mot de passe', edit_user_registration_path, class:"nav-link" %>
     </nav>
     <div class="container" style="margin-top:20px; margin-bottom:20px;">
-      <div style="background-color: green; color: lightgrey"><%= flash[:success] %></div>
-      <div style="background-color: red; color: lightgrey"><%= flash[:alert] %></div>
-      <div style="background-color: blue; color: lightgrey"><%= flash[:info] %></div>
+      <div style="background-color: green; color: white"><%= flash[:success] %></div>
+      <div style="background-color: red; color: white"><%= flash[:alert] %></div>
+      <div style="background-color: blue; color: white"><%= flash[:info] %></div>
       <p class="notice"><%= notice %></p>
       <%= yield %>
     </div>

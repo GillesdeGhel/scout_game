@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_133724) do
+ActiveRecord::Schema.define(version: 2020_01_17_164002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_133724) do
 
   create_table "troops", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.integer "turns_holding_paris"
+    t.integer "turns_holding_paris", default: 0
     t.boolean "hold_paris"
   end
 
