@@ -1,156 +1,184 @@
 <% if @patrol.city.pillaged %>
-  <p style="background-color:red; color:white;">Votre ville, <%= @patrol.city.name %>, a été pillée et les fortifications réduites de moitié</p>
+  <p style="background-color:red; color:lightgrey;">Votre ville, <%= @patrol.city.name %>, a été pillée et les fortifications réduites de moitié</p>
 <% end %>
+<h1>
+  <%= @patrol.name %>
+</h1>
 <div class="row">
   <div class="col-sm-4">
-    <h1>
-      <%= @patrol.name %>
-    </h1>
-    <br>
-    <h5>
-      Thune :
-      <%= @patrol.money %> Or
-      <i class="fas fa-coins"></i>
-    </h5>
-    <br>
-    <h5>
-      Score total:
-      <%= @patrol.total_gains %>
-    </h5>
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h3 class="card-title">
+          Score:
+        </h3>
+        <br>
+        <h5>
+          Thune :
+          <%= @patrol.money %> Or
+          <i class="fas fa-coins"></i>
+        </h5>
+        <br>
+        <h5>
+          Score total:
+          <%= @patrol.total_gains %>
+        </h5>
+      </div>
+    </div>
   </div>
+
   <br>
   <div class="col-sm-4">
-    <h3>
-      Guilde :
-      <%= @patrol.guild.name %>
-    </h3>
-      <ul>
-        Multiplicateurs:
-        <li>
-          Coûts bâtiment défensifs: x <%= @patrol.defense_construction_cost_multiplicator %>
-        </li>
-        <li>
-          Coûts engins de siège: x <%= @patrol.attack_construction_cost_multiplicator %>
-        </li>
-        <li>
-          Puissance d'attaques: x <%= @patrol.attack_power_multiplicator %>
-        </li>
-        <li>
-          Puissance défensive: x <%= @patrol.defense_power_multiplicator %>
-        </li>
-        <li>
-          Revenus passif: x <%= @patrol.revenues_multiplicator %>
-        </li>
-        <li>
-          Revenus miniers: x <%= @patrol.mining_multiplicator %>
-        </li>
-      </ul>
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h3 class="card-title">
+          Guilde :
+          <%= @patrol.guild.name %>
+        </h3>
+          <ul>
+            Multiplicateurs:
+            <li>
+              Coûts bâtiment défensifs: x <%= @patrol.defense_construction_cost_multiplicator %>
+            </li>
+            <li>
+              Coûts engins de siège: x <%= @patrol.attack_construction_cost_multiplicator %>
+            </li>
+            <li>
+              Puissance d'attaques: x <%= @patrol.attack_power_multiplicator %>
+            </li>
+            <li>
+              Puissance défensive: x <%= @patrol.defense_power_multiplicator %>
+            </li>
+            <li>
+              Revenus passif: x <%= @patrol.revenues_multiplicator %>
+            </li>
+            <li>
+              Revenus miniers: x <%= @patrol.mining_multiplicator %>
+            </li>
+          </ul>
 
-      <% if @patrol.hold_regional_capital %>
-        <%= simple_form_for @patrol do |f| %>
-          <%= f.hidden_field :patrol_id, value: @patrol.id %>
-          <%= f.collection_select :guild_id, Guild.all, :id, :name%>
-          <%= f.button :submit, class: "btn-primary" %>
-        <% end %>
-      <%end%>
+          <% if @patrol.hold_regional_capital %>
+            <%= simple_form_for @patrol do |f| %>
+              <%= f.hidden_field :patrol_id, value: @patrol.id %>
+              <%= f.collection_select :guild_id, Guild.all, :id, :name%>
+              <%= f.button :submit, class: "btn-primary" %>
+            <% end %>
+          <%end%>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-4">
-    <h3>Résumé du tour passé</h3>
-    EVENEMENT:
-    <span>
-      <%= @patrol.receipt.event %>
-    </span>
-    <hr>
-    <ul>
-      <li>
-        Revenus de taxes:
-        <span style="color:green;">
-          + <%= @patrol.receipt.base_revenues %> Or
-        </span>
-      </li>
-      <li>
-        Revenus miniers:
-        <span style="color:green;">
-          + <%= @patrol.receipt.minings_winnings %> Or
-        </span>
-      </li>
-      <li>
-        Revenus de l'attaque:
-        <span style="color:green;">
-          + <%= @patrol.receipt.attack_winnings %> Or
-        </span>
-      </li>
-      <% if @patrol.hold_paris? %>
-        <li>
-          Revenus grâce à Paris:
-          <span style="color:green;">
-            + <%= @patrol.receipt.paris_winning %> Or
-          </span>
-        </li>
-      <% end  %>
-      <li>
-        Perte de défense:
-        <span style="color:red;">
-          <%= @patrol.receipt.defense_losses %> Or
-        </span>
-      </li>
-    </ul>
 
+  <div class="col-sm-4">
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h3>Résumé du tour passé</h3>
+        EVENEMENT:
+        <span>
+          <%= @patrol.receipt.event %>
+        </span>
+        <hr>
+        <ul>
+          <li>
+            Revenus de taxes:
+            <span style="color:green;">
+              + <%= @patrol.receipt.base_revenues %> Or
+            </span>
+          </li>
+          <li>
+            Revenus miniers:
+            <span style="color:green;">
+              + <%= @patrol.receipt.minings_winnings %> Or
+            </span>
+          </li>
+          <li>
+            Revenus de l'attaque:
+            <span style="color:green;">
+              + <%= @patrol.receipt.attack_winnings %> Or
+            </span>
+          </li>
+          <% if @patrol.hold_paris? %>
+            <li>
+              Revenus grâce à Paris:
+              <span style="color:green;">
+                + <%= @patrol.receipt.paris_winning %> Or
+              </span>
+            </li>
+          <% end  %>
+          <li>
+            Perte de défense:
+            <span style="color:red;">
+              <%= @patrol.receipt.defense_losses %> Or
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="col-md-4 col-sm-6">
-    <h4> Attaque de la patrouille: </h4>
-    <% if !@patrol.attack? %>
-      <%= simple_form_for @attack do |f| %>
-        <%= f.collection_select :city_id, City.all, :id, :name %>
-        <%= f.hidden_field :patrol_id, value: @patrol.id %>
-        <%= f.input :man_power %>
-        <%= f.button :submit, class: "btn-primary" %>
-      <% end %>
-    <% else %>
-      <p> Attaque sur: <%= @patrol.attack.city.name %>
-        <% if !@patrol.attack.city.paris?%>
-          des <%= @patrol.attack.city.troop.name %> </p>
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Attaque de la patrouille: </h4>
+        <% if !@patrol.attack? %>
+          <%= simple_form_for @attack do |f| %>
+            <%= f.collection_select :city_id, City.all, :id, :name %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.input :man_power %>
+            <%= f.button :submit, class: "btn-primary" %>
+          <% end %>
+        <% else %>
+          <p> Attaque sur: <%= @patrol.attack.city.name %>
+            <% if !@patrol.attack.city.paris?%>
+              des <%= @patrol.attack.city.troop.name %> </p>
+            <% end %>
+          <p> Puissance des hommes: <%= @patrol.attack.man_power %> </p>
+          <p> Multiplicateur des constructions: <%= @patrol.attack_multiplicator %> </p>
+          <p> Puissance totale: <%= @patrol.attack.total_attack_power %> </p>
         <% end %>
-      <p> Puissance des hommes: <%= @patrol.attack.man_power %> </p>
-      <p> Multiplicateur des constructions: <%= @patrol.attack_multiplicator %> </p>
-      <p> Puissance totale: <%= @patrol.attack.total_attack_power %> </p>
-    <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="col-md-4 col-sm-6">
-    <h4> Défense de la patrouille: </h4>
-    <% if !@patrol.defense? %>
-      <%= simple_form_for @defense do |f| %>
-        <% if @patrol.hold_paris? %>
-          <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
-        <% else  %>
-          <%= f.hidden_field :city_id, value: @patrol.city.id %>
-        <% end  %>
-        <%= f.hidden_field :patrol_id, value: @patrol.id %>
-        <%= f.input :man_power %>
-        <%= f.button :submit, class: "btn-primary" %>
-      <% end %>
-    <% else %>
-      <p> Puissance des hommes: <%= @patrol.defense.man_power %> </p>
-      <p> Multiplicateur des constructions: <%= @patrol.city.defense_building_multiplicator %> </p>
-      <p> Puissance totale: <%= @patrol.defense.total_defense_power %> </p>
-    <% end %>
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Défense de la patrouille: </h4>
+        <% if !@patrol.defense? %>
+          <%= simple_form_for @defense do |f| %>
+            <% if @patrol.hold_paris? %>
+              <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
+            <% else  %>
+              <%= f.hidden_field :city_id, value: @patrol.city.id %>
+            <% end  %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.input :man_power %>
+            <%= f.button :submit, class: "btn-primary" %>
+          <% end %>
+        <% else %>
+          <p> Puissance des hommes: <%= @patrol.defense.man_power %> </p>
+          <p> Multiplicateur des constructions: <%= @patrol.city.defense_building_multiplicator %> </p>
+          <p> Puissance totale: <%= @patrol.defense.total_defense_power %> </p>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="col-md-4 col-sm-6">
-    <h4> Homme qui partent à la mine: </h4>
-    <% if !@patrol.mining? %>
-      <%= simple_form_for @mining do |f| %>
-        <%= f.hidden_field :patrol_id, value: @patrol.id %>
-        <%= f.input :man_power %>
-        <%= f.button :submit, class: "btn-primary" %>
-      <% end %>
-    <% else %>
-      <p> Nombre d'hommes: <%= @patrol.mining.man_power %> </p>
-    <% end %>
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Homme qui partent à la mine: </h4>
+        <% if !@patrol.mining? %>
+          <%= simple_form_for @mining do |f| %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.input :man_power %>
+            <%= f.button :submit, class: "btn-primary" %>
+          <% end %>
+        <% else %>
+          <p> Nombre d'hommes: <%= @patrol.mining.man_power %> </p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 <hr>
@@ -159,10 +187,14 @@
   <div class="row">
     <% @patrol.constructions.each do |c|  %>
       <div class="col-md-3 col-sm-4">
-        <h5> <%= c.building.name %> </h4>
-        <p> usage: <%= c.building.usage %> </p>
-        <p> Multiplicateur: <%= c.building.multiplicator %> </p>
-        <p> Durée: <%= c.building.durability %> </p>
+        <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+          <div class="card-body">
+            <h5> <%= c.building.name %> </h4>
+            <p> usage: <%= c.building.usage %> </p>
+            <p> Multiplicateur: <%= c.building.multiplicator %> </p>
+            <p> Durée: <%= c.building.durability %> </p>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
@@ -170,56 +202,64 @@
 <hr>
 <div class="row">
   <div class="col-md-6">
-    <h4> Constructions d'attaque: </h4>
-    <ul>
-      <% Building.select{ |b| b.usage.eql?('attack') }.each do |b| %>
-      <li>
-        <%= b.name %>:
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Constructions d'attaque: </h4>
         <ul>
+          <% Building.select{ |b| b.usage.eql?('attack') }.each do |b| %>
           <li>
-            coût: <%= b.cost %> Or
+            <%= b.name %>:
+            <ul>
+              <li>
+                coût: <%= b.cost %> Or
+              </li>
+              <li>
+                durabilité: <%= b.durability %> tour
+              </li>
+              <li>
+                Multiplicateur: x <%= b.multiplicator %>
+              </li>
+            </ul>
           </li>
-          <li>
-            durabilité: <%= b.durability %> tour
-          </li>
-          <li>
-            Multiplicateur: x <%= b.multiplicator %>
-          </li>
+          <% end %>
         </ul>
-      </li>
-      <% end %>
-    </ul>
+      </div>
+    </div>
   </div>
   <div class="col-md-6">
-    <h4> Constructions de défense: </h4>
-    <ul>
-      <% Building.select{ |b| b.usage.eql?('defense') }.each do |b| %>
-      <li>
-        <%= b.name %>:
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Constructions de défense: </h4>
         <ul>
+          <% Building.select{ |b| b.usage.eql?('defense') }.each do |b| %>
           <li>
-            coût: <%= b.cost %> Or
+            <%= b.name %>:
+            <ul>
+              <li>
+                coût: <%= b.cost %> Or
+              </li>
+              <li>
+                Multiplicateur: x <%= b.multiplicator %>
+              </li>
+            </ul>
           </li>
-          <li>
-            Multiplicateur: x <%= b.multiplicator %>
-          </li>
+          <% end %>
         </ul>
-      </li>
-      <% end %>
-    </ul>
-    <%= simple_form_for @construction do |f| %>
-    <% if @patrol.hold_paris? %>
-      <p>
-        Sélectionner Paris pour les batiments de défense pour construire sur Paname.
-        Pour les bâtiments d'attaque ça n'a pas d'importance.
-       </p>
-      <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
-    <% else  %>
-      <%= f.hidden_field :city_id, value: @patrol.city.id %>
-    <% end  %>
-      <%= f.collection_select :building_id, Building.all, :id, :name %>
-      <%= f.hidden_field :patrol_id, value: @patrol.id %>
-      <%= f.button :submit, class: "btn-primary" %>
-    <% end %>
+        <%= simple_form_for @construction do |f| %>
+        <% if @patrol.hold_paris? %>
+          <p>
+            Sélectionner Paris pour les batiments de défense pour construire sur Paname.
+            Pour les bâtiments d'attaque ça n'a pas d'importance.
+           </p>
+          <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
+        <% else  %>
+          <%= f.hidden_field :city_id, value: @patrol.city.id %>
+        <% end  %>
+          <%= f.collection_select :building_id, Building.all, :id, :name %>
+          <%= f.hidden_field :patrol_id, value: @patrol.id %>
+          <%= f.button :submit, class: "btn-primary" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

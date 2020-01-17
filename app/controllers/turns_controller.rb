@@ -166,6 +166,7 @@ class TurnsController < ApplicationController
       a.patrol.save!
     end
     city.pillaged = true
+    city.pillage_count += 1
     city.defense_building_multiplicator = (city.defense_building_multiplicator / 2).round(2)
   end
 

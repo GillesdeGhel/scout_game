@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<div class="row" style="text-align:center;">
-  <h1> Toutes les patrouilles </h1>
-</div>
+<h1> Toutes les patrouilles </h1>
 <div class="row">
-  <% Troop.all.each do |t| %>
-    <div class="col-xs-12 col-md-4">
-      <ul>
-        <li>
-          <%= t.name %>
-          (<%= t.turns_holding_paris %>)
-          <% if t.hold_paris %>
-            DETIENT PARIS
-          <% end %>
-          <ul>
-            <% t.patrols.sort_by(&:total_gains).reverse.each do |p|%>
-            <li>
-              <%= link_to p.name, patrol_path(p.id) %>
-              score total: <%= p.total_gains %>
-            </li>
-            <% end %>
-          </ul>
-        </li>
-      </ul>
+  <% Troop.all.each do |t|%>
+  <div class="col-sm-4">
+    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <%= image_tag("#{t.city.name}.png", alt: "#{t.city.name}.png", style: 'height:100px; width:100px;') %>
+        <% if t.hold_paris? %>
+          <h5 class="card-title"><%= t.name %> - Tient Paris </h5>
+        <% else %>
+          <h5 class="card-title"><%= t.name %></h5>
+        <% end %>
+        <hr>
+        <% t.patrols.sort_by(&:total_gains).reverse.each do |p|%>
+        <p>
+          <%= link_to p.name, patrol_path(p.id) %>
+          <span style="float:right;">score: <%= p.total_gains %></span>
+        </p>
+        <% end %>
+      </div>
     </div>
+  </div>
   <% end %>
 </div>
-
 
 <%= link_to 'finir le tour', end_turn_path, class: 'btn btn-primary' %>
