@@ -45,4 +45,8 @@ class Patrol < ApplicationRecord
 
     attack.total_attack_power
   end
+
+  def ranking
+    Patrol.count { |p| p.total_gains > self.total_gains } + 1
+  end
 end

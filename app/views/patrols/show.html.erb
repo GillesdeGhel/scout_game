@@ -9,13 +9,22 @@
     <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3 class="card-title">
-          Score:
+          Score
         </h3>
+        <br>
+        <h5>
+          Classement:
+          <%= @patrol.ranking %>
+          <% if @patrol.ranking == 1 %>
+            er
+          <% else %>
+            ème
+          <% end %>
+        </h5>
         <br>
         <h5>
           Thune :
           <%= @patrol.money %> Or
-          <i class="fas fa-coins"></i>
         </h5>
         <br>
         <h5>

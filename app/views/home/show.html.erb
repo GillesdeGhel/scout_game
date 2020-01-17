@@ -6,16 +6,17 @@
     <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <%= image_tag("#{t.city.name}.png", alt: "#{t.city.name}.png", style: 'height:100px; width:100px;') %>
+
+        <h5 class="card-title"><%= t.name %> <span style="float:right"> score: <%= t.turns_holding_paris %> </span> </h5>
         <% if t.hold_paris? %>
-          <h5 class="card-title"><%= t.name %> - Tient Paris </h5>
-        <% else %>
-          <h5 class="card-title"><%= t.name %></h5>
+          <b> Tient Paris </b>
         <% end %>
         <hr>
         <% t.patrols.sort_by(&:total_gains).reverse.each do |p|%>
         <p>
-          <%= link_to p.name, patrol_path(p.id) %>
-          <span style="float:right;">score: <%= p.total_gains %></span>
+          <%= link_to patrol_path(p.id) do %>
+            <%= p.name %> <span style="float:right;">score: <%= p.total_gains %></span>
+          <% end %>
         </p>
         <% end %>
       </div>
