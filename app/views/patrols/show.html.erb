@@ -6,7 +6,7 @@
 </h1>
 <div class="row">
   <div class="col-sm-4">
-    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3 class="card-title">
           Score
@@ -37,7 +37,7 @@
 
   <br>
   <div class="col-sm-4">
-    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3 class="card-title">
           Guilde :
@@ -77,7 +77,7 @@
   </div>
 
   <div class="col-sm-4">
-    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3>Résumé du tour passé</h3>
         EVENEMENT:
@@ -126,7 +126,7 @@
 <hr>
 <div class="row">
   <div class="col-md-4 col-sm-6">
-    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Attaque de la patrouille: </h4>
         <% if !@patrol.attack? %>
@@ -150,7 +150,7 @@
   </div>
 
   <div class="col-md-4 col-sm-6">
-    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Défense de la patrouille: </h4>
         <% if !@patrol.defense? %>
@@ -174,7 +174,7 @@
   </div>
 
   <div class="col-md-4 col-sm-6">
-    <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Homme qui partent à la mine: </h4>
         <% if !@patrol.mining? %>
@@ -196,7 +196,7 @@
   <div class="row">
     <% @patrol.constructions.each do |c|  %>
       <div class="col-md-3 col-sm-4">
-        <div class="card" style="width: 22rem; margin-bottom: 20px; background-color:lightgrey;">
+        <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
           <div class="card-body">
             <h5> <%= c.building.name %> </h4>
             <p> usage: <%= c.building.usage %> </p>

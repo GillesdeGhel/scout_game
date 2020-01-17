@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-
+<div class="center">
+  <h1> Toutes les villes </h1>
+</div>
 <div class="row">
   <% City.all.each do |c|%>
   <div class="col-sm-4">
@@ -14,14 +16,16 @@
         </p>
       <% end %>
       <div class="card-body">
-        <%= image_tag("#{c.name}.png", alt: "#{c.name}.png", style: 'height:100px; width:100px;') %>
+        <div class="center">
+          <%= image_tag("#{c.name}.png", alt: "#{c.name}.png", class: 'blason') %>
+        </div>
         <% if c.paris? %>
-          <h5 class="card-title"><%= c.name %> - <%= Troop.hold_paris&.name %> </h5>
+          <h5 class="card-title center"><%= c.name %> - <%= Troop.hold_paris&.name %> </h5>
         <% else %>
-          <h5 class="card-title"><%= c.name %> - <%= c.troop&.name %> </h5>
+          <h5 class="card-title center"><%= c.name %> - <%= c.troop&.name %> </h5>
         <% end %>
-        <p class="card-text">Puissance des fortifications: x <%= c.defense_building_multiplicator + 1 %> </p>
-        <p class="card-text">La ville a été pillée <%= c.pillage_count%> fois en tout </p>
+        <p class="card-text center">Puissance des fortifications: x <%= c.defense_building_multiplicator + 1 %> </p>
+        <p class="card-text center">La ville a été pillée <%= c.pillage_count%> fois en tout </p>
       </div>
     </div>
   </div>
