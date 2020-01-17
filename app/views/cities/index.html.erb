@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 
-<% City.all.each do |c|%>
-  <h4>
-    <%= c.name %>
-    <%= c.troop&.name %>
-  </h4>
-  <% if c.pillaged %>
-    <p style="background-color:red; color: white; padding: 6px;">
-      La ville est tombée au tour passée
-    </p>
-  <% else %>
-    <p style="background-color:green; color: white; padding: 6px;">
-      La ville s'est défendue au tour passée
-    </p>
+<div class="row">
+  <% City.all.each do |c|%>
+  <div class="col-sm-4">
+    <div class="card" style="width: 22rem; margin-bottom: 20px;">
+      <%= image_tag("#{c.name}.png", alt: "#{c.name}.png", class: 'card-img-top') %>
+      <div class="card-body">
+        <% if c.paris? %>
+          <h5 class="card-title"><%= c.name %> - <%= Troop.hold_paris&.name %> </h5>
+        <% else %>
+          <h5 class="card-title"><%= c.name %> - <%= c.troop&.name %> </h5>
+        <% end %>
+        <% if c.pillaged %>
+        <p style="background-color:red; color: white; padding: 6px;">
+          La ville est tombée au tour passée
+        </p>
+        <% else %>
+        <p style="background-color:green; color: white; padding: 6px;">
+          La ville s'est défendue au tour passée
+        </p>
+        <% end %>
+        <p class="card-text">Puissance des fortifications: x <%= c.defense_building_multiplicator + 1 %> </p>
+      </div>
+    </div>
+  </div>
   <% end %>
-  puissance des fortifications:
-  <%= c.defense_building_multiplicator %>
-  <hr>
-<% end %>
+</div>
