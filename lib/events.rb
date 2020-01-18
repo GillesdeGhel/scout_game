@@ -1,7 +1,7 @@
 module Event
   def self.city_plague
     Defense.all.each do |d|
-      d.manpower -= 30 if d.manpower.positive?
+      d.man_power -= 30 if d.man_power.positive?
       d.save!
       d.patrol.receipt.update(event: 'Peste dans les villes: -30 hommes en défense')
     end
@@ -9,7 +9,7 @@ module Event
 
   def self.campaign_plague
     Attack.all.each do |a|
-      a.manpower -= 30 if a.manpower.positive?
+      a.man_power -= 30 if a.man_power.positive?
       a.save!
       a.patrol.receipt.update(event: 'Peste dans les campements: -30 hommes en attaque')
     end
