@@ -27,7 +27,7 @@
       <div class="flash info"><%= flash[:info] %></div>
     <% end %>
     <% if notice.present? %>
-      <div class="flash success"><%= flash[:success] %></div>
+      <div class="flash success"><%= notice %></div>
     <% end %>
     <div class="container" style="margin-top:20px; margin-bottom:20px;">
       <%= yield %>
