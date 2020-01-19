@@ -1,5 +1,5 @@
 <% if @patrol.city.pillaged %>
-  <p style="background-color:red; color:white;">Votre ville, <%= @patrol.city.name %>, a été pillée et les fortifications réduites de moitié</p>
+  <p class="flash warning">Votre ville, <%= @patrol.city.name %>, a été pillée et les fortifications réduites de moitié</p>
 <% end %>
 <h1>
   <%= @patrol.name %>
@@ -131,7 +131,7 @@
         <h4> Attaque de la patrouille: </h4>
         <% if !@patrol.attack? %>
           <%= simple_form_for @attack do |f| %>
-            <%= f.collection_select :city_id, City.all, :id, :name %>
+            <%= f.collection_select :city_id, City.all, :id, :label %>
             <%= f.hidden_field :patrol_id, value: @patrol.id %>
             <%= f.input :man_power %>
             <%= f.button :submit, class: "btn-primary" %>

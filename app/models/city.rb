@@ -7,12 +7,12 @@ class City < ApplicationRecord
     attacks.sum(&:total_attack_power)
   end
 
-  def defense_manpower
+  def defense_man_power
     defenses.sum(&:man_power)
   end
 
   def total_defense
-    defense_manpower * (defense_building_multiplicator > 1 ? defense_building_multiplicator : 1)
+    defense_man_power * (defense_building_multiplicator > 1 ? defense_building_multiplicator : 1)
   end
 
   def power_difference
@@ -25,5 +25,10 @@ class City < ApplicationRecord
 
   def self.paris
     City.find_by(name: 'Paris')
+  end
+
+  def label
+    return "#{self.name} (#{Troop.hold_paris.name})" if self.paris?
+    "#{self.name} - #{self.troop&.country_name} (#{self.troop&.name})"
   end
 end

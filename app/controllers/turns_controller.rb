@@ -142,13 +142,13 @@ class TurnsController < ApplicationController
 
   def pillage(city)
     city.troop.patrols.each do |patrol|
-      if city.defense_manpower.zero?
+      if city.defense_man_power.zero?
         patrol.money -= (city.power_difference / 6)
         patrol.save!
         next
       else
         patrol_man_power = patrol.defense&.man_power || 0
-        patrol_percentage = 1 - (patrol_man_power / city.defense_manpower)
+        patrol_percentage = 1 - (patrol_man_power / city.defense_man_power)
         revenues = city.power_difference * patrol_percentage * 2
         revenues * 0.6 if event.eql?('clemency')
         patrol.money -= revenues
@@ -194,6 +194,6 @@ class TurnsController < ApplicationController
   end
 
   def patrols
-    @patrols ||= Patrol.all
+    @patrols = Patrol.all
   end
 end
