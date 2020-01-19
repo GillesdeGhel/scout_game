@@ -28,7 +28,7 @@ class City < ApplicationRecord
   end
 
   def label
-    return "#{self.name} (#{Troop.hold_paris.name})" if self.paris?
+    return "#{self.name} (#{Troop.hold_paris&.name})" if self.paris?
     "#{self.name} - #{self.troop&.country_name} (#{self.troop&.name})"
   end
 end
