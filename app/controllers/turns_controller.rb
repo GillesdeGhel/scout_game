@@ -147,8 +147,7 @@ class TurnsController < ApplicationController
         patrol.save!
         next
       else
-        patrol_man_power = patrol.defense&.man_power || 0
-        patrol_percentage = 1 - (patrol_man_power / city.defense_man_power)
+        patrol_percentage = inverse_of_defense_patrol_man_power_ratio(patrol) / defense_fraction(city)
         revenues = city.power_difference * patrol_percentage
         revenues * 0.6 if event.eql?('clemency')
         patrol.money -= revenues
@@ -195,5 +194,16 @@ class TurnsController < ApplicationController
 
   def patrols
     @patrols = Patrol.all
+  end
+
+  def inverse_of_defense_patrol_man_power_ratio(patrol)
+    patrol_man_power = patrol.defense&.man_power || 1
+    1 / (patrol_man_power.to_f / patrol.city.defense_man_power.to_f)
+  end
+
+  def defense_fraction(city)
+    city.troop.patrols.sum do |patrol|
+      inverse_of_defense_patrol_man_power_ratio(patrol)
+    end
   end
 end
