@@ -217,7 +217,7 @@
       <div class="col-md-3 col-sm-4">
         <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
           <div class="card-body">
-            <h5> <%= c.building.name %> </h4>
+            <h4> <%= c.building.name %> </h4>
             <p> Usage: <%= c.building.usage %> </p>
             <p> Multiplicateur: <%= c.building.multiplicator %> </p>
             <p> Durée: <%= c.building.durability %> </p>
@@ -256,9 +256,8 @@
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Constructions de défense: </h4>
-        <ul>
           <% Building.select{ |b| b.usage.eql?('defense') }.each do |b| %>
-          <li>
+          <hr>
             <%= b.name %>:
             <ul>
               <li>
@@ -268,9 +267,7 @@
                 Multiplicateur: x <%= b.multiplicator %>
               </li>
             </ul>
-          </li>
           <% end %>
-        </ul>
         <%= simple_form_for @construction do |f| %>
         <% if @patrol.hold_paris? %>
           <p>
