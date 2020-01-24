@@ -149,7 +149,7 @@ class TurnsController < ApplicationController
       else
         patrol_man_power = patrol.defense&.man_power || 0
         patrol_percentage = 1 - (patrol_man_power / city.defense_man_power)
-        revenues = city.power_difference * patrol_percentage * 2
+        revenues = city.power_difference * patrol_percentage
         revenues * 0.6 if event.eql?('clemency')
         patrol.money -= revenues
         patrol.receipt.defense_losses -= revenues
@@ -159,7 +159,7 @@ class TurnsController < ApplicationController
     end
     city.attacks.each do |a|
       percentage = a.total_attack_power / city.total_attack
-      revenues = city.power_difference * percentage * 2
+      revenues = city.power_difference * percentage
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings += revenues
       a.patrol.receipt.save!

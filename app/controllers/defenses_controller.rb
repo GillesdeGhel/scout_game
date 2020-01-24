@@ -1,6 +1,8 @@
 class DefensesController < ApplicationController
   def create
     defense = Defense.new(defense_params)
+    return unless defense.man_power.present?
+
     if defense.man_power <= patrol.money && defense.save
       patrol.money -= defense.man_power
       patrol.save

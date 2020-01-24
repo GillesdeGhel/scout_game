@@ -14,22 +14,28 @@
         <br>
         <h5>
           Classement:
-          <%= @patrol.ranking %>
-          <% if @patrol.ranking == 1 %>
-            er
-          <% else %>
-            ème
-          <% end %>
+          <span class="right">
+            <%= @patrol.ranking %>
+            <% if @patrol.ranking == 1 %>
+              er
+            <% else %>
+              ème
+            <% end %>
+          </span>
         </h5>
         <br>
         <h5>
           Thune :
-          <%= @patrol.money %> Or
+          <span class="right">
+            <%= @patrol.money %> Or
+          <span>
         </h5>
         <br>
         <h5>
           Score total:
-          <%= @patrol.total_gains %>
+          <span class="right">
+            <%= @patrol.total_gains %>
+          <span>
         </h5>
       </div>
     </div>
@@ -43,27 +49,24 @@
           Guilde :
           <%= @patrol.guild.name %>
         </h3>
-          <ul>
-            Multiplicateurs:
-            <li>
-              Coûts bâtiment défensifs: x <%= @patrol.defense_construction_cost_multiplicator %>
-            </li>
-            <li>
-              Coûts engins de siège: x <%= @patrol.attack_construction_cost_multiplicator %>
-            </li>
-            <li>
-              Puissance d'attaques: x <%= @patrol.attack_power_multiplicator %>
-            </li>
-            <li>
-              Puissance défensive: x <%= @patrol.defense_power_multiplicator %>
-            </li>
-            <li>
-              Revenus passif: x <%= @patrol.revenues_multiplicator %>
-            </li>
-            <li>
-              Revenus miniers: x <%= @patrol.mining_multiplicator %>
-            </li>
-          </ul>
+            <p>
+              Coûts bâtiment défensifs:  <span class="right <%=@patrol.defense_construction_cost_multiplicator < 1 ? 'green' : @patrol.defense_construction_cost_multiplicator > 1 ? 'red' : '' %>">  x <%= @patrol.defense_construction_cost_multiplicator %> </span>
+            </p>
+            <p>
+              Coûts engins de siège: <span class="right <%=@patrol.attack_construction_cost_multiplicator < 1 ? 'green' : @patrol.attack_construction_cost_multiplicator > 1 ? 'red' : '' %>"> x <%= @patrol.attack_construction_cost_multiplicator %> </span>
+            </p>
+            <p>
+              Puissance d'attaques: <span class="right <%=@patrol.attack_power_multiplicator > 1 ? 'green' : @patrol.attack_power_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.attack_power_multiplicator %> </span>
+            </p>
+            <p>
+              Puissance défensive: <span class="right <%=@patrol.defense_power_multiplicator > 1 ? 'green' : @patrol.defense_power_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.defense_power_multiplicator %> </span>
+            </p>
+            <p>
+              Revenus passif: <span class="right <%=@patrol.revenues_multiplicator > 1 ? 'green' : @patrol.revenues_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.revenues_multiplicator %> </span>
+            </p>
+            <p>
+              Revenus miniers: <span class="right <%=@patrol.mining_multiplicator > 1 ? 'green' : @patrol.mining_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.mining_multiplicator %> </span>
+            </p>
 
           <% if @patrol.hold_regional_capital %>
             <%= simple_form_for @patrol do |f| %>
@@ -85,47 +88,47 @@
           <%= @patrol.receipt.event %>
         </span>
         <hr>
-        <ul>
-          <li>
+          <p>
             Revenus de taxes:
-            <span style="color:green;">
+            <span class="right" style="color:green;">
               + <%= @patrol.receipt.base_revenues %> Or
             </span>
-          </li>
-          <li>
+          </p>
+          <p>
             Revenus miniers:
-            <span style="color:green;">
+            <span class="right" style="color:green;">
               + <%= @patrol.receipt.minings_winnings %> Or
             </span>
-          </li>
-          <li>
+          </p>
+          <p>
             Revenus de l'attaque:
-            <span style="color:green;">
+            <span class="right" style="color:green;">
               + <%= @patrol.receipt.attack_winnings %> Or
             </span>
-          </li>
+          </p>
           <% if @patrol.hold_paris? %>
-            <li>
+            <p>
               Revenus grâce à Paris:
-              <span style="color:green;">
+              <span class="right" style="color:green;">
                 + <%= @patrol.receipt.paris_winning %> Or
               </span>
-            </li>
+            </p>
           <% end  %>
-          <li>
-            Perte de défense:
-            <span style="color:red;">
-              <%= @patrol.receipt.defense_losses %> Or
-            </span>
-          </li>
-        </ul>
+          <% if @patrol.receipt.defense_losses.negative? %>
+            <p>
+              Perte de défense:
+              <span class="right" style="color:red;">
+                <%= @patrol.receipt.defense_losses %> Or
+              </span>
+            </p>
+          <% end %>
       </div>
     </div>
   </div>
 </div>
 <hr>
 <div class="row">
-  <div class="col-md-4 col-sm-6">
+  <div class="col-md-5 col-sm-6">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Attaque de la patrouille: </h4>
@@ -137,19 +140,35 @@
             <%= f.button :submit, class: "btn-primary" %>
           <% end %>
         <% else %>
-          <p> Attaque sur: <%= @patrol.attack.city.name %>
-            <% if !@patrol.attack.city.paris?%>
-              des <%= @patrol.attack.city.troop.name %> </p>
-            <% end %>
-          <p> Puissance des hommes: <%= @patrol.attack.man_power %> </p>
-          <p> Multiplicateur des constructions: <%= @patrol.attack_multiplicator %> </p>
-          <p> Puissance totale: <%= @patrol.attack.total_attack_power %> </p>
+          <p> Attaque sur:
+            <span class="right">
+              <%= @patrol.attack.city.name %>
+              <% if !@patrol.attack.city.paris?%>
+                des <%= @patrol.attack.city.troop.name %>
+              <% end %>
+            </span>
+          </p>
+          <p> Puissance des hommes:
+            <span class="right">
+              <%= @patrol.attack.man_power %>
+            </span>
+          </p>
+          <p> Multiplicateur des constructions:
+            <span class="right">
+              x <%= @patrol.attack_multiplicator %>
+            </span>
+          </p>
+          <p> Puissance totale:
+            <span class="right">
+              <%= @patrol.attack.total_attack_power %>
+            </span>
+          </p>
         <% end %>
       </div>
     </div>
   </div>
 
-  <div class="col-md-4 col-sm-6">
+  <div class="col-md-3 col-sm-6">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Défense de la patrouille: </h4>
@@ -166,7 +185,7 @@
           <% end %>
         <% else %>
           <p> Puissance des hommes: <%= @patrol.defense.man_power %> </p>
-          <p> Multiplicateur des constructions: <%= @patrol.city.defense_building_multiplicator %> </p>
+          <p> Multiplicateur des constructions: x <%= @patrol.city.defense_building_multiplicator %> </p>
           <p> Puissance totale: <%= @patrol.defense.total_defense_power %> </p>
         <% end %>
       </div>
@@ -199,7 +218,7 @@
         <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
           <div class="card-body">
             <h5> <%= c.building.name %> </h4>
-            <p> usage: <%= c.building.usage %> </p>
+            <p> Usage: <%= c.building.usage %> </p>
             <p> Multiplicateur: <%= c.building.multiplicator %> </p>
             <p> Durée: <%= c.building.durability %> </p>
           </div>
@@ -214,24 +233,22 @@
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Constructions d'attaque: </h4>
-        <ul>
           <% Building.select{ |b| b.usage.eql?('attack') }.each do |b| %>
-          <li>
+            <hr>
             <%= b.name %>:
             <ul>
               <li>
-                coût: <%= b.cost %> Or
+                Coût: <%= b.cost %> Or
               </li>
               <li>
-                durabilité: <%= b.durability %> tour
+                Durabilité: <%= b.durability %> tour
               </li>
               <li>
                 Multiplicateur: x <%= b.multiplicator %>
               </li>
             </ul>
-          </li>
+
           <% end %>
-        </ul>
       </div>
     </div>
   </div>
@@ -245,7 +262,7 @@
             <%= b.name %>:
             <ul>
               <li>
-                coût: <%= b.cost %> Or
+                Coût: <%= b.cost %> Or
               </li>
               <li>
                 Multiplicateur: x <%= b.multiplicator %>

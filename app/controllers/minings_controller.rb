@@ -1,6 +1,8 @@
 class MiningsController < ApplicationController
   def create
     mining = Mining.new(mining_params)
+    return unless mining.man_power.present?
+
     if mining.man_power <= patrol.money && mining.save
       patrol.money -= mining.man_power
       patrol.save

@@ -17,7 +17,7 @@ class Patrol < ApplicationRecord
     return 1 unless constructions.any?
 
     attack_construction = constructions.select(&:attack?)
-    attack_construction.sum { |construction| construction.building.multiplicator } + attack_power_multiplicator
+    attack_construction.sum { |construction| construction.building.multiplicator } * attack_power_multiplicator
   end
 
   def city

@@ -1,6 +1,8 @@
 class AttacksController < ApplicationController
   def create
     attack = Attack.new(attack_params)
+    return unless attack.man_power.present?
+
     if attack.man_power <= patrol.money && attack.save
       patrol.money -= attack.man_power
       patrol.save
