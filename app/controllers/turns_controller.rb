@@ -143,7 +143,10 @@ class TurnsController < ApplicationController
   def pillage(city)
     city.troop.patrols.each do |patrol|
       if city.defense_man_power.zero?
-        patrol.money -= (city.power_difference / 6)
+        revenues = (city.power_difference / 6)
+        patrol.money -= revenues
+        patrol.receipt.defense_losses -= revenues
+        patrol.receipt.save!
         patrol.save!
         next
       else
