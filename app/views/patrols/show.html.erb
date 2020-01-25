@@ -5,7 +5,7 @@
   <%= @patrol.name %>
 </h1>
 <div class="row">
-  <div class="col-sm-4 col-xs-12">
+  <div class="col-md-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3 class="card-title">
@@ -42,7 +42,7 @@
   </div>
 
   <br>
-  <div class="col-sm-4">
+  <div class="col-md-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3 class="card-title">
@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <div class="col-sm-4">
+  <div class="col-md-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h3>Résumé du tour passé</h3>
@@ -128,7 +128,7 @@
 </div>
 <hr>
 <div class="row">
-  <div class="col-md-5 col-sm-6">
+  <div class="col-md-5 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Attaque de la patrouille: </h4>
@@ -168,7 +168,7 @@
     </div>
   </div>
 
-  <div class="col-md-3 col-sm-6">
+  <div class="col-md-3 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Défense de la patrouille: </h4>
@@ -192,7 +192,7 @@
     </div>
   </div>
 
-  <div class="col-md-4 col-sm-6">
+  <div class="col-md-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Homme qui partent à la mine: </h4>
@@ -214,7 +214,7 @@
   <h4> Constructions de la patrouille </h4>
   <div class="row">
     <% @patrol.constructions.each do |c|  %>
-      <div class="col-md-3 col-sm-4">
+      <div class="col-md-3 col-12">
         <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
           <div class="card-body">
             <h4> <%= c.building.name %> </h4>
@@ -229,7 +229,7 @@
 <%end%>
 <hr>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-6 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Constructions d'attaque: </h4>
@@ -252,7 +252,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Constructions de défense: </h4>
