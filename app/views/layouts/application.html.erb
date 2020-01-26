@@ -9,11 +9,11 @@
 
   <body style= "background-color: #EEEEEE;">
     <nav class="navbar navbar-light" style="background-color:lightgrey;">
-      <a href="https://www.lonescouts.be/" target="_blank" class="navbar-brand">
+      <a href="/" class="navbar-brand">
         <%= image_tag("lones.png", alt: "lones.png", style: 'width: 60px;') %>
         Baden Powell Belgian Lonescouts
       </a>
-      <%= link_to 'Toutes les patrouilles', root_path, class:"nav-link" %>
+      <%= link_to 'Nations', root_path, class:"nav-link" %>
       <%= link_to 'Villes', cities_path, class:"nav-link" %>
       <%= link_to 'Changer le mot de passe', edit_user_registration_path, class:"nav-link" %>
     </nav>

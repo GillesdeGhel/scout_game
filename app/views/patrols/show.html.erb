@@ -1,9 +1,10 @@
 <% if @patrol.city.pillaged %>
   <p class="flash warning">Votre ville, <%= @patrol.city.name %>, a été pillée et les fortifications réduites de moitié</p>
 <% end %>
-<h1>
+<h1 class="center">
   <%= @patrol.name %>
 </h1>
+<hr>
 <div class="row">
   <div class="col-lg-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
@@ -209,8 +210,8 @@
     </div>
   </div>
 </div>
-<hr>
 <% if @patrol.constructions.any?  %>
+  <hr>
   <h4> Constructions de la patrouille </h4>
   <div class="row">
     <% @patrol.constructions.each do |c|  %>
