@@ -33,9 +33,7 @@ module Event
     City.all.each do |c|
       c.defense_building_multiplicator = (c.defense_building_multiplicator / 2).round(2)
       c.save!
-      next if c.paris?
-
-      c.troop.patrols.each do |p|
+      c.troop&.patrols&.each do |p|
         p.receipt.update(event: 'Tremblement de terre: Défenses des villes réduites de moitié')
       end
     end
@@ -50,6 +48,12 @@ module Event
   def self.clemency
     Patrol.all.each do |p|
       p.receipt.update(event: 'Clémence et miséricorde: -40% de perte suites aux pillages de villes')
+    end
+  end
+
+  def self.barbarism
+    Patrol.all.each do |p|
+      p.receipt.update(event: 'Barbarisme invétéré: +50% des revenus suites aux pillages de villes')
     end
   end
 

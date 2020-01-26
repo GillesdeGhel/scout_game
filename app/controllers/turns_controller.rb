@@ -10,6 +10,7 @@ class TurnsController < ApplicationController
     successfull_trade
     clemency
     gas_blast
+    barbarism
   ].freeze
 
   private_constant :EVENTS
@@ -151,7 +152,7 @@ class TurnsController < ApplicationController
         next
       else
         patrol_percentage = inverse_of_defense_patrol_man_power_ratio(patrol) / defense_fraction(city)
-        revenues = city.power_difference * patrol_percentage
+        revenues = city.power_difference * patrol_percentage * 1.5
         revenues * 0.6 if event.eql?('clemency')
         patrol.money -= revenues
         patrol.receipt.defense_losses -= revenues
@@ -161,7 +162,8 @@ class TurnsController < ApplicationController
     end
     city.attacks.each do |a|
       percentage = a.total_attack_power / city.total_attack
-      revenues = city.power_difference * percentage
+      revenues = city.power_difference * percentage * 1.5
+      revenues * 1.5 if event.eql?('barbarism')
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings += revenues
       a.patrol.receipt.save!
