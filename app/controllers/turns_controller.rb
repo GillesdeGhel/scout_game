@@ -21,7 +21,7 @@ class TurnsController < ApplicationController
       randomize_event
       resolve_minings
       resolve_conflicts
-      # pay_patrols
+      pay_patrols
       change_construction_durability
       destroy_all_actions
       compute_scores
@@ -78,23 +78,23 @@ class TurnsController < ApplicationController
     end
   end
 
-  # def pay_patrols
-  #   return if event.eql?('fiscal_fraud')
-  #
-  #   patrols.each do |p|
-  #     revenues = 100 * p.revenues_multiplicator
-  #     revenues = revenues * 1.3 if event.eql?('successfull_trade')
-  #     p.money += revenues
-  #     if p.hold_paris?
-  #       p.money += 50
-  #       p.receipt.paris_winning += 50
-  #     end
-  #     p.money = 0 if p.money.negative?
-  #     p.receipt.base_revenues += revenues
-  #     p.receipt.save!
-  #     p.save!
-  #   end
-  # end
+  def pay_patrols
+    return if event.eql?('fiscal_fraud')
+
+    patrols.each do |p|
+      revenues = 100 * p.revenues_multiplicator
+      revenues = revenues * 1.3 if event.eql?('successfull_trade')
+      p.money += revenues
+      if p.hold_paris?
+        p.money += 50
+        p.receipt.paris_winning += 50
+      end
+      p.money = 0 if p.money.negative?
+      p.receipt.base_revenues += revenues
+      p.receipt.save!
+      p.save!
+    end
+  end
 
   def destroy_all_actions
     Mining.destroy_all
