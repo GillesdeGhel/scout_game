@@ -21,7 +21,7 @@ class TurnsController < ApplicationController
       randomize_event
       resolve_minings
       resolve_conflicts
-      pay_patrols
+      # pay_patrols
       change_construction_durability
       destroy_all_actions
       compute_scores
