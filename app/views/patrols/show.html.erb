@@ -115,7 +115,7 @@
               </span>
             </p>
           <% end  %>
-          <% if @patrol.receipt.defense_losses.negative? %>
+          <% if @patrol.receipt.defense_losses&.negative? %>
             <p>
               Perte de défense:
               <span class="right" style="color:red;">
