@@ -30,7 +30,7 @@ class TurnsController < ApplicationController
     else
       flash[:alert] = "T'es pas admin qu'est ce que tu fous"
     end
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   private
@@ -175,9 +175,6 @@ class TurnsController < ApplicationController
 
   def capture_of_paris
     Troop.update_all(hold_paris: false)
-    puts Attack.first.total_attack_power
-    puts Attack.second.total_attack_power
-    puts Attack.last.total_attack_power
     winning_troop = Troop.all.max_by do |t|
       t.patrols.sum(&:attack_power_on_paris)
     end
