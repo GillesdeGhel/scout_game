@@ -11,8 +11,11 @@ gem 'sass-rails', '~> 5.0'
 gem 'simple_form'
 
 group :development, :test do
+  # Run against the latest stable release
+  # Note that rspec-rails 4.0 is still a beta release
   gem 'byebug', platform: :mri
   gem 'figaro', '~> 1.1'
+  gem 'rspec-rails', '~> 4.0.0.beta'
 end
 
 group :development do

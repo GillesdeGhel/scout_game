@@ -47,7 +47,7 @@ class TurnsController < ApplicationController
 
     @event = EVENTS.sample
     Event.send(event)
-    flash[:info] = "Attention, il y a eu un événement aléatoire"
+    flash[:info] = 'Attention, il y a eu un événement aléatoire'
   end
 
   def resolve_minings
@@ -72,7 +72,6 @@ class TurnsController < ApplicationController
         else
           pillage(c)
         end
-        puts "#{c.name} a été pillée"
       end
       c.save!
     end
@@ -83,7 +82,7 @@ class TurnsController < ApplicationController
 
     patrols.each do |p|
       revenues = 100 * p.revenues_multiplicator
-      revenues = revenues * 1.3 if event.eql?('successfull_trade')
+      revenues *= 1.3 if event.eql?('successfull_trade')
       p.money += revenues
       if p.hold_paris?
         p.money += 50
@@ -119,11 +118,11 @@ class TurnsController < ApplicationController
       p.total_gains += p.money
       p.save
     end
-    if Troop.hold_paris.present?
-      troop_with_paris = Troop.hold_paris
-      troop_with_paris.turns_holding_paris += 1
-      troop_with_paris.save
-    end
+    return if Troop.hold_paris.nil?
+
+    troop_with_paris = Troop.hold_paris
+    troop_with_paris.turns_holding_paris += 1
+    troop_with_paris.save
   end
 
   def assign_guild
@@ -136,7 +135,7 @@ class TurnsController < ApplicationController
   def assign_regional_capital
     Patrol.update_all(hold_regional_capital: false)
     Troop.all.each do |t|
-      best_patrol = t.patrols.sort_by(&:money).last
+      best_patrol = t.patrols.max_by(&:money)
       best_patrol.update(hold_regional_capital: true)
     end
   end
@@ -176,9 +175,12 @@ class TurnsController < ApplicationController
 
   def capture_of_paris
     Troop.update_all(hold_paris: false)
-    winning_troop = Troop.all.sort_by do |t|
-      t.patrols.sum { |p| p.attack_power_on_paris }
-    end.last
+    puts Attack.first.total_attack_power
+    puts Attack.second.total_attack_power
+    puts Attack.last.total_attack_power
+    winning_troop = Troop.all.max_by do |t|
+      t.patrols.sum(&:attack_power_on_paris)
+    end
     winning_troop.hold_paris = true
     winning_troop.turns_holding_paris = 0 if winning_troop.turns_holding_paris.nil?
     winning_troop.save!
@@ -202,7 +204,7 @@ class TurnsController < ApplicationController
   end
 
   def inverse_of_defense_patrol_man_power_ratio(patrol)
-    patrol_man_power = patrol.defense&.man_power || 1
+    patrol_man_power = patrol.defense.man_power.zero? ? 1 : patrol.defense.man_power
     1 / (patrol_man_power.to_f / patrol.city.defense_man_power.to_f)
   end
 
