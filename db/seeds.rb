@@ -1,9 +1,9 @@
-ingenieur = Guild.create(name: 'Ingénieur', attack_construction_cost_multiplicator: 0.7, mining_multiplicator: 1.3, revenues_multiplicator: 0.8)
+ingenieur = Guild.create(name: 'Ingénieur', attack_construction_cost_multiplicator: 0.7, mining_multiplicator: 1.3, revenues_multiplicator: 0.7)
 constructeur = Guild.create(name: 'Constructeur', defense_construction_cost_multiplicator: 0.7, mining_multiplicator: 0.7, defense_power_multiplicator: 1.2)
 marchand = Guild.create(name: 'Marchand', attack_power_multiplicator: 0.5, defense_power_multiplicator: 0.5, revenues_multiplicator: 3)
-mercenaire = Guild.create(name: 'Mercenaire', attack_power_multiplicator: 2.2, defense_power_multiplicator: 1.5, mining_multiplicator: 0.2, revenues_multiplicator: 0)
+mercenaire = Guild.create(name: 'Mercenaire', attack_power_multiplicator: 2, defense_power_multiplicator: 1.5, mining_multiplicator: 0.2, revenues_multiplicator: 0)
 arbaletrier = Guild.create(name: 'Arbalétrier', defense_power_multiplicator: 1.6)
-mineur = Guild.create(name: 'Mineur', mining_multiplicator: 2, defense_power_multiplicator: 0.7)
+mineur = Guild.create(name: 'Mineur', mining_multiplicator: 1.5, defense_power_multiplicator: 0.6)
 
 servants = Troop.create(name: 'Servants', country_name: 'Duché de Bourgogne')
 Patrol.create(name: 'Chamois', troop: servants, money: 500, guild: arbaletrier)

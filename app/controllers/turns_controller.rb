@@ -30,7 +30,7 @@ class TurnsController < ApplicationController
     else
       flash[:alert] = "T'es pas admin qu'est ce que tu fous"
     end
-    # redirect_to root_path
+    redirect_to root_path
   end
 
   private
