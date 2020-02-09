@@ -12,11 +12,7 @@ class City < ApplicationRecord
   end
 
   def total_defense
-    defense_man_power * defense_building_multiplicator 
-  end
-
-  def power_difference
-    total_attack - total_defense
+    defense_man_power * defense_building_multiplicator
   end
 
   def paris?

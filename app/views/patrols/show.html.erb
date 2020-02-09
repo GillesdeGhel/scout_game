@@ -4,6 +4,9 @@
 <h1 class="center">
   <%= @patrol.name %>
 </h1>
+<% if @patrol.id != 18 %>
+  <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
+<% end %>
 <hr>
 <div class="row">
   <div class="col-lg-4 col-12">
@@ -135,7 +138,7 @@
         <h4> Attaque de la patrouille: </h4>
         <% if !@patrol.attack? %>
           <%= simple_form_for @attack do |f| %>
-            <%= f.collection_select :city_id, City.all, :id, :label %>
+            <%= f.collection_select :city_id, City.select { |c| c != @patrol.troop.city }, :id, :label %>
             <%= f.hidden_field :patrol_id, value: @patrol.id %>
             <%= f.input :man_power %>
             <%= f.button :submit, class: "btn-primary" %>
@@ -221,7 +224,7 @@
             <h4> <%= c.building.name %> </h4>
             <p> Usage: <%= c.building.usage %> </p>
             <p> Multiplicateur: <%= c.building.multiplicator %> </p>
-            <p> Durée: <%= c.building.durability %> </p>
+            <p> Durée restante: <%= c.durability %> </p>
           </div>
         </div>
       </div>
