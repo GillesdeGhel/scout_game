@@ -23,7 +23,7 @@
         <% t.patrols.sort_by(&:total_gains).reverse.each do |p|%>
           <a href="/patrols/<%= p.id %>">
             <div class="patrol-link">
-              <%= p.name %> - <%= p.guild.name %> <span class="right">Score: <%= p.total_gains %></span>
+              <%= p.name %> - <%= p.guild.name %> <span class="right">Score: <%= number_with_delimiter(p.total_gains) %></span>
             </div>
           </a>
         <% end %>

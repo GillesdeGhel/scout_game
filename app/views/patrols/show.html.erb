@@ -31,14 +31,14 @@
         <h5>
           Thune :
           <span class="right">
-            <%= @patrol.money %> Or
+            <%= number_with_delimiter(@patrol.money) %> Or
           <span>
         </h5>
         <br>
         <h5>
           Score total:
           <span class="right">
-            <%= @patrol.total_gains %>
+            <%= number_with_delimiter(@patrol.total_gains) %>
           <span>
         </h5>
       </div>
