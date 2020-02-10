@@ -111,7 +111,7 @@ class TurnsController < ApplicationController
   end
 
   def change_construction_durability
-    Construction.all.select(&:attack?).each do |c|
+    Construction.all.reject(&:fortification?).each do |c|
       if c.durability.eql?(1)
         c.destroy
         next

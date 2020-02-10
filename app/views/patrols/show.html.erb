@@ -54,22 +54,22 @@
           <%= @patrol.guild.name %>
         </h3>
             <p>
-              Coûts bâtiment défensifs:  <span class="right <%=@patrol.defense_construction_cost_multiplicator < 1 ? 'green' : @patrol.defense_construction_cost_multiplicator > 1 ? 'red' : '' %>">  x <%= @patrol.defense_construction_cost_multiplicator %> </span>
+              Coûts bâtiment défensifs:  <span class="right <%=@patrol.defense_construction_cost_multiplicator < 1 ? 'green' : @patrol.defense_construction_cost_multiplicator > 1 ? 'red' : '' %>">   <%= (@patrol.defense_construction_cost_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Coûts engins de siège: <span class="right <%=@patrol.attack_construction_cost_multiplicator < 1 ? 'green' : @patrol.attack_construction_cost_multiplicator > 1 ? 'red' : '' %>"> x <%= @patrol.attack_construction_cost_multiplicator %> </span>
+              Coûts engins de siège: <span class="right <%=@patrol.attack_construction_cost_multiplicator < 1 ? 'green' : @patrol.attack_construction_cost_multiplicator > 1 ? 'red' : '' %>">  <%= (@patrol.attack_construction_cost_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Puissance d'attaques: <span class="right <%=@patrol.attack_power_multiplicator > 1 ? 'green' : @patrol.attack_power_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.attack_power_multiplicator %> </span>
+              Puissance d'attaques: <span class="right <%=@patrol.attack_power_multiplicator > 1 ? 'green' : @patrol.attack_power_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.attack_power_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Puissance défensive: <span class="right <%=@patrol.defense_power_multiplicator > 1 ? 'green' : @patrol.defense_power_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.defense_power_multiplicator %> </span>
+              Puissance défensive: <span class="right <%=@patrol.defense_power_multiplicator > 1 ? 'green' : @patrol.defense_power_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.defense_power_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Revenus passif: <span class="right <%=@patrol.revenues_multiplicator > 1 ? 'green' : @patrol.revenues_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.revenues_multiplicator %> </span>
+              Revenus passif: <span class="right <%=@patrol.revenues_multiplicator > 1 ? 'green' : @patrol.revenues_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.revenues_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Revenus miniers: <span class="right <%=@patrol.mining_multiplicator > 1 ? 'green' : @patrol.mining_multiplicator < 1 ? 'red' : '' %>"> x <%= @patrol.mining_multiplicator %> </span>
+              Revenus miniers: <span class="right <%=@patrol.mining_multiplicator > 1 ? 'green' : @patrol.mining_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.mining_multiplicator * 100).round %> % </span>
             </p>
 
           <% if @patrol.hold_regional_capital %>
@@ -159,7 +159,7 @@
           </p>
           <p> Multiplicateur des constructions:
             <span class="right">
-              x <%= @patrol.attack_multiplicator %>
+              x <%= @patrol.attack_multiplicator * 100%> %
             </span>
           </p>
           <p> Puissance totale:
@@ -189,7 +189,7 @@
           <% end %>
         <% else %>
           <p> Puissance des hommes: <%= @patrol.defense.man_power %> </p>
-          <p> Multiplicateur des constructions: x <%= @patrol.city.defense_building_multiplicator %> </p>
+          <p> Multiplicateur des constructions: x <%= @patrol.defense_multiplicator * 100%> %</p>
           <p> Puissance totale: <%= @patrol.defense.total_defense_power %> </p>
         <% end %>
       </div>
@@ -248,7 +248,7 @@
                 Durabilité: <%= b.durability %> tour
               </li>
               <li>
-                Puissance: + <%= b.multiplicator * 100 %> %
+                Puissance: + <%= (b.multiplicator * 100).round %> %
               </li>
             </ul>
 
@@ -271,7 +271,7 @@
                 Durabilité: <%= b.durability %> tour
               </li>
               <li>
-                Puissance: + <%= b.multiplicator * 100 %> %
+                Puissance: + <%= (b.multiplicator * 100).round %> %
               </li>
             </ul>
           <% end %>
@@ -290,7 +290,7 @@
                 Coût: <%= b.cost %> Or
               </li>
               <li>
-                Puissance: + <%= b.multiplicator * 100 %> %
+                Puissance: + <%= (b.multiplicator * 100).round %> %
               </li>
             </ul>
           <% end %>

@@ -88,13 +88,13 @@ City.create(name: 'Edimbourg', troop: paladins, defense_building_multiplicator: 
 
 City.create(name: 'Paris', defense_building_multiplicator: 1, population: 1000)
 
-Building.create(name: 'Trébuchet', usage: 'attack', durability: 3, multiplicator: 0.3, cost: 300)
-Building.create(name: 'Bélier', usage: 'attack', durability: 1, multiplicator: 0.2, cost: 125)
+Building.create(name: 'Trébuchet', usage: 'attack', durability: 3, multiplicator: 0.2, cost: 300)
+Building.create(name: 'Bélier', usage: 'attack', durability: 1, multiplicator: 0.15, cost: 125)
 Building.create(name: 'Tour de siège', usage: 'attack', durability: 2, multiplicator: 0.2, cost: 200)
 
 Building.create(name: 'Tour de guet', usage: 'defense', durability: 5, multiplicator: 0.2, cost: 400)
-Building.create(name: 'Baliste', usage: 'defense', durability: 2, multiplicator: 0.5, cost: 125)
-Building.create(name: 'Huile bouillante', usage: 'defense', durability: 1, multiplicator: 0.3, cost: 200)
+Building.create(name: 'Baliste', usage: 'defense', durability: 2, multiplicator: 0.15, cost: 125)
+Building.create(name: 'Huile bouillante', usage: 'defense', durability: 1, multiplicator: 0.25, cost: 200)
 
 Building.create(name: 'Mur de bois', usage: 'fortification', multiplicator: 1.5, cost: 400)
 Building.create(name: 'Mur de pierre', usage: 'fortification', multiplicator: 2, cost: 600)
