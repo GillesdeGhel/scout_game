@@ -7,4 +7,12 @@ class Construction < ApplicationRecord
   def attack?
     building.usage.eql?('attack')
   end
+
+  def defense?
+    building.usage.eql?('defense')
+  end
+
+  def fortification?
+    building.usage.eql?('fortification')
+  end
 end
