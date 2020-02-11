@@ -4,10 +4,12 @@
 <h1 class="center">
   <%= @patrol.name %>
 </h1>
-<% if current_user.admin? && @patrol.id != 18 %>
-  <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
+<% if current_user.admin? %>
+  <% if @patrol.id != 18 %>
+    <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
+  <% end %>
 <% else %>
-  <div class="row">  
+  <div class="row">
     <% current_user.troop.patrols.each do |p| %>
       <div class="col-2">
         <%= link_to p.name, patrol_path(p), class:"nav-link" %>
