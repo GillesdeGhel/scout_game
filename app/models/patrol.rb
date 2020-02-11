@@ -14,17 +14,17 @@ class Patrol < ApplicationRecord
   delegate :city, to: :troop
 
   def attack_multiplicator
-    return 1 unless constructions.any?
+    return attack_power_multiplicator unless constructions.any?
 
     attack_constructions = constructions.select(&:attack?)
     (1 + attack_constructions.sum { |construction| construction.building.multiplicator }) * attack_power_multiplicator
   end
 
   def defense_multiplicator
-    return 1 unless constructions.any?
+    return (defense_power_multiplicator).round(2) unless constructions.any?
 
     defense_constructions = constructions.select(&:defense?)
-    ((1 + defense_constructions.sum { |construction| construction.building.multiplicator }) * defense_power_multiplicator * city.defense_building_multiplicator).round(2)
+    ((1 + defense_constructions.sum { |construction| construction.building.multiplicator }) * defense_power_multiplicator).round(2)
   end
 
   def city
@@ -55,5 +55,26 @@ class Patrol < ApplicationRecord
 
   def ranking
     Patrol.count { |p| p.total_gains > self.total_gains } + 1
+  end
+
+  def constructable_buildings
+    return Building.all.reject{ |b| b.name == "Mur de pierre" || b.name == "Muraille" } unless wood_wall_complete
+    return Building.all.reject{ |b| b.name == "Mur de bois" || b.name == "Muraille" } unless stone_wall_complete
+
+    Building.all.reject{ |b| b.fortification? }
+  end
+
+  private
+
+  def wood_wall_complete
+    city.defense_building_multiplicator == (1 + Building.wood_wall.multiplicator)
+  end
+
+  def stone_wall_complete
+    city.defense_building_multiplicator == (1 + Building.stone_wall.multiplicator)
+  end
+
+  def fortification_complete
+    city.defense_building_multiplicator == (1 + Building.big_wall.multiplicator)
   end
 end

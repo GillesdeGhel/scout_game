@@ -4,15 +4,5 @@ class Construction < ApplicationRecord
 
   attr_accessor :city_id
 
-  def attack?
-    building.usage.eql?('attack')
-  end
-
-  def defense?
-    building.usage.eql?('defense')
-  end
-
-  def fortification?
-    building.usage.eql?('fortification')
-  end
+  delegate :attack?, :defense?, :fortification?, to: :building
 end
