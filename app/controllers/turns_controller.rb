@@ -32,7 +32,7 @@ class TurnsController < ApplicationController
     else
       flash[:alert] = "T'es pas admin qu'est ce que tu fous"
     end
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   private
@@ -57,7 +57,7 @@ class TurnsController < ApplicationController
 
     Mining.all.each do |m|
       patrol = m.patrol
-      revenues = m.man_power * 1.5 * patrol.mining_multiplicator
+      revenues = m.man_power * 1.1 * patrol.mining_multiplicator
       patrol.money += revenues
       patrol.receipt.minings_winnings += revenues
       patrol.receipt.save!
@@ -83,6 +83,7 @@ class TurnsController < ApplicationController
     return if event.eql?('fiscal_fraud')
 
     patrols.each do |p|
+      p.money = 0 if p.money.negative?
       revenues = p.city.population * p.revenues_multiplicator * 0.2
       revenues *= 1.3 if event.eql?('successfull_trade')
       p.money += revenues
@@ -90,7 +91,6 @@ class TurnsController < ApplicationController
         p.money += 100
         p.receipt.paris_winning = 100
       end
-      p.money = 0 if p.money.negative?
       p.receipt.base_revenues = revenues
       p.receipt.save!
       p.save!
@@ -164,7 +164,7 @@ class TurnsController < ApplicationController
 
   def pillage(city)
     city.troop.patrols.each do |patrol|
-      if city.defense_man_power.zero?
+      if city.total_defense.zero?
         revenues = (city.population / 6)
         patrol.money -= revenues
         patrol.receipt.defense_losses = revenues
@@ -174,7 +174,7 @@ class TurnsController < ApplicationController
       else
         patrol_percentage = inverse_of_defense_patrol_man_power_ratio(patrol) / defense_fraction(city)
         revenues = city.population * patrol_percentage
-        revenues * 0.6 if event.eql?('clemency')
+        revenues * 0.7 if event.eql?('clemency')
         patrol.money -= revenues
         patrol.receipt.defense_losses = revenues
         patrol.receipt.save!
@@ -185,13 +185,19 @@ class TurnsController < ApplicationController
     city.attacks.sort_by(&:total_attack_power).each do |a|
       attack_counter += 1
       attack_count = city.attacks.count
-      percentage = attack_counter / (1..attack_count).sum
+      percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
+      puts "--PERCENTAGE--"
+      puts percentage
       revenues = city.population * percentage
-      revenues * 1.5 if event.eql?('barbarism')
+      puts "--REVENUEs--"
+      puts revenues
+      revenues * 1.3 if event.eql?('barbarism')
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings = revenues
       a.patrol.receipt.save!
       a.patrol.save!
+      puts "--PATROL--"
+      puts a.patrol.receipt.attack_winnings
     end
     city.pillaged = true
     city.pillage_count += 1
@@ -231,7 +237,7 @@ class TurnsController < ApplicationController
 
   def inverse_of_defense_patrol_man_power_ratio(patrol)
     patrol_man_power = patrol.defense&.man_power.present? ? patrol.defense.man_power.positive? ? patrol.defense.man_power : 1 : 1
-    1 / (patrol_man_power.to_f / patrol.city.defense_man_power.to_f)
+    1 / (patrol_man_power.to_f / patrol.city.total_defense.to_f)
   end
 
   def defense_fraction(city)

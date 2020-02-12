@@ -7,12 +7,8 @@ class City < ApplicationRecord
     attacks.sum(&:total_attack_power)
   end
 
-  def defense_man_power
-    defenses.sum(&:man_power)
-  end
-
   def total_defense
-    defense_man_power * defense_building_multiplicator
+    defenses.sum(&:total_defense_power)
   end
 
   def paris?
