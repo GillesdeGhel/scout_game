@@ -13,6 +13,15 @@ class AttacksController < ApplicationController
     redirect_to patrol_path(patrol.id)
   end
 
+  def destroy
+    return unless patrol.attack.present?
+
+    patrol.money += patrol.attack.man_power
+    Attack.find(params[:id]).destroy!
+    patrol.save!
+    redirect_to patrol_path(patrol.id)
+  end
+
   def patrol
     @patrol ||= Patrol.find(attack_params[:patrol_id])
   end

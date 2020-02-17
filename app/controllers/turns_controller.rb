@@ -32,7 +32,7 @@ class TurnsController < ApplicationController
     else
       flash[:alert] = "T'es pas admin qu'est ce que tu fous"
     end
-    # redirect_to root_path
+    redirect_to root_path
   end
 
   private
@@ -186,18 +186,12 @@ class TurnsController < ApplicationController
       attack_counter += 1
       attack_count = city.attacks.count
       percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
-      puts "--PERCENTAGE--"
-      puts percentage
       revenues = city.population * percentage
-      puts "--REVENUEs--"
-      puts revenues
       revenues * 1.3 if event.eql?('barbarism')
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings = revenues
       a.patrol.receipt.save!
       a.patrol.save!
-      puts "--PATROL--"
-      puts a.patrol.receipt.attack_winnings
     end
     city.pillaged = true
     city.pillage_count += 1
