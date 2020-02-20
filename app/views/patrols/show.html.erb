@@ -5,19 +5,21 @@
   <%= @patrol.name %>
 </h1>
 <% if current_user.admin? %>
-  <% if @patrol.id != 18 %>
+  <% if @patrol.id != 54 %>
     <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
   <% end %>
 <% else %>
   <div class="row">
+    <ul class="nav nav-tabs nav-justified">
     <% current_user.troop.patrols.each do |p| %>
-      <div class="col-2">
-        <%= link_to p.name, patrol_path(p), class:"nav-link" %>
-      </div>
+      <li class="nav-item" style="width:13em;">
+        <%= link_to p.name, patrol_path(p), class: "nav-link #{p == @patrol ? 'active' : ''}" %>
+      </li>
     <% end %>
+  </ul>
   </div>
 <% end %>
-<hr>
+<br>
 <div class="row">
   <div class="col-lg-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
@@ -177,6 +179,7 @@
               <%= @patrol.attack.total_attack_power %>
             </span>
           </p>
+          <%= button_to 'Annuler', @patrol.attack, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler cette attaque?')" %>
         <% end %>
       </div>
     </div>
@@ -218,6 +221,7 @@
               <%= @patrol.defense.total_defense_power %>
             </span>
           </p>
+          <%= button_to 'Annuler', @patrol.defense, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler cette défense?')" %>
         <% end %>
       </div>
     </div>
@@ -235,6 +239,7 @@
           <% end %>
         <% else %>
           <p> Nombre d'hommes: <%= @patrol.mining.man_power %> </p>
+          <%= button_to 'Annuler', @patrol.mining, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler ce minage?')" %>
         <% end %>
       </div>
     </div>
