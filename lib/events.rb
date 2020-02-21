@@ -1,17 +1,17 @@
 module Event
   def self.city_plague
     Defense.all.each do |d|
-      d.man_power -= 30 if d.man_power.positive?
+      d.man_power *= 0.7 if d.man_power.positive?
       d.save!
-      d.patrol.receipt.update(event: 'Peste dans les villes: -30 hommes en défense')
+      d.patrol.receipt.update(event: 'Peste dans les villes: -30% hommes en défense')
     end
   end
 
   def self.campaign_plague
     Attack.all.each do |a|
-      a.man_power -= 30 if a.man_power.positive?
+      a.man_power *= 0.7 if a.man_power.positive?
       a.save!
-      a.patrol.receipt.update(event: 'Peste dans les campements: -30 hommes en attaque')
+      a.patrol.receipt.update(event: 'Peste dans les campements: -30% hommes en attaque')
     end
   end
 
@@ -30,12 +30,9 @@ module Event
   end
 
   def self.earthquake
-    City.all.each do |c|
-      c.defense_building_multiplicator = (c.defense_building_multiplicator / 2).round(2)
-      c.save!
-      c.troop&.patrols&.each do |p|
-        p.receipt.update(event: 'Tremblement de terre: Défenses des villes réduites de moitié')
-      end
+    Construction.select(&:defense?).each do |c|
+      c.patrol.receipt.update(event: 'Tremblement de terre: Batiments défensif détruits')
+      c.destroy!
     end
   end
 
@@ -47,13 +44,13 @@ module Event
 
   def self.clemency
     Patrol.all.each do |p|
-      p.receipt.update(event: 'Clémence et miséricorde: -40% de perte suites aux pillages de villes')
+      p.receipt.update(event: 'Clémence et miséricorde: -30% de perte suites aux pillages de villes')
     end
   end
 
   def self.barbarism
     Patrol.all.each do |p|
-      p.receipt.update(event: 'Barbarisme invétéré: +50% des revenus suites aux pillages de villes')
+      p.receipt.update(event: 'Barbarisme invétéré: +30% des revenus suites aux pillages de villes')
     end
   end
 

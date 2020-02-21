@@ -13,6 +13,14 @@ class MiningsController < ApplicationController
     redirect_to patrol_path(patrol.id)
   end
 
+  def destroy
+    mining = Mining.find(params[:id])
+    mining.patrol.money += mining.man_power
+    mining.destroy!
+    mining.patrol.save!
+    redirect_to patrol_path(mining.patrol.id)
+  end
+
   def index
     @minings = Mining.all
   end

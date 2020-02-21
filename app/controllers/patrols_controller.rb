@@ -1,6 +1,6 @@
 class PatrolsController < ApplicationController
   def show
-    if current_user.send("#{patrol.troop.name.downcase}?") || current_user.admin?
+    if current_user.troop == patrol.troop || current_user.admin?
       @patrol = patrol
       @attack = Attack.new
       @defense = Defense.new
