@@ -146,6 +146,7 @@ class TurnsController < ApplicationController
     troops.each do |t|
       array = Guild.all.map(&:id)
       t.patrols.each do |p|
+        p.guild_changed = false
         sample = array.sample
         p.guild_id = sample
         array.delete(sample)

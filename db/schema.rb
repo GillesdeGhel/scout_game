@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_124352) do
+ActiveRecord::Schema.define(version: 2020_03_04_100333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_124352) do
     t.boolean "hold_regional_capital"
     t.integer "total_gains", default: 0
     t.integer "guild_id"
+    t.boolean "guild_changed", default: false
   end
 
   create_table "receipts", force: :cascade do |t|

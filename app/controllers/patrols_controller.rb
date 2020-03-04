@@ -28,6 +28,6 @@ class PatrolsController < ApplicationController
   private
 
   def patrol_params
-    params.require(:patrol).permit(:guild_id)
+    params.require(:patrol).permit(:guild_id, :guild_changed)
   end
 end

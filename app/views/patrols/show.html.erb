@@ -84,9 +84,10 @@
               Revenus miniers: <span class="right <%=@patrol.mining_multiplicator > 1 ? 'green' : @patrol.mining_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.mining_multiplicator * 100).round %> % </span>
             </p>
 
-          <% if @patrol.hold_regional_capital %>
+          <% if @patrol.hold_regional_capital && !@patrol.guild_changed %>
             <%= simple_form_for @patrol do |f| %>
               <%= f.hidden_field :patrol_id, value: @patrol.id %>
+              <%= f.hidden_field :guild_changed, value: true %>
               <%= f.collection_select :guild_id, Guild.all, :id, :name%>
               <%= f.button :submit, 'Changer de guilde', class: "btn-primary" %>
             <% end %>
