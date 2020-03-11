@@ -80,7 +80,7 @@ class TurnsController < ApplicationController
   end
 
   def pay_patrols
-    return if event.eql?('fiscal_fraud')
+    return if event.eql?('fiscal_fraud') #TODO fix negative patrols
 
     patrols.each do |p|
       p.money = 0 if p.money.negative?
