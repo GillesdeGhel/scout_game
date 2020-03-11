@@ -181,7 +181,7 @@ class TurnsController < ApplicationController
       end
     end
     attack_counter = 0
-    city.attacks.sort_by(&:total_attack_power).each do |a|
+    city.attacks.select {|a| a.total_attack_power.positive? }.sort_by(&:total_attack_power).each do |a|
       attack_counter += 1
       attack_count = city.attacks.count
       percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
