@@ -58,10 +58,10 @@ class Patrol < ApplicationRecord
   end
 
   def constructable_buildings
-    return Building.all.reject{ |b| b.name == 'Mur de pierre' || b.name == 'Muraille' } unless wood_wall_complete
+    return Building.all.reject{ |b| b.name == 'Mur de bois' || b.name == 'Mur de pierre' } unless fortification_complete
     return Building.all.reject{ |b| b.name == 'Mur de bois' || b.name == 'Muraille' } unless stone_wall_complete
-    
-    Building.all.reject{ |b| b.name == 'Mur de bois' || b.name == 'Mur de pierre' }
+
+    Building.all.reject{ |b| b.name == 'Mur de pierre' || b.name == 'Muraille' } unless wood_wall_complete
   end
 
   private
