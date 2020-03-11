@@ -33,9 +33,9 @@ class City < ApplicationRecord
   end 
 
   def fortification_next_level
-    return 20 if fortification_level >= 10
-    return 30 if fortification_level >= 20
     return '∞' if fortification_level >= 30
+    return 30 if fortification_level >= 20
+    return 20 if fortification_level >= 10
 
     10
   end 
