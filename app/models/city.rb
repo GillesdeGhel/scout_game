@@ -23,4 +23,20 @@ class City < ApplicationRecord
     return "#{self.name} (#{Troop.hold_paris&.name})" if self.paris?
     "#{self.name} - #{self.troop&.country_name} (#{self.troop&.name})"
   end
+
+  def fortification_label
+    return 'Muraille (+ 300%)' if fortification_level >= 30
+    return 'Mur de Pierre (+ 200%)' if fortification_level >= 20
+    return 'Mur de bois (+100%)' if fortification_level >= 10
+
+    'Pas encore de mur'
+  end 
+
+  def fortification_next_level
+    return 20 if fortification_level >= 10
+    return 30 if fortification_level >= 20
+    return '∞' if fortification_level >= 30
+
+    10
+  end 
 end

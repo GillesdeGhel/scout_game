@@ -151,7 +151,7 @@
         <h4> Attaque de la patrouille: </h4>
         <% if !@patrol.attack? %>
           <%= simple_form_for @attack do |f| %>
-            <%= f.collection_select :city_id, City.select { |c| c != @patrol.troop.city }, :id, :label %>
+            <%= f.collection_select :city_id, City.select { |c| c != @patrol.city }, :id, :label %>
             <%= f.hidden_field :patrol_id, value: @patrol.id %>
             <%= f.input :man_power, label: "Nombre d'hommes:" %>
             <%= f.button :submit, 'Attaquer', class: "btn-primary" %>
@@ -315,10 +315,17 @@
   <div class="col-lg-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
-        <h4> Fortifications: </h4>
+        <h4> Niveau de fortification:  </h4>
+          <%= @patrol.city.name %>: <%= @patrol.city.fortification_level %>/<%= @patrol.city.fortification_next_level %>
+          <%= @patrol.city.fortification_label %>
+          <% if @patrol.hold_paris? %>
+            <br>
+            Paris: <%= City.paris.fortification_level %>/<%= City.paris.fortification_next_level %>
+            <%= City.paris.fortification_label %>
+          <% end %>
           <% Building.select{ |b| b.usage.eql?('fortification') }.each do |b| %>
             <hr>
-            <%= b.name %> (<%= @patrol.troop.patrols.sum { |p| p.constructions.count { |c| c.building == b } } %>/10):
+            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
             <ul>
               <li>
                 Coût: <%= b.cost %> Or
