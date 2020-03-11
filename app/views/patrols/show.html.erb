@@ -240,6 +240,7 @@
           <% end %>
         <% else %>
           <p> Nombre d'hommes: <%= @patrol.mining.man_power %> </p>
+          <p> Revenus prévus: <%= @patrol.mining.total_revenues.round %> </p>
           <%= button_to 'Annuler', @patrol.mining, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler ce minage?')" %>
         <% end %>
       </div>

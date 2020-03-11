@@ -57,9 +57,8 @@ class TurnsController < ApplicationController
 
     Mining.all.each do |m|
       patrol = m.patrol
-      revenues = m.man_power * 1.1 * patrol.mining_multiplicator
-      patrol.money += revenues
-      patrol.receipt.minings_winnings += revenues
+      patrol.money += m.total_revenues
+      patrol.receipt.minings_winnings += m.total_revenues
       patrol.receipt.save!
       patrol.save!
     end
@@ -80,12 +79,11 @@ class TurnsController < ApplicationController
   end
 
   def pay_patrols
-    return if event.eql?('fiscal_fraud') #TODO fix negative patrols
-
     patrols.each do |p|
       p.money = 0 if p.money.negative?
       revenues = p.city.population * p.revenues_multiplicator * 0.2
       revenues *= 1.3 if event.eql?('successfull_trade')
+      revenues = 0 if event.eql?('fiscal_fraud')
       p.money += revenues
       if p.hold_paris?
         p.money += 100
