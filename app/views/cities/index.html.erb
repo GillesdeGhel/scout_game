@@ -3,7 +3,7 @@
   <h1> Toutes les villes </h1>
 </div>
 <div class="row">
-  <% City.all.each do |c|%>
+  <% @cities.each do |c|%>
   <div class="col-lg-4 col-12 ">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <% if c.pillaged %>
@@ -29,6 +29,24 @@
         <p class="card-text center">La ville a été pillée: <%= c.pillage_count%> fois en tout </p>
         <p class="card-text center"> Attaque sur la ville au tour passé: <%= number_with_delimiter(c.previous_total_attack) %> </p>
         <p class="card-text center"> Défense de la ville au tour passé: <%= number_with_delimiter(c.previous_total_defense) %> </p>
+        <% if current_user.admin? %>
+          <hr>
+          Attaques: 
+          <br>
+          <% c.attacks.each do |a| %>
+            Patrouille: <%= a.patrol.name %> (<%= a.patrol.troop.name %>) - <%= a.total_attack_power %>
+            <br>
+          <% end %>
+          Total: <%= c.total_attack %>
+          <hr>
+          Défenses: 
+          <br>
+          <% c.defenses.each do |d| %>
+            Patrouille: <%= d.patrol.name %> - <%= d.total_defense_power %>
+            <br>
+          <% end %>
+          Total: <%= c.total_defense %>
+        <% end %>
       </div>
     </div>
   </div>

@@ -317,7 +317,7 @@
       <div class="card-body">
         <h4> Niveau de fortification:  </h4>
           <%= @patrol.city.name %>: <%= @patrol.city.fortification_level %>/<%= @patrol.city.fortification_next_level %>
-          <%= @patrol.city.fortification_label %>
+          - <%= @patrol.city.fortification_label %>
           <% if @patrol.hold_paris? %>
             <br>
             Paris: <%= City.paris.fortification_level %>/<%= City.paris.fortification_next_level %>

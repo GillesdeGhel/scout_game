@@ -1,3 +1,5 @@
 class CitiesController < ApplicationController
-  def index; end
+  def index
+    @cities = City.all
+  end
 end
