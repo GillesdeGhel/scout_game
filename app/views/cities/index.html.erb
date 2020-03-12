@@ -34,7 +34,7 @@
           Attaques: 
           <br>
           <% c.attacks.each do |a| %>
-            Patrouille: <%= a.patrol.name %> (<%= a.patrol.troop.name %>) - <%= a.total_attack_power %>
+            <%= a.patrol.name %> (<%= a.patrol.troop.name %>) - <%= a.total_attack_power %>
             <br>
           <% end %>
           Total: <%= c.total_attack %>
@@ -42,7 +42,7 @@
           Défenses: 
           <br>
           <% c.defenses.each do |d| %>
-            Patrouille: <%= d.patrol.name %> - <%= d.total_defense_power %>
+            <%= d.patrol.name %> - <%= d.total_defense_power %>
             <br>
           <% end %>
           Total: <%= c.total_defense %>
