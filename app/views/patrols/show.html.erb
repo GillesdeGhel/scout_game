@@ -131,7 +131,7 @@
               </span>
             </p>
           <% end  %>
-          <% if !@patrol.receipt.defense_losses.zero? %>
+          <% unless @patrol.receipt.defense_losses.zero? %>
             <p>
               Perte de défense:
               <span class="right" style="color:red;">
@@ -149,7 +149,7 @@
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Attaque de la patrouille: </h4>
-        <% if !@patrol.attack? %>
+        <% unless @patrol.attack? %>
           <%= simple_form_for @attack do |f| %>
             <%= f.collection_select :city_id, City.select { |c| c != @patrol.city }, :id, :label %>
             <%= f.hidden_field :patrol_id, value: @patrol.id %>
@@ -160,7 +160,7 @@
           <p> Attaque sur:
             <span class="right">
               <%= @patrol.attack.city.name %>
-              <% if !@patrol.attack.city.paris?%>
+              <% unless @patrol.attack.city.paris?%>
                 des <%= @patrol.attack.city.troop.name %>
               <% end %>
             </span>
@@ -194,7 +194,7 @@
           (<%= @patrol.defense.city.name %>)
         <% end %>
         </h4>
-        <% if !@patrol.defense? %>
+        <% unless @patrol.defense? %>
           <%= simple_form_for @defense do |f| %>
             <% if @patrol.hold_paris? %>
               <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
@@ -232,7 +232,7 @@
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Homme qui partent à la mine: </h4>
-        <% if !@patrol.mining? %>
+        <% unless @patrol.mining? %>
           <%= simple_form_for @mining do |f| %>
             <%= f.hidden_field :patrol_id, value: @patrol.id %>
             <%= f.input :man_power, label: "Nombre d'hommes:" %>
@@ -271,7 +271,7 @@
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Constructions d'attaque: </h4>
-          <% Building.select{ |b| b.usage.eql?('attack') }.each do |b| %>
+          <% Building.attacks.each do |b| %>
             <hr>
             <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
             <ul>
@@ -285,7 +285,13 @@
                 Puissance: + <%= (b.multiplicator * 100).round %> %
               </li>
             </ul>
-
+          <% end %>
+          <hr>
+          <%= simple_form_for @construction do |f| %>
+            <%= f.hidden_field :city_id, value: @patrol.city.id %>
+            <%= f.collection_select :building_id, Building.attacks, :id, :name %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.button :submit, 'Construire', class: "btn-primary" %>
           <% end %>
       </div>
     </div>
@@ -294,7 +300,7 @@
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Constructions de défense: </h4>
-          <% Building.select{ |b| b.usage.eql?('defense') }.each do |b| %>
+          <% Building.defenses.each do |b| %>
           <hr>
             <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
             <ul>
@@ -308,6 +314,20 @@
                 Puissance: + <%= (b.multiplicator * 100).round %> %
               </li>
             </ul>
+          <% end %>
+          <hr>
+          <%= simple_form_for @construction do |f| %>
+          <% if @patrol.hold_paris? %>
+            <p>
+              Sélectionner Paris pour construire sur Paname et pas sur votre ville.
+             </p>
+            <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
+          <% else  %>
+            <%= f.hidden_field :city_id, value: @patrol.city.id %>
+          <% end  %>
+            <%= f.collection_select :building_id, Building.defenses, :id, :name %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.button :submit, 'Construire', class: "btn-primary" %>
           <% end %>
       </div>
     </div>
@@ -323,7 +343,7 @@
             Paris: <%= City.paris.fortification_level %>/<%= City.paris.fortification_next_level %>
             <%= City.paris.fortification_label %>
           <% end %>
-          <% Building.select{ |b| b.usage.eql?('fortification') }.each do |b| %>
+          <% Building.fortifications.each do |b| %>
             <hr>
             <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
             <ul>
@@ -336,19 +356,20 @@
             </ul>
           <% end %>
           <hr>
-          <%= simple_form_for @construction do |f| %>
-          <% if @patrol.hold_paris? %>
-            <p>
-              Sélectionner Paris pour les batiments de défense pour construire sur Paname.
-              Pour les bâtiments d'attaque ça n'a pas d'importance.
-             </p>
-            <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
-          <% else  %>
-            <%= f.hidden_field :city_id, value: @patrol.city.id %>
-          <% end  %>
-            <%= f.collection_select :building_id, @patrol.constructable_buildings, :id, :name %>
-            <%= f.hidden_field :patrol_id, value: @patrol.id %>
-            <%= f.button :submit, 'Construire', class: "btn-primary" %>
+          <% unless @patrol.fortification_complete? %>
+            <%= simple_form_for @construction do |f| %>
+            <% if @patrol.hold_paris? %>
+              <p>
+                Sélectionner Paris pour construire sur Paname et pas sur votre ville.
+              </p>
+              <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
+            <% else  %>
+              <%= f.hidden_field :city_id, value: @patrol.city.id %>
+            <% end  %>
+              <%= f.collection_select :building_id, @patrol.constructable_fortifications, :id, :name %>
+              <%= f.hidden_field :patrol_id, value: @patrol.id %>
+              <%= f.button :submit, 'Construire', class: "btn-primary" %>
+            <% end %>
           <% end %>
       </div>
     </div>

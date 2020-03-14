@@ -13,6 +13,18 @@ class Building < ApplicationRecord
     Building.find_by(name: 'Muraille')
   end
 
+  def self.defenses
+    Building.select { |b| b.usage.eql?('defense') }
+  end
+
+  def self.attacks
+    Building.select { |b| b.usage.eql?('attack') }
+  end
+
+  def self.fortifications
+    Building.select { |b| b.usage.eql?('fortification') }
+  end
+
   def attack?
     usage.eql?('attack')
   end

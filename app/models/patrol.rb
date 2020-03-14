@@ -57,13 +57,17 @@ class Patrol < ApplicationRecord
     Patrol.count { |p| p.total_gains > self.total_gains } + 1
   end
 
-  def constructable_buildings
-    return Building.all.reject{ |b| b.fortification? } if fortification_complete?
-    return Building.all.reject{ |b| b.name == 'Mur de bois' || b.name == 'Mur de pierre' } if stone_wall_complete?
-    return Building.all.reject{ |b| b.name == 'Mur de bois' || b.name == 'Muraille' } if wood_wall_complete?
+  def constructable_fortifications
+    return Building.fortifications.reject{ |b| b.fortification? } if fortification_complete?
+    return Building.fortifications.reject{ |b| b.name == 'Mur de bois' || b.name == 'Mur de pierre' } if stone_wall_complete?
+    return Building.fortifications.reject{ |b| b.name == 'Mur de bois' || b.name == 'Muraille' } if wood_wall_complete?
 
-    Building.all.reject{ |b| b.name == 'Mur de pierre' || b.name == 'Muraille' }
+    Building.fortifications.reject{ |b| b.name == 'Mur de pierre' || b.name == 'Muraille' }
   end 
+
+  def fortification_complete?
+    city.defense_building_multiplicator == (1 + Building.big_wall.multiplicator)
+  end
   
   private
 
@@ -73,9 +77,5 @@ class Patrol < ApplicationRecord
 
   def stone_wall_complete?
     city.defense_building_multiplicator == (1 + Building.stone_wall.multiplicator)
-  end
-
-  def fortification_complete?
-    city.defense_building_multiplicator == (1 + Building.big_wall.multiplicator)
   end
 end
