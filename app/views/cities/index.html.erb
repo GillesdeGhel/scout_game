@@ -37,7 +37,7 @@
             <%= a.patrol.name %> (<%= a.patrol.troop.name %>) - <%= a.total_attack_power %>
             <br>
           <% end %>
-          Total: <%= c.total_attack %>
+          Total: <%= c.total_attack.round %>
           <hr>
           Défenses: 
           <br>
@@ -45,7 +45,7 @@
             <%= d.patrol.name %> - <%= d.total_defense_power %>
             <br>
           <% end %>
-          Total: <%= c.total_defense %>
+          Total: <%= c.total_defense.round %>
         <% end %>
       </div>
     </div>

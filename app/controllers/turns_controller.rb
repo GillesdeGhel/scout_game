@@ -229,7 +229,7 @@ class TurnsController < ApplicationController
   end
 
   def inverse_of_defense_patrol_man_power_ratio(patrol)
-    patrol_man_power = patrol.defense&.man_power.present? ? patrol.defense.man_power.positive? ? patrol.defense.man_power : 1 : 1
+    patrol_man_power = (patrol.defense&.city == patrol.city && patrol.defense&.man_power.present?) ? patrol.defense.man_power.positive? ? patrol.defense.man_power : 1 : 1
     1 / (patrol_man_power.to_f / patrol.city.total_defense.to_f)
   end
 
