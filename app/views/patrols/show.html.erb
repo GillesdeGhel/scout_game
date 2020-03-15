@@ -180,7 +180,7 @@
               <%= @patrol.attack.total_attack_power %>
             </span>
           </p>
-          <%= button_to 'Annuler', @patrol.attack, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler cette attaque?')" %>
+          <%= button_to 'Annuler', @patrol.attack, method: :delete, class: "btn btn-danger" %>
         <% end %>
       </div>
     </div>
@@ -222,7 +222,7 @@
               <%= @patrol.defense.total_defense_power %>
             </span>
           </p>
-          <%= button_to 'Annuler', @patrol.defense, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler cette défense?')" %>
+          <%= button_to 'Annuler', @patrol.defense, method: :delete, class: "btn btn-danger" %>
         <% end %>
       </div>
     </div>
@@ -241,7 +241,7 @@
         <% else %>
           <p> Nombre d'hommes: <%= @patrol.mining.man_power %> </p>
           <p> Revenus prévus: <%= @patrol.mining.total_revenues.round %> </p>
-          <%= button_to 'Annuler', @patrol.mining, method: :delete, class: "btn btn-danger", :onclick => "return confirm('Sur de vouloir annuler ce minage?')" %>
+          <%= button_to 'Annuler', @patrol.mining, method: :delete, class: "btn btn-danger" %>
         <% end %>
       </div>
     </div>
