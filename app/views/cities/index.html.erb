@@ -37,7 +37,7 @@
             <%= a.patrol.name %> (<%= a.patrol.troop.name %>) - <%= number_with_delimiter(a.total_attack_power.round) %>
             <br>
           <% end %>
-          Total: <%= number_with_delimiter(c.total_attack.round) %>
+          <b> Total: <%= number_with_delimiter(c.total_attack.round) %> </b>
           <hr>
           Défenses: 
           <br>
@@ -45,7 +45,7 @@
             <%= d.patrol.name %> - <%= number_with_delimiter(d.total_defense_power.round) %>
             <br>
           <% end %>
-          Total: <%= number_with_delimiter(c.total_defense.round) %>
+          <b> Total: <%= number_with_delimiter(c.total_defense.round) %> </b>
         <% end %>
       </div>
     </div>
