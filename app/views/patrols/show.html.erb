@@ -186,7 +186,7 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-12">
+  <div class="col-lg-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Défense de la patrouille:
@@ -194,6 +194,10 @@
           (<%= @patrol.defense.city.name %>)
         <% end %>
         </h4>
+        <p> Défense actuelle de <%= @patrol.city.name %>:  <span class="right"> <%= @patrol.city.total_defense %> </span></p>
+        <% if @patrol.hold_paris? %>
+          <p> Défense actuelle de paris:  <span class="right"> <%= City.paris.total_defense %> </span></p>
+        <% end %>
         <% unless @patrol.defense? %>
           <%= simple_form_for @defense do |f| %>
             <% if @patrol.hold_paris? %>
@@ -228,7 +232,7 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-12">
+  <div class="col-lg-3 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
         <h4> Homme qui partent à la mine: </h4>
@@ -319,9 +323,8 @@
           <%= simple_form_for @construction do |f| %>
           <% if @patrol.hold_paris? %>
             <p>
-              Sélectionner Paris pour construire sur Paname et pas sur votre ville.
+              Le bonus s'applique à la ville que vous défendez
              </p>
-            <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
           <% else  %>
             <%= f.hidden_field :city_id, value: @patrol.city.id %>
           <% end  %>

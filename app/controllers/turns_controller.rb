@@ -163,25 +163,26 @@ class TurnsController < ApplicationController
 
   def pillage(city)
     city.troop.patrols.each do |patrol|
-      if city.total_defense.zero?
-        revenues = (city.population / 6)
-        patrol.money -= revenues
-        patrol.receipt.defense_losses = revenues
-        patrol.receipt.save!
-        patrol.save!
-        next
-      else
-        patrol_percentage = inverse_of_defense_patrol_man_power_ratio(patrol) / defense_fraction(city)
-        revenues = city.population * patrol_percentage
-        revenues * 0.7 if event.eql?('clemency')
-        patrol.money -= revenues
-        patrol.receipt.defense_losses = revenues
-        patrol.receipt.save!
-        patrol.save!
-      end
+      # if city.total_defense.zero?
+      losses = (city.population / 6)
+      losses * 0.7 if event.eql?('clemency')
+      patrol.money -= losses
+      patrol.receipt.defense_losses = losses
+      patrol.receipt.save!
+      patrol.save!
+      # next
+      # else
+      #   patrol_percentage = inverse_of_defense_patrol_man_power_ratio(patrol) / defense_fraction(city)
+      #   revenues = city.population * patrol_percentage
+      #   revenues * 0.7 if event.eql?('clemency')
+      #   patrol.money -= revenues
+      #   patrol.receipt.defense_losses = revenues
+      #   patrol.receipt.save!
+      #   patrol.save!
+      # end
     end
     attack_counter = 0
-    city.attacks.select {|a| a.total_attack_power.positive? }.sort_by(&:total_attack_power).each do |a|
+    city.attacks.select { |a| a.total_attack_power.positive? }.sort_by(&:total_attack_power).each do |a|
       attack_counter += 1
       attack_count = city.attacks.count
       percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
@@ -228,14 +229,14 @@ class TurnsController < ApplicationController
     Troop.all
   end
 
-  def inverse_of_defense_patrol_man_power_ratio(patrol)
-    patrol_man_power = (patrol.defense&.city == patrol.city && patrol.defense&.man_power.present?) ? patrol.defense.man_power.positive? ? patrol.defense.man_power : 1 : 1
-    1 / (patrol_man_power.to_f / patrol.city.total_defense.to_f)
-  end
+  # def inverse_of_defense_patrol_man_power_ratio(patrol)
+  #   patrol_man_power = (patrol.defense&.city == patrol.city && patrol.defense&.man_power.present?) ? patrol.defense.man_power.positive? ? patrol.defense.man_power : 1 : 1
+  #   1 / (patrol_man_power.to_f / patrol.city.total_defense.to_f)
+  # end
 
-  def defense_fraction(city)
-    city.troop.patrols.sum do |patrol|
-      inverse_of_defense_patrol_man_power_ratio(patrol)
-    end
-  end
+  # def defense_fraction(city)
+  #   city.troop.patrols.sum do |patrol|
+  #     inverse_of_defense_patrol_man_power_ratio(patrol)
+  #   end
+  # end
 end
