@@ -2,7 +2,7 @@
   <p class="flash warning">Votre ville, <%= @patrol.city.name %>, a été pillée et la population réduites de moitié</p>
 <% end %>
 <h1 class="center">
-  <%= @patrol.name %>
+  <%= image_tag("#{@patrol.name}.png", alt: "#{@patrol.name}.png", class: 'blason') %>
 </h1>
 <% if current_user.admin? %>
   <% if @patrol.id != 54 %>
