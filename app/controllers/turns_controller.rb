@@ -80,7 +80,7 @@ class TurnsController < ApplicationController
   end
 
   def resolve_minings
-    return if event[:value].eql?('gas_blast')
+    return if event&.[](:value).eql?('gas_blast')
 
     Mining.all.each do |m|
       patrol = m.patrol
@@ -109,8 +109,8 @@ class TurnsController < ApplicationController
     patrols.each do |p|
       p.money = 0 if p.money.negative?
       revenues = p.city.population * p.revenues_multiplicator * 0.2
-      revenues *= 1.3 if event[:value].eql?('successfull_trade')
-      revenues = 0 if event[:value].eql?('fiscal_fraud')
+      revenues *= 1.3 if event&.[](:value).eql?('successfull_trade')
+      revenues = 0 if event&.[](:value).eql?('fiscal_fraud')
       p.money += revenues
       if p.hold_paris?
         p.money += 100
@@ -192,7 +192,7 @@ class TurnsController < ApplicationController
     city.troop.patrols.each do |patrol|
       # if city.total_defense.zero?
       losses = (city.population / 6)
-      losses * 0.7 if event[:value].eql?('clemency')
+      losses * 0.7 if event&.[](:value).eql?('clemency')
       patrol.money -= losses
       patrol.receipt.defense_losses = losses
       patrol.receipt.save!
@@ -201,7 +201,7 @@ class TurnsController < ApplicationController
       # else
       #   patrol_percentage = inverse_of_defense_patrol_man_power_ratio(patrol) / defense_fraction(city)
       #   revenues = city.population * patrol_percentage
-      #   revenues * 0.7 if event[:value].eql?('clemency')
+      #   revenues * 0.7 if event&.[](:value).eql?('clemency')
       #   patrol.money -= revenues
       #   patrol.receipt.defense_losses = revenues
       #   patrol.receipt.save!
@@ -214,7 +214,7 @@ class TurnsController < ApplicationController
       attack_count = city.attacks.count
       percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
       revenues = city.population * percentage
-      revenues * 1.3 if event[:value].eql?('barbarism')
+      revenues * 1.3 if event&.[](:value).eql?('barbarism')
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings = revenues
       a.patrol.receipt.save!
