@@ -40,10 +40,4 @@ class ConstructionsController < ApplicationController
   def construction_params
     params.require(:construction).permit(:building_id, :patrol_id, :city_id)
   end
-
-  private
-
-  def fortification_condition
-    patrol.troop.patrols.sum { |p| p.constructions.count { |c| c.building.eql?(building) } } > 10
-  end
 end
