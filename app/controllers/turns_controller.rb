@@ -234,9 +234,8 @@ class TurnsController < ApplicationController
     winning_troop.turns_holding_paris = 0 if winning_troop.turns_holding_paris.nil?
     winning_troop.save!
     winning_troop.patrols.each do |p|
-      revenues = 100
+      revenues = 200
       p.money += revenues
-      p.total_gains += 500
       p.receipt.paris_winning = revenues
       p.receipt.save!
       p.save!
