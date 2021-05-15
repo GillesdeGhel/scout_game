@@ -4,39 +4,39 @@ class TurnsController < ApplicationController
   EVENTS = [
     {
       value: 'city_plague',
-      label: 'Peste dans les villes'
+      label: 'Peste dans les villes: -30% hommes en défense'
     },
     {
       value: 'campaign_plague',
-      label: 'Peste dans les campagnes'
+      label: 'Peste dans les campements: -30% hommes en attaque'
     },
     {
       value: 'fund_raising',
-      label: 'Levée de fonds'
+      label: 'Levée de fond, +200 or'
     },
     {
       value: 'earthquake',
-      label: 'Tremblement de terre'
+      label: 'Tremblement de terre: Batiments défensif détruits'
     },
     {
       value: 'fiscal_fraud',
-      label: 'Fraude fiscale'
+      label: 'Fraude fiscale: pas de revenu de taxe (base)'
     },
     {
       value: 'successfull_trade',
-      label: 'Commerce fructueux'
+      label: 'Commerce fructueux, +30% de revenu de base'
     },
     {
       value: 'clemency',
-      label: 'Clémence et miséricorde'
+      label: 'Clémence et miséricorde: -30% de perte suites aux pillages de villes'
     },
     {
       value: 'gas_blast',
-      label: 'Coup de grisou'
+      label: 'Coup de grisou: Aucun revenu miniers'
     },
     {
       value: 'barbarism',
-      label: 'Brabarisme invétéré'
+      label: 'Barbarisme invétéré: +30% des revenus suites aux pillages de villes'
     }
   ].freeze
 
