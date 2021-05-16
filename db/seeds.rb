@@ -86,6 +86,15 @@ Patrol.create(name: 'Alcyon', troop: gueux, money: 200, guild: mercenaire)
 Patrol.create(name: 'Mouette', troop: gueux, money: 200, guild: mineur)
 City.create(name: 'Bruges', troop: gueux, defense_building_multiplicator: 1, population: 1000)
 
+lanciers = Troop.create(name: 'Lanciers', country_name: 'Duché de Luxembourg')
+Patrol.create(name: 'Barasingha', troop: lanciers, money: 200, guild: arbaletrier)
+Patrol.create(name: 'Chousingha', troop: lanciers, money: 200, guild: ingenieur)
+Patrol.create(name: 'Koalas', troop: lanciers, money: 200, guild: constructeur)
+Patrol.create(name: 'Monax', troop: lanciers, money: 200, guild: marchand)
+Patrol.create(name: 'Saluki', troop: lanciers, money: 200, guild: mercenaire)
+Patrol.create(name: 'Serval', troop: lanciers, money: 200, guild: mineur)
+City.create(name: 'Luxembourg', troop: lanciers, defense_building_multiplicator: 1, population: 1000)
+
 City.create(name: 'Paris', defense_building_multiplicator: 1, population: 1000)
 
 Building.create(name: 'Trébuchet', usage: 'attack', durability: 5, multiplicator: 0.2, cost: 150)
@@ -110,6 +119,7 @@ User.create!([
                { email: 'servants.lonescouts@gmail.com', password: 'servantslonescouts', password_confirmation: 'servantslonescouts', troop: servants },
                { email: 'templiers.lonescouts@gmail.com', password: 'templierslonescouts', password_confirmation: 'templierslonescouts', troop: templiers },
                { email: 'vaillants.lonescouts@gmail.com', password: 'vaillantslonescouts', password_confirmation: 'vaillantslonescouts', troop: vaillants },
+               { email: 'lanciers.lonescouts@gmail.com', password: 'lancierslonescouts', password_confirmation: 'lancierslonescouts', troop: lanciers },
                { email: 'admin@gmail.com', password: 'gillesdg95', password_confirmation: 'gillesdg95' }
              ])
 
