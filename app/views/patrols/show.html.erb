@@ -5,7 +5,7 @@
   <%= image_tag("#{@patrol.name}.png", alt: "#{@patrol.name}.png", class: 'blason') %>
 </h1>
 <% if current_user.admin? %>
-  <% if @patrol.id != 54 %>
+  <% if @patrol.id < Patrol.count %>
     <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
   <% end %>
 <% else %>
