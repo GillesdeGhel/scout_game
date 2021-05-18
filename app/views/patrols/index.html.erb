@@ -1,4 +1,7 @@
-<ul>
+<div class="center">
+  <h1> Classement des patrouilles </h1>
+</div>
+<ul class="ml-5">
   <% @patrols.sort_by(&:ranking).each do |p| %>
    <ul>
       <a href="/patrols/<%= p.id %>">
