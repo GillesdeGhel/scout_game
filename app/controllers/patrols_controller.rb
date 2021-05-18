@@ -21,6 +21,10 @@ class PatrolsController < ApplicationController
     redirect_to patrol_path(patrol)
   end
 
+  def index
+    @patrols = Patrol.all
+  end
+
   def patrol
     @patrol ||= Patrol.find(params[:id])
   end
