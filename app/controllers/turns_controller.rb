@@ -20,11 +20,11 @@ class TurnsController < ApplicationController
     },
     {
       value: 'fiscal_fraud',
-      label: 'Fraude fiscale: pas de revenu de taxe (base)'
+      label: 'Fraude fiscale: revenu des taxes diminués de moitié'
     },
     {
       value: 'successfull_trade',
-      label: 'Commerce fructueux, +30% de revenu de base'
+      label: 'Commerce fructueux, +30% de revenu des taxes'
     },
     {
       value: 'clemency',
@@ -110,7 +110,7 @@ class TurnsController < ApplicationController
       p.money = 0 if p.money.negative?
       revenues = p.city.population * p.revenues_multiplicator * 0.2
       revenues *= 1.3 if event&.[](:value).eql?('successfull_trade')
-      revenues = 0 if event&.[](:value).eql?('fiscal_fraud')
+      revenues *= 0.5 if event&.[](:value).eql?('fiscal_fraud')
       p.money += revenues
       if p.hold_paris?
         p.money += 100

@@ -16,7 +16,7 @@ module Event
   end
 
   def self.successfull_trade
-    update_receipt('Commerce fructueux, +30% de revenu de base')
+    update_receipt('Commerce fructueux, +30% de revenu des taxes')
   end
 
   def self.fund_raising
@@ -35,7 +35,7 @@ module Event
   end
 
   def self.fiscal_fraud
-    update_receipt('Fraude fiscale: pas de revenu de taxe (base)')
+    update_receipt('Fraude fiscale: revenu des taxes diminués de moitié')
   end
 
   def self.clemency
