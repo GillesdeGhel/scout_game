@@ -108,7 +108,7 @@ class TurnsController < ApplicationController
   def pay_patrols
     patrols.each do |p|
       p.money = 0 if p.money.negative?
-      revenues = p.city.population * p.revenues_multiplicator * 0.2
+      revenues = p.city.population * (p.revenues_multiplicator + p.city.tax_multiplicator) * 0.2
       revenues *= 1.3 if event&.[](:value).eql?('successfull_trade')
       revenues *= 0.5 if event&.[](:value).eql?('fiscal_fraud')
       p.money += revenues
@@ -136,7 +136,7 @@ class TurnsController < ApplicationController
   end
 
   def change_construction_durability
-    Construction.all.reject(&:fortification?).each do |c|
+    Construction.temporaries.each do |c|
       if c.durability.eql?(1)
         c.destroy
         next
@@ -160,11 +160,11 @@ class TurnsController < ApplicationController
       p.total_gains += p.money
       p.save
     end
-    return if Troop.hold_paris.nil?
-
-    troop_with_paris = Troop.hold_paris
-    troop_with_paris.turns_holding_paris += 1
-    troop_with_paris.save
+    Troop.all.each do |t|
+      t.turns_holding_paris += t.city.passive_points_earning
+      t.turns_holding_paris += 5 if t.hold_paris?
+      t.save
+    end
   end
 
   def assign_guild
@@ -219,6 +219,8 @@ class TurnsController < ApplicationController
       a.patrol.receipt.attack_winnings = revenues
       a.patrol.receipt.save!
       a.patrol.save!
+      a.patrol.troop.turns_holding_paris += 1
+      a.patrol.troop.save!
     end
     city.pillaged = true
     city.pillage_count += 1

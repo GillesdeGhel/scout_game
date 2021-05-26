@@ -4,5 +4,9 @@ class Construction < ApplicationRecord
 
   attr_accessor :city_id
 
-  delegate :attack?, :defense?, :fortification?, to: :building
+  delegate :attack?, :defense?, :fortification?, :development?, :religious?, to: :building
+
+  def self.temporaries
+    Construction.select { |c| c.attack? || c.defense? }
+  end
 end

@@ -1,7 +1,7 @@
 class ConstructionsController < ApplicationController
   def create
     construction = Construction.new(construction_params)
-    cost_multiplicator = building.usage.eql?('fortification') ? patrol.defense_construction_cost_multiplicator : patrol.attack_construction_cost_multiplicator
+    cost_multiplicator = %w[fortification development religious].include?(building.usage) ? patrol.defense_construction_cost_multiplicator : patrol.attack_construction_cost_multiplicator
     cost = building.cost * cost_multiplicator
     if cost <= patrol.money && construction.save
       construction.update!(durability: building.durability)
@@ -10,6 +10,20 @@ class ConstructionsController < ApplicationController
         city.fortification_level += 1
         if (city.fortification_level % 10).zero?
           city.defense_building_multiplicator = 1 + building.multiplicator
+        end
+        city.save!
+      end
+      if building.usage.eql?('religious')
+        city.religious_level += 1
+        if (city.religious_level % 10).zero?
+          city.tax_multiplicator = 1 + building.multiplicator
+        end
+        city.save!
+      end
+      if building.usage.eql?('development')
+        city.development_level += 1
+        if (city.development_level % 10).zero?
+          city.passive_points_earning = building.multiplicator
         end
         city.save!
       end

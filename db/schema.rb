@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_100333) do
+ActiveRecord::Schema.define(version: 2021_05_26_184702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,10 @@ ActiveRecord::Schema.define(version: 2020_03_04_100333) do
     t.integer "previous_total_defense", default: 0
     t.integer "population", default: 0
     t.integer "fortification_level", default: 0
+    t.float "tax_multiplicator", default: 0.0
+    t.integer "passive_points_earning", default: 0
+    t.integer "development_level", default: 0
+    t.integer "religious_level", default: 0
   end
 
   create_table "constructions", force: :cascade do |t|

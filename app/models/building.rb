@@ -14,15 +14,23 @@ class Building < ApplicationRecord
   end
 
   def self.defenses
-    Building.select { |b| b.usage.eql?('defense') }
+    Building.where(usage: 'defense')
   end
 
   def self.attacks
-    Building.select { |b| b.usage.eql?('attack') }
+    Building.where(usage: 'attack')
   end
 
   def self.fortifications
-    Building.select { |b| b.usage.eql?('fortification') }
+    Building.where(usage: 'fortification')
+  end
+
+  def self.developments
+    Building.where(usage: 'development')
+  end
+
+  def self.religious
+    Building.where(usage: 'religious')
   end
 
   def attack?
@@ -31,6 +39,14 @@ class Building < ApplicationRecord
 
   def defense?
     usage.eql?('defense')
+  end
+
+  def religious?
+    usage.eql?('religious')
+  end
+
+  def development?
+    usage.eql?('development')
   end
 
   def fortification?

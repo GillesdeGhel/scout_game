@@ -251,11 +251,11 @@
     </div>
   </div>
 </div>
-<% if @patrol.constructions.reject(&:fortification?).any?  %>
+<% if @patrol.constructions.select{ |c| c.attack? || c.defense? }.any?  %>
   <hr>
   <h4> Constructions de la patrouille </h4>
   <div class="row">
-    <% @patrol.constructions.reject(&:fortification?).each do |c|  %>
+    <% @patrol.constructions.select{ |c| c.attack? || c.defense? }.each do |c|  %>
       <div class="col-lg-3 col-12">
         <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
           <div class="card-body">
@@ -271,70 +271,6 @@
 <%end%>
 <hr>
 <div class="row">
-  <div class="col-lg-4 col-12">
-    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
-      <div class="card-body">
-        <h4> Constructions d'attaque: </h4>
-          <% Building.attacks.each do |b| %>
-            <hr>
-            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
-            <ul>
-              <li>
-                Coût: <%= b.cost %> Or
-              </li>
-              <li>
-                Durabilité: <%= b.durability %> tour
-              </li>
-              <li>
-                Puissance: + <%= (b.multiplicator * 100).round %> %
-              </li>
-            </ul>
-          <% end %>
-          <hr>
-          <%= simple_form_for @construction do |f| %>
-            <%= f.hidden_field :city_id, value: @patrol.city.id %>
-            <%= f.collection_select :building_id, Building.attacks, :id, :name %>
-            <%= f.hidden_field :patrol_id, value: @patrol.id %>
-            <%= f.button :submit, 'Construire', class: "btn-primary" %>
-          <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4 col-12">
-    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
-      <div class="card-body">
-        <h4> Constructions de défense: </h4>
-          <% Building.defenses.each do |b| %>
-          <hr>
-            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
-            <ul>
-              <li>
-                Coût: <%= b.cost %> Or
-              </li>
-              <li>
-                Durabilité: <%= b.durability %> tour
-              </li>
-              <li>
-                Puissance: + <%= (b.multiplicator * 100).round %> %
-              </li>
-            </ul>
-          <% end %>
-          <hr>
-          <%= simple_form_for @construction do |f| %>
-          <% if @patrol.hold_paris? %>
-            <p>
-              Le bonus s'applique à la ville que vous défendez
-             </p>
-          <% else  %>
-            <%= f.hidden_field :city_id, value: @patrol.city.id %>
-          <% end  %>
-            <%= f.collection_select :building_id, Building.defenses, :id, :name %>
-            <%= f.hidden_field :patrol_id, value: @patrol.id %>
-            <%= f.button :submit, 'Construire', class: "btn-primary" %>
-          <% end %>
-      </div>
-    </div>
-  </div>
   <div class="col-lg-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
@@ -373,6 +309,132 @@
               <%= f.hidden_field :patrol_id, value: @patrol.id %>
               <%= f.button :submit, 'Construire', class: "btn-primary" %>
             <% end %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-12">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Développement Religieux:  </h4>
+          <%= @patrol.city.name %>: <%= @patrol.city.religious_level %>/<%= @patrol.city.religious_next_level %>
+          - <%= @patrol.city.religious_label %>
+          <% Building.religious.each do |b| %>
+            <hr>
+            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
+            <ul>
+              <li>
+                Coût: <%= b.cost %> Or
+              </li>
+              <li>
+                Gain: + <%= (b.multiplicator * 100).round %> % de taxes
+              </li>
+            </ul>
+          <% end %>
+          <hr>
+          <% unless @patrol.religious_complete? %>
+            <%= simple_form_for @construction do |f| %>
+              <%= f.hidden_field :city_id, value: @patrol.city.id %>
+              <%= f.collection_select :building_id, @patrol.constructable_religious, :id, :name %>
+              <%= f.hidden_field :patrol_id, value: @patrol.id %>
+              <%= f.button :submit, 'Construire', class: "btn-primary" %>
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-12">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Développement Urbain:  </h4>
+          <%= @patrol.city.name %>: <%= @patrol.city.development_level %>/<%= @patrol.city.development_next_level %>
+          - <%= @patrol.city.development_label %>
+          <% Building.developments.each do |b| %>
+            <hr>
+            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
+            <ul>
+              <li>
+                Coût: <%= b.cost %> Or
+              </li>
+              <li>
+                Points: + <%= b.multiplicator %> par tour
+              </li>
+            </ul>
+          <% end %>
+          <hr>
+          <% unless @patrol.development_complete? %>
+            <%= simple_form_for @construction do |f| %>
+              <%= f.hidden_field :city_id, value: @patrol.city.id %>
+              <%= f.collection_select :building_id, @patrol.constructable_developments, :id, :name %>
+              <%= f.hidden_field :patrol_id, value: @patrol.id %>
+              <%= f.button :submit, 'Construire', class: "btn-primary" %>
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 col-12">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Constructions d'attaque: </h4>
+          <% Building.attacks.each do |b| %>
+            <hr>
+            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
+            <ul>
+              <li>
+                Coût: <%= b.cost %> Or
+              </li>
+              <li>
+                Durabilité: <%= b.durability %> tour
+              </li>
+              <li>
+                Puissance: + <%= (b.multiplicator * 100).round %> %
+              </li>
+            </ul>
+          <% end %>
+          <hr>
+          <%= simple_form_for @construction do |f| %>
+            <%= f.hidden_field :city_id, value: @patrol.city.id %>
+            <%= f.collection_select :building_id, Building.attacks, :id, :name %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.button :submit, 'Construire', class: "btn-primary" %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-12">
+    <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
+      <div class="card-body">
+        <h4> Constructions de défense: </h4>
+          <% Building.defenses.each do |b| %>
+          <hr>
+            <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
+            <ul>
+              <li>
+                Coût: <%= b.cost %> Or
+              </li>
+              <li>
+                Durabilité: <%= b.durability %> tour
+              </li>
+              <li>
+                Puissance: + <%= (b.multiplicator * 100).round %> %
+              </li>
+            </ul>
+          <% end %>
+          <hr>
+          <%= simple_form_for @construction do |f| %>
+          <% if @patrol.hold_paris? %>
+            <p>
+              Le bonus s'applique à la ville que vous défendez
+             </p>
+          <% else  %>
+            <%= f.hidden_field :city_id, value: @patrol.city.id %>
+          <% end  %>
+            <%= f.collection_select :building_id, Building.defenses, :id, :name %>
+            <%= f.hidden_field :patrol_id, value: @patrol.id %>
+            <%= f.button :submit, 'Construire', class: "btn-primary" %>
           <% end %>
       </div>
     </div>
