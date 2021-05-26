@@ -224,6 +224,7 @@ class TurnsController < ApplicationController
     end
     city.pillaged = true
     city.pillage_count += 1
+    city.troop.turns_holding_paris -= 3
     city.population = (city.population / 2).round(2)
   end
 
