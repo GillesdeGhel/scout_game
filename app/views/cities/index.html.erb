@@ -26,12 +26,14 @@
         <% end %>
         <p class="card-text center">Population: <%= number_with_delimiter(c.population * 10) %> </p>
         <p class="card-text center">Puissance des fortifications: x <%= c.defense_building_multiplicator%> </p>
+        <p class="card-text center">Revenus des taxes de l'église: x <%= c.tax_multiplicator %> </p>
+        <p class="card-text center">Point d'influence du chateau: <%= c.passive_points_earning %> par tour</p>
         <p class="card-text center">La ville a été pillée: <%= c.pillage_count%> fois en tout </p>
         <p class="card-text center"> Attaque sur la ville au tour passé: <%= number_with_delimiter(c.previous_total_attack) %> </p>
         <p class="card-text center"> Défense de la ville au tour passé: <%= number_with_delimiter(c.previous_total_defense) %> </p>
         <% if current_user.admin? %>
           <hr>
-          Attaques: 
+          Attaques:
           <br>
           <% c.attacks.each do |a| %>
             <%= a.patrol.name %> (<%= a.patrol.troop.name %>) - <%= number_with_delimiter(a.total_attack_power.round) %>
@@ -39,7 +41,7 @@
           <% end %>
           <b> Total: <%= number_with_delimiter(c.total_attack.round) %> </b>
           <hr>
-          Défenses: 
+          Défenses:
           <br>
           <% c.defenses.each do |d| %>
             <%= d.patrol.name %> - <%= number_with_delimiter(d.total_defense_power.round) %>

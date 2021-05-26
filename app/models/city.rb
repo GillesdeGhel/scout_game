@@ -30,7 +30,7 @@ class City < ApplicationRecord
     return 'Mur de bois (+100%)' if fortification_level >= 10
 
     'Pas encore de mur'
-  end 
+  end
 
   def fortification_next_level
     return '∞' if fortification_level >= 30
@@ -38,5 +38,37 @@ class City < ApplicationRecord
     return 20 if fortification_level >= 10
 
     10
-  end 
+  end
+
+  def development_label
+    return 'Citadelle (3 points par tour)' if development_level >= 30
+    return 'Forteresse (2 points par tour)' if development_level >= 20
+    return 'Chateau (1 points par tour)' if development_level >= 10
+
+    'Pas encore de dévelopement urbain'
+  end
+
+  def development_next_level
+    return '∞' if development_level >= 30
+    return 30 if development_level >= 20
+    return 20 if development_level >= 10
+
+    10
+  end
+
+  def religious_label
+    return 'Cathédrale (+ 60% de taxes)' if religious_level >= 30
+    return 'Eglise (+ 40% de taxes)' if religious_level >= 20
+    return 'Chapelle (+ 20% de taxes)' if religious_level >= 10
+
+    'Pas encore de lieu saint'
+  end
+
+  def religious_next_level
+    return '∞' if religious_level >= 30
+    return 30 if religious_level >= 20
+    return 20 if religious_level >= 10
+
+    10
+  end
 end

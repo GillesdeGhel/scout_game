@@ -1,9 +1,57 @@
-ingenieur = Guild.create(name: 'Ingénieur', attack_construction_cost_multiplicator: 0.7, mining_multiplicator: 1.3, revenues_multiplicator: 0.7)
-constructeur = Guild.create(name: 'Constructeur', defense_construction_cost_multiplicator: 0.7, mining_multiplicator: 0.7, defense_power_multiplicator: 1.2)
-marchand = Guild.create(name: 'Marchand', attack_power_multiplicator: 0.5, defense_power_multiplicator: 1, revenues_multiplicator: 1.6)
-mercenaire = Guild.create(name: 'Mercenaire', attack_power_multiplicator: 2, defense_power_multiplicator: 1.5, mining_multiplicator: 0.2, revenues_multiplicator: 0.5)
-arbaletrier = Guild.create(name: 'Arbalétrier', defense_power_multiplicator: 1.6)
-mineur = Guild.create(name: 'Mineur', mining_multiplicator: 1.5, defense_power_multiplicator: 0.6)
+ingenieur = Guild.create(
+  name: 'Ingénieurs',
+  mining_multiplicator: 1,
+  revenues_multiplicator: 0.7,
+  attack_construction_cost_multiplicator: 0.7,
+  defense_construction_cost_multiplicator: 1,
+  attack_power_multiplicator: 1.3,
+  defense_power_multiplicator: 0.8
+)
+constructeur = Guild.create(
+  name: 'Batisseurs',
+  mining_multiplicator: 0.7,
+  revenues_multiplicator: 1,
+  attack_construction_cost_multiplicator: 1,
+  defense_construction_cost_multiplicator: 0.7,
+  attack_power_multiplicator: 0.8,
+  defense_power_multiplicator: 1.3
+)
+marchand = Guild.create(
+  name: 'Marchands',
+  mining_multiplicator: 1.3,
+  revenues_multiplicator: 1.5,
+  attack_construction_cost_multiplicator: 1,
+  defense_construction_cost_multiplicator: 1,
+  attack_power_multiplicator: 0.7,
+  defense_power_multiplicator: 0.6
+)
+mercenaire = Guild.create(
+  name: 'Hommes d\'armes',
+  mining_multiplicator: 1,
+  revenues_multiplicator: 1,
+  attack_construction_cost_multiplicator: 1.5,
+  defense_construction_cost_multiplicator: 1.5,
+  attack_power_multiplicator: 1.5,
+  defense_power_multiplicator: 1.2
+)
+arbaletrier = Guild.create(
+  name: 'Arbalétriers',
+  mining_multiplicator: 0.7,
+  revenues_multiplicator: 0.7,
+  attack_construction_cost_multiplicator: 1,
+  defense_construction_cost_multiplicator: 1,
+  attack_power_multiplicator: 1.2,
+  defense_power_multiplicator: 1.5
+)
+mineur = Guild.create(
+  name: 'Mineurs',
+  mining_multiplicator: 1.5,
+  revenues_multiplicator: 1.3,
+  attack_construction_cost_multiplicator: 1.3,
+  defense_construction_cost_multiplicator: 1.3,
+  attack_power_multiplicator: 1,
+  defense_power_multiplicator: 1
+)
 
 servants = Troop.create(name: 'Servants', country_name: 'Duché de Bourgogne')
 Patrol.create(name: 'Chamois', troop: servants, money: 200, guild: arbaletrier)
@@ -108,6 +156,14 @@ Building.create(name: 'Huile bouillante', usage: 'defense', durability: 2, multi
 Building.create(name: 'Mur de bois', usage: 'fortification', multiplicator: 1, cost: 200)
 Building.create(name: 'Mur de pierre', usage: 'fortification', multiplicator: 2, cost: 400)
 Building.create(name: 'Muraille', usage: 'fortification', multiplicator: 3, cost: 800)
+
+Building.create(name: 'Chapelle', usage: 'religious', multiplicator: 0.2, cost: 200)
+Building.create(name: 'Eglise', usage: 'religious', multiplicator: 0.4, cost: 400)
+Building.create(name: 'Cathédrale', usage: 'religious', multiplicator: 0.6, cost: 800)
+
+Building.create(name: 'Chateau', usage: 'development', multiplicator: 1, cost: 200)
+Building.create(name: 'Forteresse', usage: 'development', multiplicator: 3, cost: 400)
+Building.create(name: 'Citadelle', usage: 'development', multiplicator: 5, cost: 800)
 
 User.create!([
                { email: 'archers.lonescouts@gmail.com', password: 'archerslonescouts', password_confirmation: 'archerslonescouts', troop: archers },

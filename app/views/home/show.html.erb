@@ -14,7 +14,7 @@
           <%= image_tag("#{t.city.name}.png", alt: "#{t.city.name}.png", class: 'blason') %>
         </div>
 
-        <h5 class="card-title"><%= t.name %> <span class="right"> Score: <%= t.turns_holding_paris %> </span>
+        <h5 class="card-title"><%= t.name %> <span class="right"> Points: <%= t.turns_holding_paris %> </span>
           <% if t.hold_paris? %>
             - Tient Paris
           <% end %>
