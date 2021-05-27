@@ -66,10 +66,10 @@
           <%= @patrol.guild.name %>
         </h3>
             <p>
-              Coûts des fortifications:  <span class="right <%=@patrol.defense_construction_cost_multiplicator < 1 ? 'green' : @patrol.defense_construction_cost_multiplicator > 1 ? 'red' : '' %>">   <%= (@patrol.defense_construction_cost_multiplicator * 100).round %> % </span>
+              Coûts des développements:  <span class="right <%=@patrol.defense_construction_cost_multiplicator < 1 ? 'green' : @patrol.defense_construction_cost_multiplicator > 1 ? 'red' : '' %>">   <%= (@patrol.defense_construction_cost_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Coûts des machines de guerre: <span class="right <%=@patrol.attack_construction_cost_multiplicator < 1 ? 'green' : @patrol.attack_construction_cost_multiplicator > 1 ? 'red' : '' %>">  <%= (@patrol.attack_construction_cost_multiplicator * 100).round %> % </span>
+              Coûts des constructions: <span class="right <%=@patrol.attack_construction_cost_multiplicator < 1 ? 'green' : @patrol.attack_construction_cost_multiplicator > 1 ? 'red' : '' %>">  <%= (@patrol.attack_construction_cost_multiplicator * 100).round %> % </span>
             </p>
             <p>
               Puissance d'attaques: <span class="right <%=@patrol.attack_power_multiplicator > 1 ? 'green' : @patrol.attack_power_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.attack_power_multiplicator * 100).round %> % </span>
@@ -274,7 +274,7 @@
   <div class="col-lg-4 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
-        <h4> Niveau de fortification:  </h4>
+        <h4> Développement des Murs:  </h4>
           <%= @patrol.city.name %>: <%= @patrol.city.fortification_level %>/<%= @patrol.city.fortification_next_level %>
           - <%= @patrol.city.fortification_label %>
           <% if @patrol.hold_paris? %>
