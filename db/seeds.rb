@@ -26,7 +26,7 @@ marchand = Guild.create(
   defense_power_multiplicator: 0.6
 )
 mercenaire = Guild.create(
-  name: 'Hommes d\'armes',
+  name: 'Soldats',
   mining_multiplicator: 1,
   revenues_multiplicator: 1,
   attack_construction_cost_multiplicator: 1.5,
