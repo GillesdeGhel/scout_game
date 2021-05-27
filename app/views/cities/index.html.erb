@@ -25,7 +25,7 @@
           <h5 class="card-title center"><%= c.name %> - <%= c.troop&.name %> </h5>
         <% end %>
         <p class="card-text center">Population: <%= number_with_delimiter(c.population * 10) %> </p>
-        <p class="card-text center">Puissance des fortifications: + <%= c.defense_building_multiplicator * 100%> % </p>
+        <p class="card-text center">Puissance des fortifications: + <%= (c.defense_building_multiplicator - 1) * 100%> % </p>
         <p class="card-text center">Revenus des taxes de l'église: + <%= c.tax_multiplicator * 100 %> % </p>
         <p class="card-text center">Point d'influence du chateau: <%= c.passive_points_earning %> par tour</p>
         <p class="card-text center">La ville a été pillée: <%= c.pillage_count%> fois en tout </p>
