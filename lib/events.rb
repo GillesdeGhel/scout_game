@@ -47,7 +47,7 @@ module Event
   end
 
   def self.gas_blast
-    update_receipt('Coup de grisou: Aucun revenu miniers')
+    update_receipt('Coup de grisou: revenu miniers diminué de moitier')
   end
 
   def self.update_receipt(event)

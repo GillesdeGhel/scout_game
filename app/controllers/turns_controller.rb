@@ -20,7 +20,7 @@ class TurnsController < ApplicationController
     },
     {
       value: 'fiscal_fraud',
-      label: 'Fraude fiscale: revenu des taxes diminués de moitié'
+      label: 'Fraude fiscale: revenus des taxes diminués de moitié'
     },
     {
       value: 'successfull_trade',
@@ -32,7 +32,7 @@ class TurnsController < ApplicationController
     },
     {
       value: 'gas_blast',
-      label: 'Coup de grisou: Aucun revenu miniers'
+      label: 'Coup de grisou: revenus miniers diminués de moitié'
     },
     {
       value: 'barbarism',
@@ -80,9 +80,8 @@ class TurnsController < ApplicationController
   end
 
   def resolve_minings
-    return if event&.[](:value).eql?('gas_blast')
-
     Mining.all.each do |m|
+      m.total_revenues *= 0.5 if event&.[](:value).eql?('gas_blast')
       patrol = m.patrol
       patrol.money += m.total_revenues
       patrol.receipt.minings_winnings += m.total_revenues
