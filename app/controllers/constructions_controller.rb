@@ -16,7 +16,7 @@ class ConstructionsController < ApplicationController
       if building.usage.eql?('religious')
         city.religious_level += 1
         if (city.religious_level % 10).zero?
-          city.tax_multiplicator = 1 + building.multiplicator
+          city.tax_multiplicator = building.multiplicator
         end
         city.save!
       end
