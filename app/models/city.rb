@@ -41,8 +41,8 @@ class City < ApplicationRecord
   end
 
   def development_label
-    return 'Citadelle (3 points par tour)' if development_level >= 30
-    return 'Forteresse (2 points par tour)' if development_level >= 20
+    return 'Citadelle (5 points par tour)' if development_level >= 30
+    return 'Forteresse (3 points par tour)' if development_level >= 20
     return 'Chateau (1 points par tour)' if development_level >= 10
 
     'Pas encore de dévelopement urbain'
