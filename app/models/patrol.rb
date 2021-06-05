@@ -109,10 +109,10 @@ class Patrol < ApplicationRecord
   end
 
   def chapel_complete?
-    city.tax_multiplicator == (1 + Building.find_by(name: 'Chapelle').multiplicator)
+    city.tax_multiplicator == Building.find_by(name: 'Chapelle').multiplicator
   end
 
   def church_complete?
-    city.tax_multiplicator == (1 + Building.find_by(name: 'Eglise').multiplicator)
+    city.tax_multiplicator == Building.find_by(name: 'Eglise').multiplicator
   end
 end
