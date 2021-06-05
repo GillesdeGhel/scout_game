@@ -83,11 +83,11 @@ class Patrol < ApplicationRecord
   end
 
   def religious_complete?
-    city.tax_multiplicator == (1 + Building.find_by(name: 'Cathédrale').multiplicator)
+    city.tax_multiplicator == Building.find_by(name: 'Cathédrale').multiplicator
   end
 
   def development_complete?
-    city.passive_points_earning == (Building.find_by(name: 'Citadelle').multiplicator)
+    city.passive_points_earning == Building.find_by(name: 'Citadelle').multiplicator
   end
 
   private
