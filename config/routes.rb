@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   resources :minings, only: %i[create index destroy]
   resources :defenses, only: %i[create index destroy]
   resources :buildings, only: %i[create index]
-  resources :constructions, only: %i[create index]
+  resources :constructions, only: %i[create index destroy]
   get 'end_turn', action: :end_turn, controller: 'turns'
 end

@@ -54,4 +54,12 @@ class ConstructionsController < ApplicationController
   def construction_params
     params.require(:construction).permit(:building_id, :patrol_id, :city_id)
   end
+
+  def destroy
+    construction = Construction.find(params[:id])
+    construction.patrol.money += construction.building.cost * construction.patrol.attack_construction_cost_multiplicator
+    construction.destroy!
+    construction.patrol.save!
+    redirect_to patrol_path(construction.patrol.id)
+  end
 end

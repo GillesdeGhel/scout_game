@@ -80,7 +80,7 @@ class TurnsController < ApplicationController
   end
 
   def resolve_minings
-    Mining.all.each do |m|
+    Mining.all.includes(:patrol).each do |m|
       m.total_revenues *= 0.5 if event&.[](:value).eql?('gas_blast')
       patrol = m.patrol
       patrol.money += m.total_revenues
@@ -188,7 +188,7 @@ class TurnsController < ApplicationController
   end
 
   def pillage(city)
-    city.troop.patrols.each do |patrol|
+    city.troop.patrols.includes(:receipt).each do |patrol|
       # if city.total_defense.zero?
       losses = (city.population / 6)
       losses * 0.7 if event&.[](:value).eql?('clemency')
@@ -208,22 +208,24 @@ class TurnsController < ApplicationController
       # end
     end
     attack_counter = 0
-    city.attacks.select { |a| a.total_attack_power.positive? }.sort_by(&:total_attack_power).each do |a|
+    city.attacks.includes(:patrol).select { |a| a.total_attack_power.positive? }.sort_by(&:total_attack_power).each do |a|
       attack_counter += 1
       attack_count = city.attacks.count
       percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
       revenues = city.population * percentage
       revenues * 1.3 if event&.[](:value).eql?('barbarism')
+      attack_points_earned = (city.population * percentage / 1000).to_i
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings = revenues
+      a.patrol.receipt.attack_points_earned = attack_points_earned
       a.patrol.receipt.save!
       a.patrol.save!
-      a.patrol.troop.turns_holding_paris += 1
+      a.patrol.troop.turns_holding_paris += attack_points_earned
       a.patrol.troop.save!
     end
     city.pillaged = true
     city.pillage_count += 1
-    city.troop.turns_holding_paris -= 3
+    city.troop.turns_holding_paris -= 1
     city.troop.save!
     city.population = (city.population / 2).round(2)
   end
@@ -251,11 +253,11 @@ class TurnsController < ApplicationController
   end
 
   def patrols
-    Patrol.all
+    Patrol.all.includes(:receipt, troop: :city)
   end
 
   def troops
-    Troop.all
+    Troop.all.includes(:patrols)
   end
 
   # def inverse_of_defense_patrol_man_power_ratio(patrol)

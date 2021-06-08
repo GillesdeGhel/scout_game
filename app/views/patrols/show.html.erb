@@ -123,6 +123,14 @@
               + <%= @patrol.receipt.attack_winnings %> Or
             </span>
           </p>
+          <% if @patrol.receipt.attack_points_earned.positive? %>
+            <p>
+              Score gagné pour la nation:
+              <span class="right" style="color:green;">
+                + <%= @patrol.receipt.attack_points_earned %> points
+              </span>
+            </p>
+          <% end  %>
           <% if @patrol.hold_paris? %>
             <p>
               Revenus grâce à Paris:
@@ -263,6 +271,9 @@
             <p> Usage: <%= c.building.usage %> </p>
             <p> Puissance: + <%= (c.building.multiplicator * 100).round %> % </p>
             <p> Durée restante: <%= c.durability %> </p>
+            <% if c.durability == c.building.durability %>
+              <%= button_to 'Annuler', c, method: :delete, class: "btn btn-danger" %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -277,11 +288,6 @@
         <h4> Développement des Murs:  </h4>
           <%= @patrol.city.name %>: <%= @patrol.city.fortification_level %>/<%= @patrol.city.fortification_next_level %>
           - <%= @patrol.city.fortification_label %>
-          <% if @patrol.hold_paris? %>
-            <br>
-            Paris: <%= City.paris.fortification_level %>/<%= City.paris.fortification_next_level %>
-            <%= City.paris.fortification_label %>
-          <% end %>
           <% Building.fortifications.each do |b| %>
             <hr>
             <%= b.name %> (<%= @patrol.constructions.count { |c| c.building == b } %>):
@@ -297,14 +303,7 @@
           <hr>
           <% unless @patrol.fortification_complete? %>
             <%= simple_form_for @construction do |f| %>
-            <% if @patrol.hold_paris? %>
-              <p>
-                Sélectionner Paris pour construire sur Paname et pas sur votre ville.
-              </p>
-              <%= f.collection_select :city_id, [City.paris, @patrol.city], :id, :name %>
-            <% else  %>
               <%= f.hidden_field :city_id, value: @patrol.city.id %>
-            <% end  %>
               <%= f.collection_select :building_id, @patrol.constructable_fortifications, :id, :name %>
               <%= f.hidden_field :patrol_id, value: @patrol.id %>
               <%= f.button :submit, 'Construire', class: "btn-primary" %>
