@@ -1,4 +1,6 @@
 class AttacksController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     attack = Attack.new(attack_params)
     return unless attack.man_power.present?

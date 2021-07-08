@@ -1,4 +1,6 @@
 class MiningsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     mining = Mining.new(mining_params)
     return unless mining.man_power.present?

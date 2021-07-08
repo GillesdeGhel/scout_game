@@ -1,4 +1,6 @@
 class PatrolsController < ApplicationController
+  before_action :authenticate_user!, only: %i[show update]
+
   def show
     if current_user.troop == patrol.troop || current_user.admin?
       @patrol = patrol
@@ -25,13 +27,13 @@ class PatrolsController < ApplicationController
     @patrols = Patrol.all
   end
 
-  def patrol
-    @patrol ||= Patrol.find(params[:id])
-  end
-
   private
 
   def patrol_params
     params.require(:patrol).permit(:guild_id, :guild_changed)
+  end
+
+  def patrol
+    @patrol ||= Patrol.find(params[:id])
   end
 end

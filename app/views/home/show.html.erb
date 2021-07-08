@@ -33,6 +33,6 @@
   </div>
   <% end %>
 </div>
-<% if current_user.admin? %>
+<% if current_user.present? && current_user.admin? %>
   <%= link_to 'Finir le tour', end_turn_path, class: 'btn btn-primary' %>
 <% end %>

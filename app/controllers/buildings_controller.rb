@@ -1,4 +1,6 @@
 class BuildingsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     building = Building.new(building_params)
     if building.save

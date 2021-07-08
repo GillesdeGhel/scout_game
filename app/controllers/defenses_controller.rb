@@ -1,4 +1,6 @@
 class DefensesController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     defense = Defense.new(defense_params)
     return unless defense.man_power.present?
