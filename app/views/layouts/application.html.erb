@@ -17,7 +17,9 @@
       <%= link_to 'Nations', root_path, class:"nav-link" %>
       <%= link_to 'Villes', cities_path, class:"nav-link" %>
       <%= link_to 'Patrouilles', patrols_path, class:"nav-link" %>
-      <%= link_to 'Changer le mot de passe', edit_user_registration_path, class:"nav-link" %>
+      <% if current_user.present? %>
+        <%= link_to 'Changer le mot de passe', edit_user_registration_path, class:"nav-link" %>
+      <% end %>
     </nav>
     <% if flash[:success].present? %>
       <div class="flash success"><%= flash[:success] %></div>
