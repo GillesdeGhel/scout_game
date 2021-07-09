@@ -94,7 +94,7 @@ Patrol.create(name: 'Ecureuils', troop: preux, money: 200, guild: arbaletrier)
 Patrol.create(name: 'Toucans', troop: preux, money: 200, guild: ingenieur)
 Patrol.create(name: 'Lézards', troop: preux, money: 200, guild: constructeur)
 Patrol.create(name: 'Daguets', troop: preux, money: 200, guild: marchand)
-Patrol.create(name: 'Hibous', troop: preux, money: 200, guild: mercenaire)
+Patrol.create(name: 'Hiboux', troop: preux, money: 200, guild: mercenaire)
 Patrol.create(name: 'Corbeaux', troop: preux, money: 200, guild: mineur)
 City.create(name: 'Tolede', troop: preux, defense_building_multiplicator: 1, population: 1000)
 

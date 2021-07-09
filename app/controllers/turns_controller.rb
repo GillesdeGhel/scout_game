@@ -18,7 +18,7 @@ class TurnsController < ApplicationController
     },
     {
       value: 'earthquake',
-      label: 'Tremblement de terre: bâtiments défensif détruits'
+      label: 'Tremblement de terre: bâtiments défensifs détruits'
     },
     {
       value: 'fiscal_fraud',
