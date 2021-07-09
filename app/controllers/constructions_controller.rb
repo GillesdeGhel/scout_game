@@ -1,4 +1,6 @@
 class ConstructionsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     construction = Construction.new(construction_params)
     cost_multiplicator = %w[fortification development religious].include?(building.usage) ? patrol.defense_construction_cost_multiplicator : patrol.attack_construction_cost_multiplicator

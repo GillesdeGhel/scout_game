@@ -16,7 +16,7 @@ module Event
   end
 
   def self.successfull_trade
-    update_receipt('Commerce fructueux, +30% de revenu des taxes')
+    update_receipt('Commerce fructueux: +30% de revenu des taxes')
   end
 
   def self.fund_raising
@@ -24,12 +24,12 @@ module Event
       p.money += 200
       p.save!
     end
-    update_receipt('Levée de fond, +200 or')
+    update_receipt('Levée de fonds: +200 or')
   end
 
   def self.earthquake
     Construction.select(&:defense?).each do |c|
-      c.patrol.receipt.update(event: 'Tremblement de terre: Batiments défensif détruits')
+      c.patrol.receipt.update(event: 'Tremblement de terre: bâtiments défensifs détruits')
       c.destroy!
     end
   end
@@ -39,15 +39,15 @@ module Event
   end
 
   def self.clemency
-    update_receipt('Clémence et miséricorde: -30% de perte suites aux pillages de villes')
+    update_receipt('Clémence et miséricorde: -30% de perte suite aux pillages de villes')
   end
 
   def self.barbarism
-    update_receipt('Barbarisme invétéré: +30% des revenus suites aux pillages de villes')
+    update_receipt('Barbarisme invétéré: +30% des revenus suite aux pillages de villes')
   end
 
   def self.gas_blast
-    update_receipt('Coup de grisou: revenu miniers diminué de moitier')
+    update_receipt('Coup de grisou: revenus miniers diminué de moitié')
   end
 
   def self.update_receipt(event)

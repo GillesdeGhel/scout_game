@@ -10,7 +10,7 @@ class MiningsController < ApplicationController
       patrol.save
       flash[:success] = 'Les hommes sont partis à la mine.'
     else
-      flash[:alert] = 'Pas assez de thune'
+      flash[:alert] = 'Pas assez d\'or'
     end
     redirect_to patrol_path(patrol.id)
   end

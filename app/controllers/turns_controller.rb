@@ -18,7 +18,7 @@ class TurnsController < ApplicationController
     },
     {
       value: 'earthquake',
-      label: 'Tremblement de terre: Batiments défensif détruits'
+      label: 'Tremblement de terre: bâtiments défensif détruits'
     },
     {
       value: 'fiscal_fraud',
@@ -26,11 +26,11 @@ class TurnsController < ApplicationController
     },
     {
       value: 'successfull_trade',
-      label: 'Commerce fructueux, +30% de revenu des taxes'
+      label: 'Commerce fructueux: +30% de revenus des taxes'
     },
     {
       value: 'clemency',
-      label: 'Clémence et miséricorde: -30% de perte suites aux pillages de villes'
+      label: 'Clémence et miséricorde: -30% de pertes suite aux pillages de villes'
     },
     {
       value: 'gas_blast',
@@ -38,7 +38,7 @@ class TurnsController < ApplicationController
     },
     {
       value: 'barbarism',
-      label: 'Barbarisme invétéré: +30% des revenus suites aux pillages de villes'
+      label: 'Barbarisme invétéré: +30% des revenus suite aux pillages de villes'
     }
   ].freeze
 

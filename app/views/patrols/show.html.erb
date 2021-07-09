@@ -78,7 +78,7 @@
               Puissance défensive: <span class="right <%=@patrol.defense_power_multiplicator > 1 ? 'green' : @patrol.defense_power_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.defense_power_multiplicator * 100).round %> % </span>
             </p>
             <p>
-              Revenus passif: <span class="right <%=@patrol.revenues_multiplicator > 1 ? 'green' : @patrol.revenues_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.revenues_multiplicator * 100).round %> % </span>
+              Revenus des taxes: <span class="right <%=@patrol.revenues_multiplicator > 1 ? 'green' : @patrol.revenues_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.revenues_multiplicator * 100).round %> % </span>
             </p>
             <p>
               Revenus miniers: <span class="right <%=@patrol.mining_multiplicator > 1 ? 'green' : @patrol.mining_multiplicator < 1 ? 'red' : '' %>">  <%= (@patrol.mining_multiplicator * 100).round %> % </span>
@@ -243,7 +243,7 @@
   <div class="col-lg-3 col-12">
     <div class="card" style="margin-bottom: 20px; background-color:lightgrey;">
       <div class="card-body">
-        <h4> Homme qui partent à la mine: </h4>
+        <h4> Hommes qui partent à la mine: </h4>
         <% unless @patrol.mining? %>
           <%= simple_form_for @mining do |f| %>
             <%= f.hidden_field :patrol_id, value: @patrol.id %>
