@@ -172,7 +172,7 @@ User.create!([
                { email: 'paladins.lonescouts@gmail.com', password: 'paladinslonescouts', password_confirmation: 'paladinslonescouts', troop: paladins },
                { email: 'preux.lonescouts@gmail.com', password: 'preuxlonescouts', password_confirmation: 'preuxlonescouts', troop: preux },
                { email: 'hardis.lonescouts@gmail.com', password: 'hardislonescouts', password_confirmation: 'hardislonescouts', troop: hardis },
-               { email: 'servants.lonescouts@gmail.lcom', password: 'servantslonescouts', password_confirmation: 'servantslonescouts', troop: servants },
+               { email: 'servants.lonescouts@gmail.com', password: 'servantslonescouts', password_confirmation: 'servantslonescouts', troop: servants },
                { email: 'templiers.lonescouts@gmail.com', password: 'templierslonescouts', password_confirmation: 'templierslonescouts', troop: templiers },
                { email: 'vaillants.lonescouts@gmail.com', password: 'vaillantslonescouts', password_confirmation: 'vaillantslonescouts', troop: vaillants },
                { email: 'lanciers.lonescouts@gmail.com', password: 'lancierslonescouts', password_confirmation: 'lancierslonescouts', troop: lanciers },
