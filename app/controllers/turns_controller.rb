@@ -115,7 +115,7 @@ class TurnsController < ApplicationController
       p.money += revenues
       if p.hold_paris?
         p.money += 100
-        p.receipt.paris_winning = 100
+        p.receipt.paris_winning += 100
       end
       p.receipt.base_revenues = revenues
       p.receipt.save!
@@ -243,7 +243,7 @@ class TurnsController < ApplicationController
     winning_troop.patrols.each do |p|
       revenues = 200
       p.money += revenues
-      p.receipt.paris_winning = revenues
+      p.receipt.paris_winning += revenues
       p.receipt.save!
       p.save!
     end
