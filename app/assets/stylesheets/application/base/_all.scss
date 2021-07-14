@@ -14,7 +14,7 @@
 }
 
 .avatar {
-  height: 2em;
+  height: 4em;
 }
 
 .center {
@@ -25,9 +25,15 @@
   float: right;
 }
 
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .patrol-link {
-  padding: 10px;
   color: #772233;
+  padding-right: 8px;
 }
 
 .patrol-link:hover {

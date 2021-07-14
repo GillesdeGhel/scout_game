@@ -22,9 +22,14 @@
         <hr>
         <% t.patrols.sort_by(&:total_gains).reverse.each do |p|%>
           <a href="/patrols/<%= p.id %>">
-            <div class="patrol-link">
-              <%= image_tag("#{p.name}.png", alt: "#{p.name}.png", class: 'avatar') %>
-              <%= p.name %> - <%= p.guild.name %> <span class="right"> <%= number_with_delimiter(p.total_gains) %></span>
+            <div class="patrol-link flex-between">
+              <div>
+                <%= image_tag("#{p.name}.png", alt: "#{p.name}.png", class: "avatar") %>
+                <%= p.name %> - <%= p.guild.name %>
+              </div>
+              <div>
+                <span class="right"> <%= number_with_delimiter(p.total_gains) %></span>
+              </div>
             </div>
           </a>
         <% end %>
