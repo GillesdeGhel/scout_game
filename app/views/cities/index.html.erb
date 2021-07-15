@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<div class="center">
-  <h1> Toutes les villes </h1>
+<div class="center" style="margin-bottom: 30px;">
+  <%= image_tag("GCU.png", alt: "GCU.png", class: 'blason') %>
 </div>
 <div class="row">
   <% @cities.each do |c|%>
@@ -18,7 +18,7 @@
       <div class="card-body">
         <div class="center">
           <% if c.paris? %>
-            <%= image_tag("#{Troop.hold_paris&.name}.png", alt: "#{Troop.hold_paris&.name}.png", class: 'blason') %>
+            <%= image_tag("Paris.png", alt: "Paris.png", class: 'blason-paris') %>
           <% else %>
             <%= image_tag("#{c.troop&.name}.png", alt: "#{c.troop&.name}.png", class: 'blason') %>
           <% end %>
