@@ -17,7 +17,11 @@
       <% end %>
       <div class="card-body">
         <div class="center">
-          <%= image_tag("#{c.name}.png", alt: "#{c.name}.png", class: 'blason') %>
+          <% if c.paris? %>
+            <%= image_tag("#{Troop.hold_paris&.name}.png", alt: "#{Troop.hold_paris&.name}.png", class: 'blason') %>
+          <% else %>
+            <%= image_tag("#{c.troop&.name}.png", alt: "#{c.troop&.name}.png", class: 'blason') %>
+          <% end %>
         </div>
         <% if c.paris? %>
           <h5 class="card-title center"><%= c.name %> - <%= Troop.hold_paris&.name %> </h5>
