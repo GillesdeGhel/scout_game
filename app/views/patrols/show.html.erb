@@ -1,9 +1,9 @@
 <% if @patrol.city.pillaged %>
   <p class="flash warning">Votre ville, <%= @patrol.city.name %>, a été pillée et la population réduites de moitié</p>
 <% end %>
-<h1 class="center">
+<h3 class="center" style="margin-bottom: 2em;">
   <%= image_tag("#{@patrol.name}.png", alt: "#{@patrol.name}.png", class: 'blason') %>
-</h1>
+</h3>
 <% if current_user.admin? %>
   <% if @patrol.id < Patrol.count %>
     <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
