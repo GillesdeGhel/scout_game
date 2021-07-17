@@ -216,7 +216,7 @@ class TurnsController < ApplicationController
       percentage = (attack_counter.to_f / (1..attack_count).sum.to_f)
       revenues = city.population * percentage
       revenues * 1.3 if event&.[](:value).eql?('barbarism')
-      attack_points_earned = (city.population * percentage / 1000).to_i
+      attack_points_earned = (city.population * percentage / 1000).round
       a.patrol.money += revenues
       a.patrol.receipt.attack_winnings = revenues
       a.patrol.receipt.attack_points_earned = attack_points_earned
