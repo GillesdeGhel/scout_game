@@ -4,42 +4,42 @@ class TurnsController < ApplicationController
   require 'events'
 
   EVENTS = [
-    # {
-    #   value: 'city_plague',
-    #   label: 'Peste dans les villes: -30% hommes en défense'
-    # },
-    # {
-    #   value: 'campaign_plague',
-    #   label: 'Peste dans les campements: -30% hommes en attaque'
-    # },
-    # {
-    #   value: 'fund_raising',
-    #   label: 'Levée de fond, +200 or'
-    # },
-    # {
-    #   value: 'earthquake',
-    #   label: 'Tremblement de terre: bâtiments défensifs détruits'
-    # },
-    # {
-    #   value: 'fiscal_fraud',
-    #   label: 'Fraude fiscale: revenus des taxes diminués de moitié'
-    # },
-    # {
-    #   value: 'successfull_trade',
-    #   label: 'Commerce fructueux: +30% de revenus des taxes'
-    # },
-    # {
-    #   value: 'clemency',
-    #   label: 'Clémence et miséricorde: -30% de pertes suite aux pillages de villes'
-    # },
+    {
+      value: 'city_plague',
+      label: 'Peste dans les villes: -30% hommes en défense'
+    },
+    {
+      value: 'campaign_plague',
+      label: 'Peste dans les campements: -30% hommes en attaque'
+    },
+    {
+      value: 'fund_raising',
+      label: 'Levée de fond, +200 or'
+    },
+    {
+      value: 'earthquake',
+      label: 'Tremblement de terre: bâtiments défensifs détruits'
+    },
+    {
+      value: 'fiscal_fraud',
+      label: 'Fraude fiscale: revenus des taxes diminués de moitié'
+    },
+    {
+      value: 'successfull_trade',
+      label: 'Commerce fructueux: +30% de revenus des taxes'
+    },
+    {
+      value: 'clemency',
+      label: 'Clémence et miséricorde: -30% de pertes suite aux pillages de villes'
+    },
     {
       value: 'gas_blast',
       label: 'Coup de grisou: revenus miniers diminués de moitié'
     },
-    # {
-    #   value: 'barbarism',
-    #   label: 'Barbarisme invétéré: +30% des revenus suite aux pillages de villes'
-    # }
+    {
+      value: 'barbarism',
+      label: 'Barbarisme invétéré: +30% des revenus suite aux pillages de villes'
+    }
   ].freeze
 
   private_constant :EVENTS
@@ -74,7 +74,7 @@ class TurnsController < ApplicationController
   end
 
   def randomize_event
-    # return if rand(2) == 1
+    return if rand(2) == 1
 
     @event = EVENTS.sample
     Event.send(event[:value])
