@@ -4,10 +4,10 @@ class TurnsController < ApplicationController
   require 'events'
 
   EVENTS = [
-    # {
-    #   value: 'city_plague',
-    #   label: 'Peste dans les villes: -30% hommes en défense'
-    # },
+    {
+      value: 'city_plague',
+      label: 'Peste dans les villes: -30% hommes en défense'
+    },
     # {
     #   value: 'campaign_plague',
     #   label: 'Peste dans les campements: -30% hommes en attaque'
@@ -20,14 +20,14 @@ class TurnsController < ApplicationController
       value: 'earthquake',
       label: 'Tremblement de terre: bâtiments défensifs détruits'
     },
-    # {
-    #   value: 'fiscal_fraud',
-    #   label: 'Fraude fiscale: revenus des taxes diminués de moitié'
-    # },
-    # {
-    #   value: 'successfull_trade',
-    #   label: 'Commerce fructueux: +30% de revenus des taxes'
-    # },
+    {
+      value: 'fiscal_fraud',
+      label: 'Fraude fiscale: revenus des taxes diminués de moitié'
+    },
+    {
+      value: 'successfull_trade',
+      label: 'Commerce fructueux: +30% de revenus des taxes'
+    },
     {
       value: 'clemency',
       label: 'Clémence et miséricorde: -30% de pertes suite aux pillages de villes'
