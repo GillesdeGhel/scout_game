@@ -16,10 +16,10 @@ class TurnsController < ApplicationController
     #   value: 'fund_raising',
     #   label: 'Levée de fond, +200 or'
     # },
-    # {
-    #   value: 'earthquake',
-    #   label: 'Tremblement de terre: bâtiments défensifs détruits'
-    # },
+    {
+      value: 'earthquake',
+      label: 'Tremblement de terre: bâtiments défensifs détruits'
+    },
     # {
     #   value: 'fiscal_fraud',
     #   label: 'Fraude fiscale: revenus des taxes diminués de moitié'
@@ -28,18 +28,18 @@ class TurnsController < ApplicationController
     #   value: 'successfull_trade',
     #   label: 'Commerce fructueux: +30% de revenus des taxes'
     # },
-    # {
-    #   value: 'clemency',
-    #   label: 'Clémence et miséricorde: -30% de pertes suite aux pillages de villes'
-    # },
+    {
+      value: 'clemency',
+      label: 'Clémence et miséricorde: -30% de pertes suite aux pillages de villes'
+    },
     {
       value: 'gas_blast',
       label: 'Coup de grisou: revenus miniers diminués de moitié'
     },
-    # {
-    #   value: 'barbarism',
-    #   label: 'Barbarisme invétéré: +30% des revenus suite aux pillages de villes'
-    # }
+    {
+      value: 'barbarism',
+      label: 'Barbarisme invétéré: +30% des revenus suite aux pillages de villes'
+    }
   ].freeze
 
   private_constant :EVENTS
