@@ -74,7 +74,7 @@ class TurnsController < ApplicationController
   end
 
   def randomize_event
-    # return if rand(2) == 1
+    return if rand(2) == 1
 
     @event = EVENTS.sample
     Event.send(event[:value])
