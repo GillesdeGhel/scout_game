@@ -4,21 +4,15 @@
 <h3 class="center" style="margin-bottom: 2em;">
   <%= image_tag("#{@patrol.name}.png", alt: "#{@patrol.name}.png", class: 'blason') %>
 </h3>
-<% if current_user.admin? %>
-  <% if @patrol.id < Patrol.count %>
-    <%= link_to "Prochaine patrouille (#{Patrol.find(@patrol.id + 1).troop.name})", patrol_path(@patrol.id + 1), class:"nav-link" %>
-  <% end %>
-<% else %>
-  <div class="row">
-    <ul class="nav nav-tabs nav-justified">
-    <% current_user.troop.patrols.each do |p| %>
+<div class="row">
+  <ul class="nav nav-tabs nav-justified">
+    <% @patrol.troop.patrols.each do |p| %>
       <li class="nav-item" style="width:13em;">
         <%= link_to p.name, patrol_path(p), class: "nav-link #{p == @patrol ? 'active' : ''}" %>
       </li>
     <% end %>
   </ul>
-  </div>
-<% end %>
+</div>
 <br>
 <div class="row">
   <div class="col-lg-4 col-12">
