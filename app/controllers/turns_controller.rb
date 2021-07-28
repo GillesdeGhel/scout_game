@@ -47,7 +47,7 @@ class TurnsController < ApplicationController
   def end_turn
     if current_user.admin?
       reset_all_receipts
-      randomize_event
+      # randomize_event
       resolve_minings
       resolve_conflicts
       pay_patrols
