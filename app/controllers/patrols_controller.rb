@@ -2,15 +2,19 @@ class PatrolsController < ApplicationController
   before_action :authenticate_user!, only: %i[show update]
 
   def show
-    if current_user.troop == patrol.troop || current_user.admin?
-      @patrol = patrol
-      @attack = Attack.new
-      @defense = Defense.new
-      @mining = Mining.new
-      @construction = Construction.new
+    if current_user&.admin?
+      if current_user.troop == patrol.troop || current_user.admin?
+        @patrol = patrol
+        @attack = Attack.new
+        @defense = Defense.new
+        @mining = Mining.new
+        @construction = Construction.new
+      else
+        flash[:alert] = 'Pas votre patrouille'
+        redirect_to root_path
+      end
     else
-      flash[:alert] = 'Pas votre patrouille'
-      redirect_to root_path
+      render plain: "Les résultats seront disponibles à midi le 29/07"
     end
   end
 
@@ -24,7 +28,11 @@ class PatrolsController < ApplicationController
   end
 
   def index
-    @patrols = Patrol.all
+    if current_user&.admin?
+      @patrols = Patrol.all
+    else
+      render plain: "Les résultats seront disponibles à midi le 29/07"
+    end
   end
 
   private

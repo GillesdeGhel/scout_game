@@ -1,5 +1,9 @@
 class CitiesController < ApplicationController
   def index
-    @cities = City.all
+    if current_user&.admin?
+      @cities = City.all
+    else
+      render plain: "Les résultats seront disponibles à midi le 29/07"
+    end
   end
 end
