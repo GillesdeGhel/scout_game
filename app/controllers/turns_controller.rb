@@ -8,14 +8,14 @@ class TurnsController < ApplicationController
       value: 'city_plague',
       label: 'Peste dans les villes: -30% hommes en défense'
     },
-    # {
-    #   value: 'campaign_plague',
-    #   label: 'Peste dans les campements: -30% hommes en attaque'
-    # },
-    # {
-    #   value: 'fund_raising',
-    #   label: 'Levée de fond, +200 or'
-    # },
+    {
+      value: 'campaign_plague',
+      label: 'Peste dans les campements: -30% hommes en attaque'
+    },
+    {
+      value: 'fund_raising',
+      label: 'Levée de fond, +200 or'
+    },
     {
       value: 'earthquake',
       label: 'Tremblement de terre: bâtiments défensifs détruits'
@@ -47,7 +47,7 @@ class TurnsController < ApplicationController
   def end_turn
     if current_user.admin?
       reset_all_receipts
-      # randomize_event
+      randomize_event
       resolve_minings
       resolve_conflicts
       pay_patrols
