@@ -7,10 +7,11 @@
       <a href="/patrols/<%= p.id %>">
         <div class="patrol-link">
           <%= p.ranking %>.
-          <%= image_tag("#{p.name}.png", alt: "#{p.name}.png", class: 'avatar') %>
+          <%# <%= image_tag("#{p.name}.png", alt: "#{p.name}.png", class: 'avatar') %>
           <%= p.name %> (<%= p.troop.name %>) - <%= number_with_delimiter(p.total_gains) %>
         </div>
       </a>
+      <br>
    </ul>
   <% end %>
 </ul>

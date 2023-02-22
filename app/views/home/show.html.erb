@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="center" style="margin-bottom: 30px;">
-  <%= image_tag("GCU.png", alt: "GCU.png", class: 'blason') %>
+  <%= image_tag("GCU.png", alt: "GCU.png", class: 'main-logo') %>
 </div>
 <div class="row">
   <% Troop.all.sort_by(&:turns_holding_paris).reverse.each do |t|%>
@@ -11,7 +11,7 @@
           <h4>
             <%= t.country_name %>
           </h4>
-          <%= image_tag("#{t.name}.png", alt: "#{t.name}.png", class: 'blason') %>
+          <%= image_tag("#{t.city.name}.png", alt: "#{t.id}.png", class: 'blason') %>
         </div>
 
         <h5 class="card-title"><%= t.name %> <span class="right"> Points: <%= t.turns_holding_paris %> </span>
@@ -24,7 +24,7 @@
           <a href="/patrols/<%= p.id %>">
             <div class="patrol-link flex-between">
               <div>
-                <%= image_tag("#{p.name}.png", alt: "#{p.name}.png", class: "avatar") %>
+                <%# <%= image_tag("#{p.name}.png", alt: "#{p.name}.png", class: "avatar") %>
                 <%= p.name %> - <%= p.guild.name %>
               </div>
               <div>
@@ -32,6 +32,7 @@
               </div>
             </div>
           </a>
+          <br>
         <% end %>
       </div>
     </div>

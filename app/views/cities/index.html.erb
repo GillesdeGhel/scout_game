@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div class="center" style="margin-bottom: 30px;">
-  <%= image_tag("GCU.png", alt: "GCU.png", class: 'blason') %>
+  <%= image_tag("GCU.png", alt: "GCU.png", class: 'main-logo') %>
 </div>
 <div class="row">
   <% @cities.each do |c|%>
@@ -20,7 +20,7 @@
           <% if c.paris? %>
             <%= image_tag("Paris.png", alt: "Paris.png", class: 'blason-paris') %>
           <% else %>
-            <%= image_tag("#{c.troop&.name}.png", alt: "#{c.troop&.name}.png", class: 'blason') %>
+            <%= image_tag("#{c.name}.png", alt: "#{c.name}.png", class: 'blason') %>
           <% end %>
         </div>
         <% if c.paris? %>

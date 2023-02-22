@@ -2,7 +2,8 @@
   <p class="flash warning">Votre ville, <%= @patrol.city.name %>, a été pillée et la population réduites de moitié</p>
 <% end %>
 <h3 class="center" style="margin-bottom: 2em;">
-  <%= image_tag("#{@patrol.name}.png", alt: "#{@patrol.name}.png", class: 'blason') %>
+  <%= @patrol.name %>
+  <%# <%= image_tag("#{@patrol.name}.png", alt: "#{@patrol.name}.png", class: 'blason') %>
 </h3>
 <div class="row">
   <ul class="nav nav-tabs nav-justified">
@@ -96,32 +97,32 @@
         <h3>Résumé du tour passé</h3>
         EVENEMENT:
         <span>
-          <%= @patrol.receipt.event %>
+          <%= @patrol.receipt&.event %>
         </span>
         <hr>
           <p>
             Revenus de taxes:
             <span class="right" style="color:green;">
-              + <%= @patrol.receipt.base_revenues %> Or
+              + <%= @patrol.receipt&.base_revenues %> Or
             </span>
           </p>
           <p>
             Revenus miniers:
             <span class="right" style="color:green;">
-              + <%= @patrol.receipt.minings_winnings %> Or
+              + <%= @patrol.receipt&.minings_winnings %> Or
             </span>
           </p>
           <p>
             Revenus de l'attaque:
             <span class="right" style="color:green;">
-              + <%= @patrol.receipt.attack_winnings %> Or
+              + <%= @patrol.receipt&.attack_winnings %> Or
             </span>
           </p>
-          <% if @patrol.receipt.attack_points_earned.positive? %>
+          <% if @patrol.receipt&.attack_points_earned&.positive? %>
             <p>
               Score gagné pour la nation:
               <span class="right" style="color:green;">
-                + <%= @patrol.receipt.attack_points_earned %> points
+                + <%= @patrol.receipt&.attack_points_earned %> points
               </span>
             </p>
           <% end  %>
@@ -129,15 +130,15 @@
             <p>
               Revenus grâce à Paris:
               <span class="right" style="color:green;">
-                + <%= @patrol.receipt.paris_winning %> Or
+                + <%= @patrol.receipt&.paris_winning %> Or
               </span>
             </p>
           <% end  %>
-          <% unless @patrol.receipt.defense_losses.zero? %>
+          <% unless @patrol.receipt&.defense_losses&.zero? %>
             <p>
               Perte de défense:
               <span class="right" style="color:red;">
-                - <%= @patrol.receipt.defense_losses %> Or
+                - <%= @patrol.receipt&.defense_losses %> Or
               </span>
             </p>
           <% end %>
