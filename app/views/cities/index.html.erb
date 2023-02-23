@@ -35,7 +35,8 @@
         <p class="card-text center">La ville a été pillée: <%= c.pillage_count%> fois en tout </p>
         <p class="card-text center"> Attaque sur la ville au tour passé: <%= number_with_delimiter(c.previous_total_attack) %> </p>
         <p class="card-text center"> Défense de la ville au tour passé: <%= number_with_delimiter(c.previous_total_defense) %> </p>
-        <% if current_user.present? && current_user.admin? %>
+        <%# <% if current_user.present? && current_user.admin? %>
+        <% if false %>
           <hr>
           Attaques:
           <br>
